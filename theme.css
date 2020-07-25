@@ -1,3 +1,54 @@
-.title-bar {
-  color: aquamarine;
+body {
+  margin: 0;
+}
+
+ul {
+  list-style: none;
+}
+#myname {
+  margin-left: 100px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+#indexname {
+  margin-top: 500px;
+  font-size: 40px;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.top-panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: auto;
+  background-color: white;
+  box-shadow: 0 0 8px 5px rgba(0, 0, 0, 0.4);
+}
+
+.index-show {
+  height: 100vh;
+  text-align: center;
+  background: url('https://cdn.luogu.com.cn/upload/image_hosting/3qjxhfjm.png') no-repeat center;
+}
+
+.container::before {
+  content: '';
+  display: block;
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: -50px;
+}
+
+.container {
+  position: relative;
+  width: auto;
+  height: 100vh;
+  overflow: hidden;
 }
