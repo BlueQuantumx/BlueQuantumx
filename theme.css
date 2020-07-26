@@ -1,10 +1,12 @@
 body {
   margin: 0;
+  display: block;
 }
 
 ul {
   list-style: none;
 }
+
 #myname {
   margin-left: 100px;
   font-size: 20px;
@@ -26,29 +28,70 @@ ul {
   height: auto;
   background-color: white;
   box-shadow: 0 0 8px 5px rgba(0, 0, 0, 0.4);
+  z-index: 10;
 }
 
 .index-show {
   height: 100vh;
   text-align: center;
-  background: url('https://cdn.luogu.com.cn/upload/image_hosting/3qjxhfjm.png') no-repeat center;
+  background: url('https://cdn.luogu.com.cn/upload/image_hosting/3qjxhfjm.png') no-repeat;
+  background-position: center;
+  background-position-y: -200px;
 }
 
-.container::before {
+.card::before {
   content: '';
   display: block;
   position: absolute;
   z-index: -1;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
-  margin: -50px;
+  height: 100%;
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 3px 8px 5px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.card:hover::before {
+  opacity: 1;
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateY(-35px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card {
+  display: flex;
+  animation: fadeInLeft 2s ease;
+  -webkit-animation: fadeInLeft 2s ease;
+  background-color: white;
+  position: relative;
+  margin: 20px;
+  z-index: 2;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 3px 5px 5px rgba(0, 0, 0, 0.2);
+  width: auto;
 }
 
 .container {
-  position: relative;
-  width: auto;
-  height: 100vh;
-  overflow: hidden;
+  background-color: rgb(237, 246, 253);
+  padding: 5vh;
+  height: auto;
+}
+
+a {
+  font-size: larger;
+  font-weight: 600;
+  color: black;
+  text-decoration: none;
 }
