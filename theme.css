@@ -34,7 +34,7 @@ ul {
 .index-show {
   height: 100vh;
   text-align: center;
-  background: url('https://cdn.luogu.com.cn/upload/image_hosting/3qjxhfjm.png') no-repeat;
+  background: url('res/1.png') no-repeat;
   background-position: center;
   background-position-y: -200px;
 }
@@ -58,7 +58,7 @@ ul {
   opacity: 1;
 }
 
-@keyframes fadeInLeft {
+@keyframes cutin {
   from {
     opacity: 0;
     transform: translateY(-35px);
@@ -71,14 +71,14 @@ ul {
 
 .card {
   display: flex;
-  animation: fadeInLeft 2s ease;
-  -webkit-animation: fadeInLeft 2s ease;
+  transition: opacity 0.3s;
   background-color: white;
   position: relative;
   margin: 20px;
   z-index: 2;
   padding: 30px;
   border-radius: 10px;
+  opacity: 0;
   box-shadow: 0 3px 5px 5px rgba(0, 0, 0, 0.2);
   width: auto;
 }

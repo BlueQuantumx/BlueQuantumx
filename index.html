@@ -3,8 +3,21 @@
 
 <head>
   <link rel="stylesheet" type="text/css" href="theme.css">
+  <link rel="script" type="text/js" href="script.js">
   <title>BlueQuantum's Blog</title>
-  <link rel="icon" type="image/png" sizes="512x512" href="https://cdn.luogu.com.cn/upload/image_hosting/ikgdxm4y.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="res/blog.png">
+  <script>
+    window.onscroll = function () {
+      if (document.documentElement.scrollTop > 400) {
+        var list = document.getElementsByClassName("card");
+        for (let i = 0; i < list.length; i++) {
+          const element = list[i];
+          element.style.animation = "cutin 2s ease";
+          element.style.opacity = "1";
+        }
+      }
+    }
+  </script>
 </head>
 
 <body>
@@ -17,14 +30,9 @@
     <span id="indexname">BlueQuantum's Blog</span>
   </div>
   <div class="container">
-    <a class="card" href="Test.html"><span>Test</span></a>
-    <a class="card" href="OIStudy.html"><span>OIStudy</span></a>
-    <a class="card" href="OIStudy.html"><span>OIStudy</span></a>
-    <a class="card" href="OIStudy.html"><span>OIStudy</span></a>
-    <a class="card" href="OIStudy.html"><span>OIStudy</span></a>
-    <a class="card" href="OIStudy.html"><span>OIStudy</span></a>
-    <a class="card" href="OIStudy.html"><span>OIStudy</span></a>
-    <a class="card" href="OIStudy.html"><span>OIStudy</span></a>
+    <a class="card" href="Artical/[CQOI2014]数三角形.html"><span>[CQOI2014]数三角形</span></a>
+    <a class="card" href="Artical/OIStudy.html"><span>OIStudy</span></a>
+    <a class="card" href="Artical/Test.html"><span>Test</span></a>
   </div>
 </body>
 
