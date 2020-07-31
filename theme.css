@@ -9,7 +9,7 @@ ul {
 }
 
 #myname {
-  margin-left: 100px;
+  margin-left: 50px;
   font-size: 20px;
   font-weight: 600;
 }
@@ -59,17 +59,6 @@ ul {
   opacity: 1;
 }
 
-@keyframes cutin {
-  from {
-    opacity: 0;
-    transform: translateY(-35px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 .card {
   display: flex;
   transition: opacity 0.3s;
@@ -87,7 +76,7 @@ ul {
 .container {
   background-color: rgb(237, 246, 253);
   padding: 5vh;
-  height: auto;
+  height: 80vh;
 }
 
 a {
@@ -95,4 +84,26 @@ a {
   font-weight: 600;
   color: black;
   text-decoration: none;
+}
+
+@keyframes cutin {
+  from {
+    opacity: 0;
+    transform: translateY(-35px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes cutout {
+  from {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-35px);
+  }
 }
