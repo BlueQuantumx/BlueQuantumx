@@ -1,6 +1,9 @@
 var flag = 0;
 window.onscroll = function () {
-  if (flag == 0 && document.documentElement.scrollTop > 400) {
+  var height = document.documentElement.clientHeight;
+  // document.getElementById("A").innerHTML = height;
+  // document.getElementById("B").innerHTML = document.documentElement.scrollTop;
+  if (flag == 0 && document.documentElement.scrollTop > height * 0.75) {
     var list = document.getElementsByClassName("card");
     for (let i = 0; i < list.length; ++i) {
       const element = list[i];
@@ -9,7 +12,7 @@ window.onscroll = function () {
     }
     flag = 1;
   }
-  if (flag == 1 && document.documentElement.scrollTop < 350) {
+  if (flag == 1 && document.documentElement.scrollTop < height * 0.6) {
     var list = document.getElementsByClassName("card");
     for (let i = 0; i < list.length; ++i) {
       const element = list[i];
