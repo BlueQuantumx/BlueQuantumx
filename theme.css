@@ -23,13 +23,6 @@ a:hover {
   align-self: center;
 }
 
-#indexname {
-  margin-top: 500px;
-  font-size: 40px;
-  font-weight: 600;
-  display: inline-block;
-}
-
 .top-panel {
   position: fixed;
   top: 0;
@@ -49,7 +42,7 @@ a:hover {
   text-align: center;
   background: url('res/1.png') no-repeat;
   background-position: center;
-  background-position-y: -200px;
+  background-position-y: 55%;
 }
 
 .container {
