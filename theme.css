@@ -20,7 +20,7 @@ body {
 }
 
 a {
-  transition: color 0.2s;
+  transition: color 0.4s;
   color: black;
   text-decoration: none;
 }
@@ -56,16 +56,17 @@ a:hover {
 .index-show {
   height: 100vh;
   text-align: center;
-  background: url('res/1.png') no-repeat;
-  background-position: center;
-  background-position-y: 55%;
+  background: url('res/4.png') no-repeat;
+  background-position: bottom;
+  background-size: 100%;
 }
 
 .container {
-  background-color: rgb(237, 246, 253);
   padding: 5vh;
   min-height: 80vh;
   display: flex;
+  background: url('res/5.png');
+  background-size: 100% 100%;
   flex-direction: row;
   justify-content: space-around;
   align-content: flex-end;
@@ -80,7 +81,7 @@ a:hover {
   height: 100%;
   width: 100%;
   border-radius: 10px;
-  box-shadow: 0 3px 8px 5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
   opacity: 0;
   transition: opacity 0.3s;
 }
@@ -90,7 +91,7 @@ a:hover {
 }
 
 .card {
-  transition: opacity 0.3s;
+  transition: opacity color 0.4s;
   background-color: white;
   position: relative;
   margin: 20px;
@@ -98,7 +99,7 @@ a:hover {
   padding: 30px;
   border-radius: 10px;
   opacity: 0;
-  box-shadow: 0 3px 5px 5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 8px rgba(0, 0, 0, 0.2);
 }
 
 #articals {
