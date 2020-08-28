@@ -1,20 +1,27 @@
 body {
   margin: 0;
-  background-color: rgb(237, 246, 253);
+  background: url('res/5.png') fixed;
+  background-size: 100% 100%;
   display: block;
 }
 
+main {
+  min-height: 95vh;
+}
+
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 10px;
+  width: 10px;
   background-color: rgba(0, 0, 0, 0);
 }
+
 ::-webkit-scrollbar-track {
   background-color: rgba(0, 0, 0, 0.05);
 }
+
 ::-webkit-scrollbar-thumb {
   background-color: rgba(0, 0, 0, 0.2);
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background-color: #5e72e4;
 }
@@ -39,37 +46,78 @@ a:hover {
   align-self: center;
 }
 
-.top-panel {
+#top-panel {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   height: 3em;
+  border-bottom: 1px solid lightgray;
   background-color: white;
-  box-shadow: 0 0 8px 5px rgba(0, 0, 0, 0.4);
+  transition: box-shadow 0.1s;
   z-index: 10;
   list-style: none;
   display: flex;
   justify-content: space-around;
 }
 
-.index-show {
+#index-show {
+  position: relative;
   height: 100vh;
-  text-align: center;
-  background: url('res/4.png') no-repeat;
-  background-position: bottom;
-  background-size: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+#index-show::before {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: url('res/5.png') fixed;
+  background-size: 100% 100%;
+  filter: blur(10px);
+}
+
+#sway-pic {
+  position: absolute;
+  left: calc(50% - 243px);
+  top: calc(50% - 150px);
+  display: block;
+  background: url('res/sway.png') no-repeat;
+  width: 486px;
+  height: 300px;
+}
+
+#back {
+  position: absolute;
+  display: block;
+  background: url('res/background.png') no-repeat;
+  background-size: contain;
+  background-position-x: center;
+  width: 100%;
+  height: 100%;
+}
+
+#starback {
+  position: absolute;
+  display: block;
+  background: url('res/starback.png') no-repeat;
+  background-size: contain;
+  background-position-x: center;
+  width: 100%;
+  height: 100%;
 }
 
 .container {
   padding: 5vh;
-  min-height: 80vh;
   display: flex;
-  background: url('res/5.png');
-  background-size: 100% 100%;
   flex-direction: row;
   justify-content: space-around;
   align-content: flex-end;
+}
+
+#main-container {
+  pointer-events: none;
 }
 
 .card::before {
@@ -128,7 +176,7 @@ a:hover {
 @keyframes cutin {
   from {
     opacity: 0;
-    transform: translateY(-35px);
+    transform: translateY(35px);
   }
   to {
     opacity: 1;
@@ -143,6 +191,6 @@ a:hover {
   }
   to {
     opacity: 0;
-    transform: translateY(-35px);
+    transform: translateY(35px);
   }
 }
