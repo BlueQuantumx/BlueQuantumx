@@ -5,8 +5,7 @@ body {
 }
 
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 10px;
+  width: 10px;
   background-color: rgba(0, 0, 0, 0);
 }
 ::-webkit-scrollbar-track {
@@ -39,26 +38,35 @@ a:hover {
   align-self: center;
 }
 
-.top-panel {
+#top-panel {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   height: 3em;
+  border-bottom: 1px solid lightgray;
   background-color: white;
-  box-shadow: 0 0 8px 5px rgba(0, 0, 0, 0.4);
+  transition: box-shadow 0.1s;
   z-index: 10;
   list-style: none;
   display: flex;
   justify-content: space-around;
 }
 
-.index-show {
+#index-show {
   height: 100vh;
-  text-align: center;
+  display: flex;
   background: url('res/4.png') no-repeat;
   background-position: bottom;
   background-size: 100%;
+  justify-content: center;
+}
+#sway-pic {
+  margin-top: 15%;
+  transform-origin: center;
+  background: url('res/sway.png') no-repeat;
+  width: 500px;
+  height: 500px;
 }
 
 .container {
