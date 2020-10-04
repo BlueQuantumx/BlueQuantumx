@@ -6,10 +6,12 @@ var offsY = document.documentElement.clientHeight / 2;
 document.onmousemove = function (event) {
   let X = event.pageX;
   let Y = event.pageY;
-  let ele = document.getElementById("sway-pic");
+  let sway = document.getElementById("sway-pic");
+  let back = document.getElementById("back");
   // document.getElementById("posX").innerHTML = X;
   // document.getElementById("posY").innerHTML = Y;
-  ele.style.transform = "translate(" + (X - offsX) / 40 + "px" + "," + (Y - offsY) / 40 + "px)";
+  sway.style.transform = "translate(" + (X - offsX) / 20 + "px" + "," + (Y - offsY) / 20 + "px)";
+  back.style.transform = "translate(" + (X - offsX) / 40 + "px" + "," + (Y - offsY) / 40 + "px)";
 }
 
 window.onscroll = function () {
