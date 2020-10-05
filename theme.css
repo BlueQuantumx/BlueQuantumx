@@ -1,19 +1,27 @@
 body {
   margin: 0;
-  background-color: rgb(237, 246, 253);
+  background: url('res/5.png') fixed;
+  background-size: 100% 100%;
   display: block;
+}
+
+main {
+  min-height: 95vh;
 }
 
 ::-webkit-scrollbar {
   width: 10px;
   background-color: rgba(0, 0, 0, 0);
 }
+
 ::-webkit-scrollbar-track {
   background-color: rgba(0, 0, 0, 0.05);
 }
+
 ::-webkit-scrollbar-thumb {
   background-color: rgba(0, 0, 0, 0.2);
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background-color: #5e72e4;
 }
@@ -56,11 +64,19 @@ a:hover {
 #index-show {
   height: 100vh;
   width: 100%;
-  background: url('res/4.png') no-repeat;
-  background-position: bottom;
-  background-size: 100%;
   overflow: hidden;
 }
+
+#index-show::before {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: url('res/5.png') fixed;
+  background-size: 100% 100%;
+  filter: blur(10px);
+}
+
 #sway-pic {
   position: absolute;
   left: calc(50% - 243px);
@@ -70,6 +86,7 @@ a:hover {
   width: 486px;
   height: 300px;
 }
+
 #back {
   display: block;
   background: url('res/backgroundtest.png');
@@ -79,13 +96,14 @@ a:hover {
 
 .container {
   padding: 5vh;
-  min-height: 90vh;
   display: flex;
-  background: url('res/5.png');
-  background-size: 100% 100%;
   flex-direction: row;
   justify-content: space-around;
   align-content: flex-end;
+}
+
+#main-container {
+  pointer-events: none;
 }
 
 .card::before {
@@ -144,7 +162,7 @@ a:hover {
 @keyframes cutin {
   from {
     opacity: 0;
-    transform: translateY(-35px);
+    transform: translateY(35px);
   }
   to {
     opacity: 1;
@@ -159,6 +177,6 @@ a:hover {
   }
   to {
     opacity: 0;
-    transform: translateY(-35px);
+    transform: translateY(35px);
   }
 }
