@@ -14,8 +14,8 @@ document.onmousemove = function (event) {
   let star = document.getElementById("starback");
   let back = document.getElementById("back");
   sway.style.transform = "translate(" + (X - offsX) / 15 + "px" + "," + (Y - offsY) / 15 + "px)";
-  star.style.transform = "translate(" + (X - offsX) / 30 + "px" + "," + (Y - offsY) / 30 + "px)";
-  back.style.transform = "translate(" + (X - offsX) / 60 + "px" + "," + (Y - offsY) / 60 + "px)";
+  star.style.transform = "translate(" + (offsX - X) / 30 + "px" + "," + (offsY - Y) / 30 + "px)";
+  back.style.transform = "translate(" + (offsX - X) / 60 + "px" + "," + (offsY - Y) / 60 + "px)";
 }
 
 window.onscroll = function () {
