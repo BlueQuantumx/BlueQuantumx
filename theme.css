@@ -80,7 +80,7 @@ a:hover {
 
 #sway-pic {
   z-index: 3;
-  transition: transform 0.05s;
+  transition: transform 0.1s;
   position: absolute;
   left: calc(50% - 243px);
   top: calc(50% - 150px);
@@ -92,7 +92,7 @@ a:hover {
 
 #back {
   z-index: 1;
-  transition: transform 0.05s;
+  transition: transform 0.1s;
   position: absolute;
   display: block;
   background: url('res/background.png') no-repeat;
@@ -105,7 +105,7 @@ a:hover {
 
 #starback {
   z-index: 2;
-  transition: transform 0.05s;
+  transition: transform 0.1s;
   position: absolute;
   display: block;
   background: url('res/starback.png') no-repeat;
