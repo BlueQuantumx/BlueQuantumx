@@ -5,10 +5,9 @@
 - .vim 里的插件
 - .vimrc 的配置
 - dde-top-panel：dde-istate-menu，dde-smart-dir
-- mod msr
 - blender，krita，clion
 - ~/.config/.kwinrc，~/.config/.kwinrulesrc
 - sources.list
-- /x11里修改caps/super
-
-安装vim-gtk3
+- /usr/share/X11/xkb/keycodes里修改caps/super
+- 安装vim-gtk3
+- /etc/modules msr
