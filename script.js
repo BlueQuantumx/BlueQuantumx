@@ -45,3 +45,16 @@ window.onscroll = function () {
     flag = 0;
   }
 }
+
+var gitalk = new Gitalk({
+  clientID: 'b820644a38313eb3360f', //Client ID
+
+  clientSecret: 'eebc1a3b7a57db5c06cbd73445ef48622df0a6ee', //Client Secret
+
+  repo: 'MyBlogComments',//仓库名称
+  owner: 'Bluequarks',//仓库拥有者
+  admin: ['Bluequarks'],
+  distractionFreeMode: false  // Facebook-like distraction free mode
+});
+
+gitalk.render('gitalk-container');
