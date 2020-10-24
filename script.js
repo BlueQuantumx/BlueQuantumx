@@ -54,7 +54,8 @@ var gitalk = new Gitalk({
   repo: 'MyBlogComments',//仓库名称
   owner: 'Bluequarks',//仓库拥有者
   admin: ['Bluequarks'],
-  id: decodeURI(window.location.pathname),
+  // id: decodeURI(window.location.pathname),
+  id: 'test',
   distractionFreeMode: false  // Facebook-like distraction free mode
 });
 
