@@ -68,56 +68,73 @@ a:hover {
   overflow: hidden;
 }
 
-#sway-pic {
-  z-index: 3;
+#sway {
+  text-align: center;
   transition: transform 0.1s;
   position: absolute;
-  left: calc(50% - 243px);
-  top: calc(50% - 150px);
+  left: 0;
+  top: 40%;
   display: block;
-  background: url('res/sway.png') no-repeat;
-  width: 486px;
-  height: 300px;
-}
-
-#back {
-  z-index: 1;
-  transition: transform 0.1s;
-  position: absolute;
-  display: block;
-  background: url('res/background.png') no-repeat;
-  background-size: contain;
-  background-position-x: center;
-  background-position: bottom;
   width: 100%;
-  height: 100%;
+  height: fit-content;
 }
 
-#starback {
-  z-index: 2;
-  transition: transform 0.1s;
+#sway>span {
+  font-weight: 600;
+  font-size: 4em;
+}
+
+.goline-text, #links>a {
+  position: relative;
+}
+
+.goline-text::before, #links>a::before {
+  content: "";
   position: absolute;
-  display: block;
-  background: url('res/starback.png') no-repeat;
-  background-size: contain;
-  background-position-x: center;
+  height: 3px;
   width: 100%;
-  height: 100%;
+  left: 0px;
+  top: 0px;
+  background-color: #5e72e4;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s;
 }
 
-.container {
-  padding: 5vh;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-content: flex-end;
+.goline-text:hover::before, #links>a:hover::before {
+  transform: scaleX(1);
+  transform-origin: right;
+}
+
+.goline-text::after, #links>a::after {
+  content: "";
+  position: absolute;
+  height: 3px;
+  width: 100%;
+  left: 0px;
+  bottom: 0px;
+  background-color: #5e72e4;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.4s;
+}
+
+.goline-text:hover::after, #links>a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
 }
 
 #main-container {
   pointer-events: none;
+  padding: 5vh;
+  display: flex;
+  flex-direction: row;
+  opacity: 0;
+  justify-content: space-around;
+  align-content: flex-end;
 }
 
-.card::before {
+.card::before, .gt-comment-content::before {
   content: '';
   position: absolute;
   z-index: -1;
@@ -131,11 +148,11 @@ a:hover {
   transition: opacity 0.3s;
 }
 
-.card:hover::before {
+.card:hover::before, .gt-comment-content:hover::before {
   opacity: 1;
 }
 
-.card {
+.card, .gt-comment-content {
   transition: opacity color 0.4s;
   background-color: white;
   position: relative;
@@ -143,13 +160,12 @@ a:hover {
   z-index: 2;
   padding: 30px;
   border-radius: 10px;
-  opacity: 0;
   box-shadow: 0 5px 8px rgba(0, 0, 0, 0.2);
 }
 
 #articals {
   display: flex;
-  width: 75%;
+  width: 60%;
   flex-direction: column;
 }
 
@@ -160,9 +176,14 @@ a:hover {
 #links {
   width: 100px;
   display: flex;
+  line-height: 2em;
   height: auto;
   flex-direction: column;
   align-content: flex-start;
+}
+
+#gitalk-container {
+  min-width: 30%;
 }
 
 #right-part {
