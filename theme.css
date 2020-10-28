@@ -82,6 +82,7 @@ a:hover {
 #sway>span {
   font-weight: 600;
   font-size: 4em;
+  user-select: none;
 }
 
 .goline-text, #links>a {
@@ -98,7 +99,7 @@ a:hover {
   background-color: #5e72e4;
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform 0.4s;
+  transition: transform 0.3s;
 }
 
 .goline-text:hover::before, #links>a:hover::before {
@@ -116,7 +117,7 @@ a:hover {
   background-color: #5e72e4;
   transform: scaleX(0);
   transform-origin: right;
-  transition: transform 0.4s;
+  transition: transform 0.3s;
 }
 
 .goline-text:hover::after, #links>a:hover::after {
@@ -185,10 +186,14 @@ a:hover {
 #links {
   width: 100px;
   display: flex;
-  line-height: 2em;
   height: auto;
   flex-direction: column;
   align-content: flex-start;
+}
+
+#links>a {
+  margin-top: 3px;
+  margin-bottom: 3px;
 }
 
 #gitalk-container {

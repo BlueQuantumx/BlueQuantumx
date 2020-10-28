@@ -9,5 +9,6 @@
 - ~/.config/.kwinrc，~/.config/.kwinrulesrc
 - sources.list
 - /usr/share/X11/xkb/keycodes里修改caps/super
-- 安装vim-gtk3
+- 安装vim-gtk3(支持系统剪贴板)
 - /etc/modules msr
+- libinput-dev.deb
