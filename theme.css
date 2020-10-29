@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  background: url('res/5.png') fixed;
+  background: url('Resources/5.png') fixed;
   background-size: 100% 100%;
   display: block;
 }

@@ -48,3 +48,36 @@ var gitalk = new Gitalk({
 });
 
 gitalk.render('gitalk-container');
+
+// 拉取 json 以获取文章列表和友链列表
+function getArticle(Arts) {
+  let make_html = '';
+  for (let i in Arts) {
+    let a = Arts[i];
+    make_html += '<a class="card artical" href="./Articles/' + a.path + '" target="_blank">' + a.Name + '</a>';
+  }
+  document.getElementById('articals').innerHTML = make_html;
+}
+
+function getFriendLinks(Friends) {
+  for (let i = 0; i < Friends.length; ++i) {
+    let f = Friends[i];
+    let str = '<a target=_"blank" href="' + f.href + '">' + f.Name + "</a>";
+    document.getElementById("links").innerHTML += str;
+  }
+}
+
+fetch('/Resources/Articles.json').then(response => { return response.json(); }).then(getArticle);
+fetch('/Resources/FriendLinks.json').then(response => { return response.json(); }).then(getFriendLinks);
+
+// 一言
+fetch('https://v1.hitokoto.cn?c=i').then(function (response) { return response.json(); })
+  .then(function (myJson) {
+    document.getElementById("hitokoto").innerHTML = myJson.hitokoto;
+    if (myJson.from_who) {
+      let ref = document.createElement('div');
+      ref.textContent = myJson.from_who;
+      ref.id = "hitokotoRef";
+      document.getElementById('hitokoto').appendChild(ref);
+    }
+  });
