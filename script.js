@@ -54,7 +54,7 @@ function getArticle(Arts) {
   let make_html = '';
   for (let i in Arts) {
     let a = Arts[i];
-    make_html += '<a class="card artical" href="./Articles/' + a.path + '" target="_blank">' + a.Name + '</a>';
+    make_html += '<a class="card artical" href="./Articles/' + a.file + '" target="_blank">' + a.name + '</a>';
   }
   document.getElementById('articals').innerHTML = make_html;
 }
@@ -62,7 +62,7 @@ function getArticle(Arts) {
 function getFriendLinks(Friends) {
   for (let i = 0; i < Friends.length; ++i) {
     let f = Friends[i];
-    let str = '<a target=_"blank" href="' + f.href + '">' + f.Name + "</a>";
+    let str = '<a target=_"blank" href="' + f.href + '">' + f.name + "</a>";
     document.getElementById("links").innerHTML += str;
   }
 }
