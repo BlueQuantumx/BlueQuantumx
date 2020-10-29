@@ -1,3 +1,8 @@
+@charset "UTF-8";
+html {
+  font-family: 'Segoe UI', 'Noto Sans CJK SC', 'Microsoft Yahei', sans-serif;
+}
+
 body {
   margin: 0;
   background: url('Resources/5.png') fixed;
@@ -16,11 +21,7 @@ main {
 
 ::-webkit-scrollbar {
   width: 10px;
-  background-color: rgba(0, 0, 0, 0);
-}
-
-::-webkit-scrollbar-track {
-  background-color: rgba(0, 0, 0, 0.05);
+  background-color: rgb(200, 251, 255);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -86,7 +87,7 @@ a:hover {
 }
 
 #sway>span {
-  font-weight: 600;
+  font-weight: 550;
   font-size: 4em;
   user-select: none;
 }
