@@ -54,7 +54,7 @@ function getArticle(Arts) {
   let make_html = '';
   for (let i in Arts) {
     let a = Arts[i];
-    make_html += '<a class="card artical" href="./Articles/' + a.file + '" target="_blank">' + a.name + '</a>';
+    make_html += '<a class="card artical" href="./Articles/' + a.path + '" target="_blank">' + a.name + '</a>';
   }
   document.getElementById('articals').innerHTML = make_html;
 }
@@ -73,7 +73,7 @@ fetch('/Resources/FriendLinks.json').then(response => { return response.json(); 
 // 一言
 fetch('https://v1.hitokoto.cn?c=i').then(function (response) { return response.json(); })
   .then(function (myJson) {
-    document.getElementById("hitokoto").innerHTML = myJson.hitokoto;
+    document.getElementById("hitokoto").innerHTML += myJson.hitokoto;
     if (myJson.from_who) {
       let ref = document.createElement('div');
       ref.textContent = myJson.from_who;
