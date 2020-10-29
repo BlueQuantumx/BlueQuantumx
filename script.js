@@ -7,33 +7,47 @@ var sway = document.getElementById("sway");
 var topPanel = document.getElementById("top-panel");
 var height = document.documentElement.clientHeight;
 
-window.onmousemove = function (event) {
-  // document.getElementById("posX").innerHTML = X;
-  // document.getElementById("posY").innerHTML = Y;
-  sway.style.transform = "translate(" + (event.pageX - offsX) * 0.1 + "px" + "," + (event.pageY - offsY) * 0.1 + "px)";
-}
-
-window.onscroll = function () {
-  // document.getElementById("scroll").innerHTML = document.documentElement.scrollTop;
-  if (document.documentElement.scrollTop < 0.01) {
-    topPanel.style.boxShadow = "0 0 0 black";
-  } else {
-    topPanel.style.boxShadow = "0 0 8px rgba(0, 0, 0, 0.4)";
-  }
-
-  if (flag == false && document.documentElement.scrollTop > height * 0.75) {
-    mainContainer.style.animation = "cutin 1s ease";
-    mainContainer.style.opacity = "1";
-    mainContainer.style.pointerEvents = "auto";
-    flag = 1;
-  }
-  if (flag == true && document.documentElement.scrollTop < height * 0.6) {
-    mainContainer.style.animation = "cutout 1s ease";
-    mainContainer.style.opacity = "0";
-    mainContainer.style.pointerEvents = "none";
-    flag = 0;
+function mouseMoveThrottle() {
+  let previous = 0;
+  return function (event) {
+    let now = Date.now();
+    if (now - previous > 15) {
+      if (flag == false)
+        sway.style.transform = "translate(" + (event.pageX - offsX) * 0.1 + "px" + "," + (event.pageY - offsY) * 0.1 + "px)";
+      previous = now;
+    }
   }
 }
+window.onmousemove = mouseMoveThrottle()
+
+function scrollThrottle() {
+  let previous = 0;
+  return function () {
+    let now = Date.now();
+    if (now - previous > 15) {
+      if (document.documentElement.scrollTop < 0.01) {
+        topPanel.style.boxShadow = "0 0 0 black";
+      } else {
+        topPanel.style.boxShadow = "0 0 8px rgba(0, 0, 0, 0.4)";
+      }
+      if (flag == false && document.documentElement.scrollTop > height * 0.75) {
+        mainContainer.style.animation = "cutin 1s ease";
+        mainContainer.style.opacity = "1";
+        mainContainer.style.pointerEvents = "auto";
+        flag = true;
+      }
+      if (flag == true && document.documentElement.scrollTop < height * 0.6) {
+        mainContainer.style.animation = "cutout 1s ease";
+        mainContainer.style.opacity = "0";
+        mainContainer.style.pointerEvents = "none";
+        flag = false;
+      }
+      previous = now;
+    }
+  }
+}
+
+window.onscroll = scrollThrottle()
 
 var gitalk = new Gitalk({
   clientID: 'b820644a38313eb3360f', //Client ID
