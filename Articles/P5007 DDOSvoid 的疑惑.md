@@ -1,3 +1,23 @@
+<script>
+    var MathJax = {
+        startup: {
+            typeset: false,
+            output: 'chtml'
+	},
+	tex: {
+		inlineMath: [
+        	['$', '$'],
+            ['\\(', '\\)']
+        ]
+	},
+    options: {
+    	enableMenu: false
+    }
+};
+</script>
+
+<script id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
 # P5007 DDOSvoid 的疑惑
 
 ## Description
@@ -74,3 +94,6 @@ int main() {
   return 0;
 }
 ```
+<script>
+	MathJax.typeset();
+</script>

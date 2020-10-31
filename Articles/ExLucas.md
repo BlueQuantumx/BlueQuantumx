@@ -1,14 +1,36 @@
+<script>
+    var MathJax = {
+        startup: {
+            typeset: false,
+            output: 'chtml'
+	},
+	tex: {
+		inlineMath: [
+        	['$', '$'],
+            ['\\(', '\\)']
+        ]
+	},
+    options: {
+    	enableMenu: false
+    }
+};
+</script>
+
+<script id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
 # 扩展卢卡斯定理
 
 求：
+
 $$
 \binom n m \bmod p
 $$
+
 其中 $p$ 不保证为质数。
 
-------
+---
 
-### 前置知识
+**前置知识**
 
 中国剩余定理（CRT）
 
@@ -16,11 +38,12 @@ ExGCD求逆元
 
 （应该都会吧）
 
------
+---
 
 考虑令 $p=p_1^{k_1}p_2^{k_2}p_3^{k_3} \dots$
 
 原问题转化为求：
+
 $$
 \begin{cases}
 C_n^m \bmod p_1^{k_1} \\
@@ -35,6 +58,7 @@ $$
 针对其中一个式子 $C_n^m \bmod p^{k}$ 即 $\frac {n!} {m!(n-m)!} \bmod p^k$ ，使用求逆元的方法是不行的，因为 $p$ 不保证为质数， $m!(n-m)!$ 可能不存在逆元。
 
 设 $f(n)=n! \bmod p^k$ ，进一步考虑，既然不互质，那就把他们的公因子都约掉，我们把阶乘展开看一看：
+
 $$
 \begin{aligned}
 n! &= 1 \times 2 \times 3 \cdots n \\
@@ -52,10 +76,13 @@ $$
 每这样一次，我们都可以从阶乘提取出 $p^{\lfloor \frac n p \rfloor}$ 这个因子，并把原问题变为一个规模更小的问题 $f(\frac n p)$ ，可以递归进行，并在过程中累加 $\lfloor \frac n p \rfloor$ ，记为 $h(n)$ ，最后的 $h(n)$ 就是 $n!$ 中 $p$ 这个因子的数量。
 
 至此，我们成功把 $n!$ 里的 $p$ 的因子分离出来。回归原来的问题 $C_n^m \bmod p^{k}$ ：
+
 $$
 \large \frac {\frac {n!}{p^{h(n)}}} {\frac {m!}{p^{h(m)}}\frac {(n-m)!}{p^{h(n-m)}}} p^{h(n)-h(m)-h(n-m)} \bmod p^k
 $$
+
 即
+
 $$
 \frac{f(n)}{f(m)f(n-m)} p^{h(n)-h(m)-h(n-m)} \bmod p^k
 $$

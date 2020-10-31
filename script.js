@@ -68,7 +68,7 @@ function getArticle(Arts) {
   let make_html = '';
   for (let i in Arts) {
     let a = Arts[i];
-    make_html += '<a class="card artical" href="./Articles/' + a.path + '" target="_blank">' + a.name + '</a>';
+    make_html += '<a class="card artical" href="./Articles/Articles/' + a.path + '" target="_blank">' + a.name + '</a>';
   }
   document.getElementById('articals').innerHTML = make_html;
 }
