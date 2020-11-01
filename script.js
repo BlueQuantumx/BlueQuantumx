@@ -61,7 +61,7 @@ var gitalk = new Gitalk({
   distractionFreeMode: false  // Facebook-like distraction free mode
 });
 
-// gitalk.render('gitalk-container');
+gitalk.render('gitalk-container');
 
 // 拉取 json 以获取文章列表和友链列表
 function getArticle(Arts) {

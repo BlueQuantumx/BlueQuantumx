@@ -217,6 +217,8 @@ a:hover {
 }
 
 #right-part {
+  position: sticky;
+  top: 3em;
   width: 20%;
   height: auto;
 }
