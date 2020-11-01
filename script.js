@@ -11,7 +11,7 @@ function mouseMoveThrottle() {
   let previous = 0;
   return function (event) {
     let now = Date.now();
-    if (now - previous > 15) {
+    if (now - previous > 200) {
       if (flag == false)
         sway.style.transform = "translate(" + (event.pageX - offsX) * 0.1 + "px" + "," + (event.pageY - offsY) * 0.1 + "px)";
       previous = now;
@@ -61,7 +61,7 @@ var gitalk = new Gitalk({
   distractionFreeMode: false  // Facebook-like distraction free mode
 });
 
-gitalk.render('gitalk-container');
+// gitalk.render('gitalk-container');
 
 // 拉取 json 以获取文章列表和友链列表
 function getArticle(Arts) {
