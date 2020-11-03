@@ -2,7 +2,7 @@ var flag = false;
 
 var offsX = document.documentElement.clientWidth / 2;
 var offsY = document.documentElement.clientHeight / 2;
-var mainContainer = document.getElementById("main-container");
+var mainContainer = document.getElementsByTagName("main")[0];
 var sway = document.getElementById("sway");
 var topPanel = document.getElementById("top-panel");
 var height = document.documentElement.clientHeight;
@@ -18,13 +18,13 @@ function mouseMoveThrottle() {
     }
   }
 }
-window.onmousemove = mouseMoveThrottle()
+// window.onmousemove = mouseMoveThrottle()
 
 function scrollThrottle() {
   let previous = 0;
   return function () {
     let now = Date.now();
-    if (now - previous > 15) {
+    if (now - previous > 16) {
       if (document.documentElement.scrollTop < 0.01) {
         topPanel.style.boxShadow = "0 0 0 black";
       } else {

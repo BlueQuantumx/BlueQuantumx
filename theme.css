@@ -1,4 +1,5 @@
 @charset "UTF-8";
+
 html {
   font-family: 'Segoe UI', 'Noto Sans CJK SC', 'Microsoft Yahei', sans-serif;
 }
@@ -24,7 +25,16 @@ h4 {
 }
 
 main {
+  box-sizing: border-box;
   min-height: 95vh;
+  pointer-events: none;
+  padding: 5vh;
+  /* display: flex; */
+  /* flex-direction: row; */
+  opacity: 0;
+  width: 100%;
+  /* justify-content: space-around; */
+  /* align-content: flex-end; */
 }
 
 ::-webkit-scrollbar {
@@ -50,15 +60,14 @@ a:hover {
   color: cornflowerblue;
 }
 
+nav>* {
+  align-self: center;
+}
+
 #myname {
   font-size: 20px;
   user-select: none;
   font-weight: 600;
-  align-self: center;
-}
-
-#about {
-  align-self: center;
 }
 
 #top-panel {
@@ -86,7 +95,6 @@ a:hover {
 
 #sway {
   text-align: center;
-  /* will-change: auto; */
   transition: transform 0.5s;
   position: absolute;
   left: 0;
@@ -99,6 +107,15 @@ a:hover {
   font-weight: 550;
   font-size: 4em;
   user-select: none;
+}
+
+.bright-text {
+  transition: all 0.4s;
+}
+
+.bright-text:hover {
+  color: cyan;
+  text-shadow: 0 0.1rem 0.4rem black;
 }
 
 .goline-text, #links>a {
@@ -141,17 +158,6 @@ a:hover {
   transform-origin: left;
 }
 
-#main-container {
-  pointer-events: none;
-  padding: 5vh;
-  display: flex;
-  flex-direction: row;
-  opacity: 0;
-  justify-content: space-around;
-  align-content: flex-end;
-  background-color: inherit;
-}
-
 .card::before, .gt-comment-content::before {
   content: '';
   position: absolute;
@@ -191,7 +197,8 @@ a:hover {
 
 #articals {
   display: flex;
-  width: 60%;
+  width: 50%;
+  box-sizing: border-box;
   flex-direction: column;
 }
 
@@ -213,14 +220,18 @@ a:hover {
 }
 
 #gitalk-container {
+  box-sizing: border-box;
   width: 30%;
 }
 
 #right-part {
+  box-sizing: border-box;
   position: sticky;
   top: 3em;
+  right: 1em;
   width: 20%;
   height: auto;
+  float: right;
 }
 
 #hitokotoRef {
