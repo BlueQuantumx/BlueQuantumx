@@ -29,12 +29,8 @@ main {
   min-height: 95vh;
   pointer-events: none;
   padding: 5vh;
-  /* display: flex; */
-  /* flex-direction: row; */
   opacity: 0;
   width: 100%;
-  /* justify-content: space-around; */
-  /* align-content: flex-end; */
 }
 
 ::-webkit-scrollbar {
@@ -196,6 +192,7 @@ nav>* {
 }
 
 #articals {
+  float: left;
   display: flex;
   width: 50%;
   box-sizing: border-box;
@@ -220,6 +217,7 @@ nav>* {
 }
 
 #gitalk-container {
+  float: left;
   box-sizing: border-box;
   width: 30%;
 }
