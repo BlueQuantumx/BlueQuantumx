@@ -1,23 +1,3 @@
-<script>
-    var MathJax = {
-        startup: {
-            typeset: false,
-            output: 'chtml'
-	},
-	tex: {
-		inlineMath: [
-        	['$', '$'],
-            ['\\(', '\\)']
-        ]
-	},
-    options: {
-    	enableMenu: false
-    }
-};
-</script>
-
-<script id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
-
 # Deepin 折腾笔记
 
 这个主要是记录一下折腾的详细条目，防止以后重装系统后忘掉。。。

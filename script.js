@@ -1,7 +1,7 @@
 var flag = false;
 
-var offsX = document.documentElement.clientWidth / 2;
-var offsY = document.documentElement.clientHeight / 2;
+var offsX = document.documentElement.clientWidth * 0.5;
+var offsY = document.documentElement.clientHeight * 0.5;
 var mainContainer = document.getElementsByTagName("main")[0];
 var sway = document.getElementById("sway");
 var topPanel = document.getElementById("top-panel");
@@ -11,21 +11,21 @@ function mouseMoveThrottle() {
   let previous = 0;
   return function (event) {
     let now = Date.now();
-    if (now - previous > 200) {
+    if (now - previous > 16) {
       if (flag == false)
         sway.style.transform = "translate(" + (event.pageX - offsX) * 0.1 + "px" + "," + (event.pageY - offsY) * 0.1 + "px)";
       previous = now;
     }
   }
 }
-// window.onmousemove = mouseMoveThrottle()
+window.onmousemove = mouseMoveThrottle()
 
 function scrollThrottle() {
   let previous = 0;
   return function () {
     let now = Date.now();
     if (now - previous > 16) {
-      if (document.documentElement.scrollTop < 0.01) {
+      if (document.documentElement.scrollTop < 0.001) {
         topPanel.style.boxShadow = "0 0 0 black";
       } else {
         topPanel.style.boxShadow = "0 0 8px rgba(0, 0, 0, 0.4)";
@@ -46,7 +46,6 @@ function scrollThrottle() {
     }
   }
 }
-
 window.onscroll = scrollThrottle()
 
 var gitalk = new Gitalk({
@@ -54,8 +53,8 @@ var gitalk = new Gitalk({
 
   clientSecret: 'eebc1a3b7a57db5c06cbd73445ef48622df0a6ee', //Client Secret
 
-  repo: 'MyBlogComments',//仓库名称
-  owner: 'Bluequarks',//仓库拥有者
+  repo: 'MyBlogComments', //仓库名称
+  owner: 'Bluequarks', //仓库拥有者
   admin: ['Bluequarks'],
   id: 'commentsTest',
   distractionFreeMode: false  // Facebook-like distraction free mode
@@ -68,7 +67,7 @@ function getArticle(Arts) {
   let make_html = '';
   for (let i in Arts) {
     let a = Arts[i];
-    make_html += '<a class="card artical" href="./Articles/Articles/' + a.path + '" target="_blank">' + a.name + '</a>';
+    make_html += `<a class="card artical" href="./Articles/Articles/${a.path}" target="_blank">${a.name}</a>`;
   }
   document.getElementById('articals').innerHTML = make_html;
 }
@@ -76,7 +75,7 @@ function getArticle(Arts) {
 function getFriendLinks(Friends) {
   for (let i = 0; i < Friends.length; ++i) {
     let f = Friends[i];
-    let str = '<a target=_"blank" href="' + f.href + '">' + f.name + "</a>";
+    let str = `<a target=_"blank" href="${f.href}">${f.name}</a>`;
     document.getElementById("links").innerHTML += str;
   }
 }

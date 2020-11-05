@@ -345,9 +345,121 @@ span.modal-close:hover, span.modal-close:focus { color: rgb(34, 34, 34); }
 .hljs-meta-string { color: rgb(77, 153, 191); }
 .hljs-emphasis { font-style: italic; }
 .hljs-strong { font-weight: bold; }
-.hljs-ln { border-collapse: collapse; }
-.hljs-ln td { padding: 0px; }
-.hljs-ln-n::before { content: attr(data-line-number); }
+.CtxtMenu_InfoClose { top: 0.2em; right: 0.2em; }
+.CtxtMenu_InfoContent { overflow: auto; text-align: left; font-size: 80%; padding: 0.4em 0.6em; border: 1px inset; margin: 1em 0px; max-height: 20em; max-width: 30em; background-color: rgb(238, 238, 238); white-space: normal; }
+.CtxtMenu_Info.CtxtMenu_MousePost { outline: none; }
+.CtxtMenu_Info { position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: rgb(221, 221, 221); color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0px; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; box-shadow: rgb(128, 128, 128) 0px 10px 20px; }
+.CtxtMenu_MenuClose { position: absolute; cursor: pointer; display: inline-block; border: 2px solid rgb(170, 170, 170); border-radius: 18px; font-family: "Courier New", Courier; font-size: 24px; color: rgb(240, 240, 240); }
+.CtxtMenu_MenuClose span { display: block; background-color: rgb(170, 170, 170); border: 1.5px solid; border-radius: 18px; line-height: 0; padding: 8px 0px 6px; }
+.CtxtMenu_MenuClose:hover { color: white !important; border: 2px solid rgb(204, 204, 204) !important; }
+.CtxtMenu_MenuClose:hover span { background-color: rgb(204, 204, 204) !important; }
+.CtxtMenu_MenuClose:hover:focus { outline: none; }
+.CtxtMenu_Menu { position: absolute; background-color: white; color: black; width: auto; padding: 5px 0px; border: 1px solid rgb(204, 204, 204); margin: 0px; cursor: default; font-style: normal; font-weight: normal; font-size: 16px; font-family: Arial; font-stretch: normal; font-variant: normal; text-align: left; text-indent: 0px; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 5px; box-shadow: rgb(128, 128, 128) 0px 10px 20px; }
+.CtxtMenu_MenuItem { padding: 1px 2em; background: transparent; }
+.CtxtMenu_MenuArrow { position: absolute; right: 0.5em; padding-top: 0.25em; color: rgb(102, 102, 102); font-family: null; font-size: 0.75em; }
+.CtxtMenu_MenuActive .CtxtMenu_MenuArrow { color: white; }
+.CtxtMenu_MenuArrow.CtxtMenu_RTL { left: 0.5em; right: auto; }
+.CtxtMenu_MenuCheck { position: absolute; left: 0.7em; font-family: null; }
+.CtxtMenu_MenuCheck.CtxtMenu_RTL { right: 0.7em; left: auto; }
+.CtxtMenu_MenuRadioCheck { position: absolute; left: 0.7em; }
+.CtxtMenu_MenuRadioCheck.CtxtMenu_RTL { right: 0.7em; left: auto; }
+.CtxtMenu_MenuInputBox { padding-left: 1em; right: 0.5em; color: rgb(102, 102, 102); font-family: null; }
+.CtxtMenu_MenuInputBox.CtxtMenu_RTL { left: 0.1em; }
+.CtxtMenu_MenuComboBox { left: 0.1em; padding-bottom: 0.5em; }
+.CtxtMenu_MenuSlider { left: 0.1em; }
+.CtxtMenu_SliderValue { position: absolute; right: 0.1em; padding-top: 0.25em; color: rgb(51, 51, 51); font-size: 0.75em; }
+.CtxtMenu_SliderBar { outline: none; background: rgb(211, 211, 211); }
+.CtxtMenu_MenuLabel { padding: 1px 2em 3px 1.33em; font-style: italic; }
+.CtxtMenu_MenuRule { border-top: 1px solid rgb(221, 221, 221); margin: 4px 3px; }
+.CtxtMenu_MenuDisabled { color: graytext; }
+.CtxtMenu_MenuActive { background-color: rgb(96, 104, 114); color: white; }
+.CtxtMenu_MenuDisabled:focus { background-color: rgb(232, 232, 232); }
+.CtxtMenu_MenuLabel:focus { background-color: rgb(232, 232, 232); }
+.CtxtMenu_ContextMenu:focus { outline: none; }
+.CtxtMenu_ContextMenu .CtxtMenu_MenuItem:focus { outline: none; }
+.CtxtMenu_SelectionMenu { position: relative; float: left; border-bottom: none; box-shadow: none; border-radius: 0px; }
+.CtxtMenu_SelectionItem { padding-right: 1em; }
+.CtxtMenu_Selection { right: 40%; width: 50%; }
+.CtxtMenu_SelectionBox { padding: 0em; max-height: 20em; max-width: none; background-color: rgb(255, 255, 255); }
+.CtxtMenu_SelectionDivider { clear: both; border-top: 2px solid rgb(0, 0, 0); }
+.CtxtMenu_Menu .CtxtMenu_MenuClose { top: -10px; left: -10px; }
+mjx-container[jax="CHTML"] { line-height: 0; }
+mjx-container [space="1"] { margin-left: 0.111em; }
+mjx-container [space="2"] { margin-left: 0.167em; }
+mjx-container [space="3"] { margin-left: 0.222em; }
+mjx-container [space="4"] { margin-left: 0.278em; }
+mjx-container [space="5"] { margin-left: 0.333em; }
+mjx-container [rspace="1"] { margin-right: 0.111em; }
+mjx-container [rspace="2"] { margin-right: 0.167em; }
+mjx-container [rspace="3"] { margin-right: 0.222em; }
+mjx-container [rspace="4"] { margin-right: 0.278em; }
+mjx-container [rspace="5"] { margin-right: 0.333em; }
+mjx-container [size="s"] { font-size: 70.7%; }
+mjx-container [size="ss"] { font-size: 50%; }
+mjx-container [size="Tn"] { font-size: 60%; }
+mjx-container [size="sm"] { font-size: 85%; }
+mjx-container [size="lg"] { font-size: 120%; }
+mjx-container [size="Lg"] { font-size: 144%; }
+mjx-container [size="LG"] { font-size: 173%; }
+mjx-container [size="hg"] { font-size: 207%; }
+mjx-container [size="HG"] { font-size: 249%; }
+mjx-container [width="full"] { width: 100%; }
+mjx-box { display: inline-block; }
+mjx-block { display: block; }
+mjx-itable { display: inline-table; }
+mjx-row { display: table-row; }
+mjx-row > * { display: table-cell; }
+mjx-mtext { display: inline-block; }
+mjx-mstyle { display: inline-block; }
+mjx-merror { display: inline-block; color: red; background-color: yellow; }
+mjx-mphantom { visibility: hidden; }
+mjx-assistive-mml { top: 0px; left: 0px; clip: rect(1px 1px 1px 1px); user-select: none; position: absolute !important; padding: 1px 0px 0px !important; border: 0px !important; display: block !important; width: auto !important; overflow: hidden !important; }
+mjx-assistive-mml[display="block"] { width: 100% !important; }
+mjx-c::before { display: block; width: 0px; }
+.MJX-TEX { font-family: MJXZERO, MJXTEX; }
+.TEX-B { font-family: MJXZERO, MJXTEX-B; }
+.TEX-I { font-family: MJXZERO, MJXTEX-I; }
+.TEX-MI { font-family: MJXZERO, MJXTEX-MI; }
+.TEX-BI { font-family: MJXZERO, MJXTEX-BI; }
+.TEX-S1 { font-family: MJXZERO, MJXTEX-S1; }
+.TEX-S2 { font-family: MJXZERO, MJXTEX-S2; }
+.TEX-S3 { font-family: MJXZERO, MJXTEX-S3; }
+.TEX-S4 { font-family: MJXZERO, MJXTEX-S4; }
+.TEX-A { font-family: MJXZERO, MJXTEX-A; }
+.TEX-C { font-family: MJXZERO, MJXTEX-C; }
+.TEX-CB { font-family: MJXZERO, MJXTEX-CB; }
+.TEX-FR { font-family: MJXZERO, MJXTEX-FR; }
+.TEX-FRB { font-family: MJXZERO, MJXTEX-FRB; }
+.TEX-SS { font-family: MJXZERO, MJXTEX-SS; }
+.TEX-SSB { font-family: MJXZERO, MJXTEX-SSB; }
+.TEX-SSI { font-family: MJXZERO, MJXTEX-SSI; }
+.TEX-SC { font-family: MJXZERO, MJXTEX-SC; }
+.TEX-T { font-family: MJXZERO, MJXTEX-T; }
+.TEX-V { font-family: MJXZERO, MJXTEX-V; }
+.TEX-VB { font-family: MJXZERO, MJXTEX-VB; }
+mjx-stretchy-v mjx-c, mjx-stretchy-h mjx-c { font-family: MJXZERO, MJXTEX-S1, MJXTEX-S4, MJXTEX, MJXTEX-A !important; }
+@font-face { font-family: MJXZERO; src: url("file:///home/bluequantum/.local/lib/MathJax-3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Zero.woff") format("woff"); }
+@font-face { font-family: MJXTEX; src: url("file:///home/bluequantum/.local/lib/MathJax-3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Main-Regular.woff") format("woff"); }
+@font-face { font-family: MJXTEX-B; src: url("file:///home/bluequantum/.local/lib/MathJax-3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Main-Bold.woff") format("woff"); }
+@font-face { font-family: MJXTEX-I; src: url("file:///home/bluequantum/.local/lib/MathJax-3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Math-Italic.woff") format("woff"); }
+@font-face { font-family: MJXTEX-MI; src: url("file:///home/bluequantum/.local/lib/MathJax-3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Main-Italic.woff") format("woff"); }
+@font-face { font-family: MJXTEX-BI; src: url("file:///home/bluequantum/.local/lib/MathJax-3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Math-BoldItalic.woff") format("woff"); }
+@font-face { font-family: MJXTEX-S1; src: url("file:///home/bluequantum/.local/lib/MathJax-3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Size1-Regular.woff") format("woff"); }
+@font-face { font-family: MJXTEX-S2; src: url("file:///home/bluequantum/.local/lib/MathJax-3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Size2-Regular.woff") format("woff"); }
+@font-face { font-family: MJXTEX-S3; src: url("file:///home/bluequantum/.local/lib/MathJax-3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Size3-Regular.woff") format("woff"); }
+@font-face { font-family: MJXTEX-S4; src: url("file:///home/bluequantum/.local/lib/MathJax-3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Size4-Regular.woff") format("woff"); }
+@font-face { font-family: MJXTEX-A; src: url("file:///home/bluequantum/.local/lib/MathJax-3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_AMS-Regular.woff") format("woff"); }
+@font-face { font-family: MJXTEX-C; src: url("file:///home/bluequantum/.local/lib/MathJax-3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Calligraphic-Regular.woff") format("woff"); }
+@font-face { font-family: MJXTEX-CB; src: url("file:///home/bluequantum/.local/lib/MathJax-3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Calligraphic-Bold.woff") format("woff"); }
+@font-face { font-family: MJXTEX-FR; src: url("file:///home/bluequantum/.local/lib/MathJax-3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Fraktur-Regular.woff") format("woff"); }
+@font-face { font-family: MJXTEX-FRB; src: url("file:///home/bluequantum/.local/lib/MathJax-3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Fraktur-Bold.woff") format("woff"); }
+@font-face { font-family: MJXTEX-SS; src: url("file:///home/bluequantum/.local/lib/MathJax-3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_SansSerif-Regular.woff") format("woff"); }
+@font-face { font-family: MJXTEX-SSB; src: url("file:///home/bluequantum/.local/lib/MathJax-3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_SansSerif-Bold.woff") format("woff"); }
+@font-face { font-family: MJXTEX-SSI; src: url("file:///home/bluequantum/.local/lib/MathJax-3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_SansSerif-Italic.woff") format("woff"); }
+@font-face { font-family: MJXTEX-SC; src: url("file:///home/bluequantum/.local/lib/MathJax-3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Script-Regular.woff") format("woff"); }
+@font-face { font-family: MJXTEX-T; src: url("file:///home/bluequantum/.local/lib/MathJax-3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Typewriter-Regular.woff") format("woff"); }
+@font-face { font-family: MJXTEX-V; src: url("file:///home/bluequantum/.local/lib/MathJax-3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Vector-Regular.woff") format("woff"); }
+@font-face { font-family: MJXTEX-VB; src: url("file:///home/bluequantum/.local/lib/MathJax-3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Vector-Bold.woff") format("woff"); }
 
     </style>
 
@@ -606,25 +718,7 @@ var highlightItemOnlyInOutline = function(id) {
         <div id="outline-content" class="section-nav"></div>
     </div>
     <div id="post-content" class="col-12 col-md-9 col-xl-10 py-md-3 pl-md-5 bd-content">
-    <script>
-    var MathJax = {
-        startup: {
-            typeset: false,
-            output: 'chtml'
-	},
-	tex: {
-		inlineMath: [
-        	['$', '$'],
-            ['\\(', '\\)']
-        ]
-	},
-    options: {
-    	enableMenu: false
-    }
-};
-</script>
-<script id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
-<h1 id="toc_0">Deepin 折腾笔记<a class="vnote-anchor" href="#toc_0" data-anchor-icon="#"></a></h1>
+    <h1 id="toc_0">Deepin 折腾笔记<a class="vnote-anchor" href="#toc_0" data-anchor-icon="#"></a></h1>
 <p>这个主要是记录一下折腾的详细条目，防止以后重装系统后忘掉。。。</p>
 <ul>
 <li>.vim 里的插件</li>
