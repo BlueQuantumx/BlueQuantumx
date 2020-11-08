@@ -1,5 +1,4 @@
 @charset "UTF-8";
-
 html {
   font-family: 'Segoe UI', 'Noto Sans CJK SC', 'Microsoft Yahei', sans-serif;
 }
@@ -27,11 +26,16 @@ h4 {
 main {
   box-sizing: border-box;
   min-height: 95vh;
-  height: fit-content;
   pointer-events: none;
-  padding: 5vh;
+  padding: 50px;
   opacity: 0;
   width: 100%;
+}
+
+.hori-flex {
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: row;
 }
 
 ::-webkit-scrollbar {
@@ -40,6 +44,7 @@ main {
 }
 
 ::-webkit-scrollbar-thumb {
+  border-radius: 5px;
   background-color: rgba(0, 0, 0, 0.2);
 }
 
@@ -189,18 +194,17 @@ nav>* {
 }
 
 .gt-comment-content {
-  overflow: visible;
   margin-right: 0;
 }
 
-#articals {
+#articles {
   display: flex;
-  width: 50%;
+  width: 60%;
   box-sizing: border-box;
   flex-direction: column;
 }
 
-.artical {
+.article {
   font-weight: 550;
   font-size: larger;
 }
@@ -219,17 +223,15 @@ nav>* {
 
 #gitalk-container {
   box-sizing: border-box;
-  width: 30%;
-  float: right;
+  width: 40%;
+  /* float: right; */
 }
 
 #right-part {
   box-sizing: border-box;
   position: sticky;
   top: 3em;
-  right: 1em;
-  width: 20%;
-  height: auto;
+  width: 15%;
   float: right;
 }
 
@@ -242,15 +244,24 @@ nav>* {
   content: '——';
 }
 
+footer {
+  padding: 20px;
+  position: relative;
+  color: white;
+  text-align: center;
+}
+
+footer>a {
+  color: white;
+}
+
 @keyframes cutin {
   from {
     opacity: 0;
-    -webkit-transform: translateY(35px);
     transform: translateY(35px);
   }
   to {
     opacity: 1;
-    -webkit-transform: translateY(0);
     transform: translateY(0);
   }
 }
@@ -258,12 +269,10 @@ nav>* {
 @keyframes cutout {
   from {
     opacity: 1;
-    -webkit-transform: translateY(0);
     transform: translateY(0px);
   }
   to {
     opacity: 0;
-    -webkit-transform: translateY(35px);
     transform: translateY(35px);
   }
 }
