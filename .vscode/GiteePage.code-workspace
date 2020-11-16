@@ -2,7 +2,18 @@
 	"folders": [
 		{
 			"path": ".."
+		},
+		{
+			"path": "../Articles"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"files.exclude": {
+			"**/_v*": true
+		},
+		"code-runner.clearPreviousOutput": true,
+		"code-runner.executorMapByFileExtension": {
+			".md": "pandoc --mathml $fileName -o ./Exports/$fileNameWithoutExt.html --template=../Resources/MyTemplate.html -M pagetitle=$fileNameWithoutExt"
+		}
+	}
 }

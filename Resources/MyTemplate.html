@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="author" content="BlueQuantum" />
+  <link rel="icon" type="image/png" sizes="512x512" href="../../Resources/blog.png" />
+  <link rel="stylesheet" type="text/css" href="../../Resources/ArticleTheme.css" />
+  <script id="MathJax-script" async="" src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.1.2/es5/mml-chtml.js"></script>
+  $if(date-meta)$
+  <meta name="dcterms.date" content="$date-meta$" />
+  $endif$
+  $if(keywords)$
+  <meta name="keywords" content="$for(keywords)$$keywords$$sep$, $endfor$" />
+  $endif$
+  <title>$pagetitle$</title>
+  <style type="text/css">
+    $if(quotes)$ q {
+      quotes: "“""”""‘""’";
+    }
+
+    $endif$
+  </style>
+  $for(header-includes)$
+  $header-includes$
+  $endfor$
+</head>
+
+<body id="write">
+  $for(include-before)$
+  $include-before$
+  $endfor$
+  $body$
+  $for(include-after)$
+  $include-after$
+  $endfor$
+</body>
+
+</html>
