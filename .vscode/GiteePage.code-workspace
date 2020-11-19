@@ -13,7 +13,15 @@
 		},
 		"code-runner.clearPreviousOutput": true,
 		"code-runner.executorMapByFileExtension": {
-			".md": "pandoc --mathml $fileName -o ./Exports/$fileNameWithoutExt.html --template=../Resources/MyTemplate.html -M pagetitle=$fileNameWithoutExt"
+			".md": "pandoc --mathjax $fileName -o ./Exports/$fileNameWithoutExt.html --template=../Resources/MyTemplate.html -M pagetitle=$fileNameWithoutExt"
+		},
+		"[markdown]": {
+			"editor.renderWhitespace": "all",
+			"editor.quickSuggestions": {
+				"other": true,
+				"comments": true,
+			},
+			"editor.acceptSuggestionOnEnter": "on"
 		}
 	}
 }

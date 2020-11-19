@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="author" content="BlueQuantum" />
+  <link rel="icon" type="image/png" sizes="512x512" href="../../Resources/blog.png" />
+  <link rel="stylesheet" type="text/css" href="../../Resources/ArticleTheme.css" />
+  <script src="../../Resources/ArticleJS.js"></script>
+  <script id="MathJax-script" async="" src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.1.2/es5/tex-chtml.js"></script>
+      <title>11-17模拟赛</title>
+  </head>
+
+<body id="write">
+    <h1 id="模拟赛">11-17模拟赛</h1>
+<h2 id="队伍统计">队伍统计</h2>
+<h3 id="题目描述">题目描述</h3>
+<p>现在有 <span class="math inline">\(n\)</span> 个人要排成一列，编号为 <span class="math inline">\(1 \rightarrow n\)</span> 。但由于一些不明原因的关系，人与人之间可能存在一些矛盾关系，具体有 <span class="math inline">\(m\)</span> 条矛盾关系 <span class="math inline">\((u, v)\)</span> ，表示编号为 <span class="math inline">\(u\)</span> 的人想要排在编号为 <span class="math inline">\(v\)</span> 的人前面。要使得队伍和谐，最多不能违背 <span class="math inline">\(k\)</span> 条矛盾关系（即不能有超过 <span class="math inline">\(k\)</span> 条矛盾关系 <span class="math inline">\((u, v)\)</span> ，满足最后 <span class="math inline">\(v\)</span> 排在了 <span class="math inline">\(u\)</span> 前面）。问有多少合法的排列。答案对 <span class="math inline">\(10^9+7\)</span> 取模。</p>
+<h3 id="题解">题解</h3>
+<p>状压DP</p>
+<button onclick="showCode('que')">
+显示代码
+</button>
+<div id="que" class="code">
+<div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><a class="sourceLine" id="cb1-1" title="1"><span class="pp">#include </span><span class="im">&lt;cstdio&gt;</span></a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="pp">#include </span><span class="im">&lt;algorithm&gt;</span></a>
+<a class="sourceLine" id="cb1-3" title="3"></a>
+<a class="sourceLine" id="cb1-4" title="4"><span class="dt">int</span> main() {</a>
+<a class="sourceLine" id="cb1-5" title="5">  <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb1-6" title="6">}</a></code></pre></div>
+</div>
+<h2 id="序列问题">序列问题</h2>
+<h3 id="题目描述-1">题目描述</h3>
+<p>给定一个长度为 <span class="math inline">\(n\)</span> 的序列 <span class="math inline">\(A\)</span>。定义 <span class="math inline">\(f(l, r)=max(a_l, a_{l+1}, a_{r-1}, q_r)\)</span>，<span class="math inline">\(g(l,r) =min(a_l, a_{l+1}, \cdots , a_r)\)</span>，希望你求出：</p>
+<p><span class="math display">\[
+\sum_{l=1}^n \sum_{r=l}^n f(l,r) \times g(l,r) \pmod {10^9+7}
+\]</span></p>
+<h3 id="题解-1">题解</h3>
+<p>序列问题还可以用分治考虑</p>
+<p>在每一层中，预处理一边的前/后缀最大/小值，再枚举一边维护两个指针 <span class="math inline">\(i, j\)</span> 向另一边扫，如果使区间的max/min改变就停下来统计，分三种情况讨论</p>
+<button onclick="showCode('seq')">
+显示代码
+</button>
+<div id="seq" class="code">
+<div class="sourceCode" id="cb2"><pre class="sourceCode cpp"><code class="sourceCode cpp"><a class="sourceLine" id="cb2-1" title="1"><span class="co">// Tags:</span></a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="pp">#include </span><span class="im">&lt;algorithm&gt;</span></a>
+<a class="sourceLine" id="cb2-3" title="3"><span class="pp">#include </span><span class="im">&lt;cctype&gt;</span></a>
+<a class="sourceLine" id="cb2-4" title="4"><span class="pp">#include </span><span class="im">&lt;cstdio&gt;</span></a>
+<a class="sourceLine" id="cb2-5" title="5"></a>
+<a class="sourceLine" id="cb2-6" title="6"><span class="kw">typedef</span> <span class="dt">long</span> <span class="dt">long</span> ll;</a>
+<a class="sourceLine" id="cb2-7" title="7"></a>
+<a class="sourceLine" id="cb2-8" title="8"><span class="kw">template</span> &lt;<span class="kw">typename</span> T&gt;</a>
+<a class="sourceLine" id="cb2-9" title="9"><span class="kw">inline</span> T &amp;read(T &amp;x) {</a>
+<a class="sourceLine" id="cb2-10" title="10">  x = <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb2-11" title="11">  <span class="dt">bool</span> f = <span class="kw">false</span>;</a>
+<a class="sourceLine" id="cb2-12" title="12">  <span class="dt">short</span> ch = getchar();</a>
+<a class="sourceLine" id="cb2-13" title="13">  <span class="cf">while</span> (!isdigit(ch)) {</a>
+<a class="sourceLine" id="cb2-14" title="14">    <span class="cf">if</span> (ch == <span class="ch">&#39;-&#39;</span>) f = <span class="kw">true</span>;</a>
+<a class="sourceLine" id="cb2-15" title="15">    ch = getchar();</a>
+<a class="sourceLine" id="cb2-16" title="16">  }</a>
+<a class="sourceLine" id="cb2-17" title="17">  <span class="cf">while</span> (isdigit(ch)) x = x * <span class="dv">10</span> + (ch ^ <span class="ch">&#39;0&#39;</span>), ch = getchar();</a>
+<a class="sourceLine" id="cb2-18" title="18">  <span class="cf">if</span> (f) x = -x;</a>
+<a class="sourceLine" id="cb2-19" title="19">  <span class="cf">return</span> x;</a>
+<a class="sourceLine" id="cb2-20" title="20">}</a>
+<a class="sourceLine" id="cb2-21" title="21"></a>
+<a class="sourceLine" id="cb2-22" title="22"><span class="at">const</span> <span class="dt">int</span> N = <span class="fl">5e5</span> + <span class="dv">5</span>, mod = <span class="fl">1e9</span> + <span class="dv">7</span>, inf = <span class="bn">0x3f3f3f3f</span>;</a>
+<a class="sourceLine" id="cb2-23" title="23"><span class="dt">int</span> n, ans, a[N];</a>
+<a class="sourceLine" id="cb2-24" title="24"></a>
+<a class="sourceLine" id="cb2-25" title="25"><span class="kw">inline</span> <span class="dt">void</span> add(<span class="dt">int</span> &amp;x, <span class="dt">int</span> y) {</a>
+<a class="sourceLine" id="cb2-26" title="26">  <span class="cf">if</span> ((x += y) &gt;= mod) x -= mod;</a>
+<a class="sourceLine" id="cb2-27" title="27">}</a>
+<a class="sourceLine" id="cb2-28" title="28"></a>
+<a class="sourceLine" id="cb2-29" title="29"><span class="dt">void</span> solve(<span class="dt">int</span> l, <span class="dt">int</span> r) {</a>
+<a class="sourceLine" id="cb2-30" title="30">  <span class="cf">if</span> (l == r) <span class="cf">return</span> add(ans, (ll)a[l] * a[l] % mod);</a>
+<a class="sourceLine" id="cb2-31" title="31">  <span class="at">static</span> <span class="dt">int</span> minl[N], maxl[N];</a>
+<a class="sourceLine" id="cb2-32" title="32">  <span class="at">static</span> ll summin[N], summax[N], sumans[N];</a>
+<a class="sourceLine" id="cb2-33" title="33">  <span class="dt">int</span> mid = (l + r) &gt;&gt; <span class="dv">1</span>;</a>
+<a class="sourceLine" id="cb2-34" title="34">  minl[mid + <span class="dv">1</span>] = inf, maxl[mid + <span class="dv">1</span>] = -inf,</a>
+<a class="sourceLine" id="cb2-35" title="35">  sumans[mid + <span class="dv">1</span>] = summax[mid + <span class="dv">1</span>] = summin[mid + <span class="dv">1</span>] = <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb2-36" title="36">  <span class="cf">for</span> (<span class="dt">int</span> i = mid; i &gt;= l; --i) {</a>
+<a class="sourceLine" id="cb2-37" title="37">    minl[i] = <span class="bu">std::</span>min(minl[i + <span class="dv">1</span>], a[i]);</a>
+<a class="sourceLine" id="cb2-38" title="38">    maxl[i] = <span class="bu">std::</span>max(maxl[i + <span class="dv">1</span>], a[i]);</a>
+<a class="sourceLine" id="cb2-39" title="39">    summin[i] = (summin[i + <span class="dv">1</span>] + minl[i]) % mod;</a>
+<a class="sourceLine" id="cb2-40" title="40">    summax[i] = (summax[i + <span class="dv">1</span>] + maxl[i]) % mod;</a>
+<a class="sourceLine" id="cb2-41" title="41">    sumans[i] = (sumans[i + <span class="dv">1</span>] + maxl[i] * minl[i] % mod) % mod;</a>
+<a class="sourceLine" id="cb2-42" title="42">  }</a>
+<a class="sourceLine" id="cb2-43" title="43"></a>
+<a class="sourceLine" id="cb2-44" title="44">  <span class="cf">for</span> (<span class="dt">int</span> i = mid + <span class="dv">1</span>, rmin = inf, rmax = -inf, j = mid, k = mid; i &lt;= r; ++i) {</a>
+<a class="sourceLine" id="cb2-45" title="45">    rmax = <span class="bu">std::</span>max(a[i], rmax);</a>
+<a class="sourceLine" id="cb2-46" title="46">    rmin = <span class="bu">std::</span>min(a[i], rmin);</a>
+<a class="sourceLine" id="cb2-47" title="47">    <span class="cf">while</span> (j &gt;= l &amp;&amp; maxl[j] &lt; rmax) --j;</a>
+<a class="sourceLine" id="cb2-48" title="48">    <span class="cf">while</span> (k &gt;= l &amp;&amp; minl[k] &gt; rmin) --k;</a>
+<a class="sourceLine" id="cb2-49" title="49">    <span class="cf">if</span> (j &gt; k)</a>
+<a class="sourceLine" id="cb2-50" title="50">      add(ans, ((ll)(mid - j) * rmax % mod * rmin % mod +</a>
+<a class="sourceLine" id="cb2-51" title="51">                rmin * (summax[k + <span class="dv">1</span>] - summax[j + <span class="dv">1</span>]) % mod + sumans[l] -</a>
+<a class="sourceLine" id="cb2-52" title="52">                sumans[k + <span class="dv">1</span>]) %</a>
+<a class="sourceLine" id="cb2-53" title="53">                   mod);</a>
+<a class="sourceLine" id="cb2-54" title="54">    <span class="cf">else</span></a>
+<a class="sourceLine" id="cb2-55" title="55">      add(ans, ((ll)(mid - k) * rmax % mod * rmin % mod +</a>
+<a class="sourceLine" id="cb2-56" title="56">                rmax * (summin[j + <span class="dv">1</span>] - summin[k + <span class="dv">1</span>]) % mod + sumans[l] -</a>
+<a class="sourceLine" id="cb2-57" title="57">                sumans[j + <span class="dv">1</span>]) %</a>
+<a class="sourceLine" id="cb2-58" title="58">                   mod);</a>
+<a class="sourceLine" id="cb2-59" title="59">  }</a>
+<a class="sourceLine" id="cb2-60" title="60"></a>
+<a class="sourceLine" id="cb2-61" title="61">  solve(l, mid);</a>
+<a class="sourceLine" id="cb2-62" title="62">  solve(mid + <span class="dv">1</span>, r);</a>
+<a class="sourceLine" id="cb2-63" title="63">}</a>
+<a class="sourceLine" id="cb2-64" title="64"></a>
+<a class="sourceLine" id="cb2-65" title="65"><span class="dt">int</span> main() {</a>
+<a class="sourceLine" id="cb2-66" title="66"><span class="pp">#ifndef ONLINE_JUDGE</span></a>
+<a class="sourceLine" id="cb2-67" title="67"><span class="pp">#ifdef LOCAL</span></a>
+<a class="sourceLine" id="cb2-68" title="68">  freopen64(<span class="st">&quot;/tmp/CodeTmp/testdata.in&quot;</span>, <span class="st">&quot;r&quot;</span>, stdin);</a>
+<a class="sourceLine" id="cb2-69" title="69">  freopen64(<span class="st">&quot;/tmp/CodeTmp/testdata.out&quot;</span>, <span class="st">&quot;w&quot;</span>, stdout);</a>
+<a class="sourceLine" id="cb2-70" title="70"><span class="pp">#else</span></a>
+<a class="sourceLine" id="cb2-71" title="71">  freopen(<span class="st">&quot;seq.in&quot;</span>, <span class="st">&quot;r&quot;</span>, stdin);</a>
+<a class="sourceLine" id="cb2-72" title="72">  freopen(<span class="st">&quot;seq.out&quot;</span>, <span class="st">&quot;w&quot;</span>, stdout);</a>
+<a class="sourceLine" id="cb2-73" title="73"><span class="pp">#endif</span></a>
+<a class="sourceLine" id="cb2-74" title="74"><span class="pp">#endif</span></a>
+<a class="sourceLine" id="cb2-75" title="75"></a>
+<a class="sourceLine" id="cb2-76" title="76">  read(n);</a>
+<a class="sourceLine" id="cb2-77" title="77">  <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">1</span>; i &lt;= n; ++i) read(a[i]);</a>
+<a class="sourceLine" id="cb2-78" title="78">  solve(<span class="dv">1</span>, n);</a>
+<a class="sourceLine" id="cb2-79" title="79">  printf(<span class="st">&quot;</span><span class="sc">%d</span><span class="st">&quot;</span>, ans);</a>
+<a class="sourceLine" id="cb2-80" title="80">  <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb2-81" title="81">}</a></code></pre></div>
+</div>
+<h2 id="带权排序">带权排序</h2>
+<p>/kk 先去改S2OJ上的题了，咕咕咕</p>
+  </body>
+
+</html>

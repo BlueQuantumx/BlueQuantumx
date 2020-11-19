@@ -7,11 +7,9 @@
   <meta name="author" content="BlueQuantum" />
   <link rel="icon" type="image/png" sizes="512x512" href="../../Resources/blog.png" />
   <link rel="stylesheet" type="text/css" href="../../Resources/ArticleTheme.css" />
-  <script id="MathJax-script" async="" src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.1.2/es5/mml-chtml.js"></script>
+  <script src="../../Resources/ArticleJS.js"></script>
+  <script id="MathJax-script" async="" src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.1.2/es5/tex-chtml.js"></script>
       <title>10-28模拟赛</title>
-  <style type="text/css">
-    
-  </style>
   </head>
 
 <body id="write">
@@ -24,27 +22,27 @@
 <p>具体来讲，每次rotate实际只影响两个点的子树和，以中序遍历为下标用线段树维护区间积，每次rotate单点修改，区间查询。</p>
 <h2 id="进化序列">「进化序列」</h2>
 <h3 id="题目描述-1">题目描述</h3>
-<p>Abathur 采集了一系列 Primal Zerg 的基因样本，这些基因构成了一个完整的进化链。为了方便，我们用 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>A</mi><mn>0</mn></msub><mo>,</mo><msub><mi>A</mi><mn>1</mn></msub><mo>,</mo><mi>⋯</mi><mo>,</mo><msub><mi>A</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">A_0,A_1,\cdots,A_{n-1}</annotation></semantics></math> 这 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math> 个正整数描述它们。 一个基因 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>A</mi><mi>x</mi></msub><annotation encoding="application/x-tex">A_x</annotation></semantics></math> 可以进化为序列中在它之后的基因 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>A</mi><mi>y</mi></msub><annotation encoding="application/x-tex">A_y</annotation></semantics></math> 。这个进化的复杂度，等于 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>A</mi><mi>x</mi></msub><mo stretchy="false" form="prefix">|</mo><msub><mi>A</mi><mrow><mi>x</mi><mo>+</mo><mn>1</mn></mrow></msub><mo stretchy="false" form="prefix">|</mo><mi>⋯</mi><mo stretchy="false" form="prefix">|</mo><msub><mi>A</mi><mrow><mi>y</mi><mo>−</mo><mn>1</mn></mrow></msub><mo stretchy="false" form="prefix">|</mo><msub><mi>A</mi><mi>y</mi></msub></mrow><annotation encoding="application/x-tex">A_x|A_{x+1}|\cdots|A_{y-1}|A_y</annotation></semantics></math> 的值，其中 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo stretchy="false" form="prefix">|</mo><annotation encoding="application/x-tex">|</annotation></semantics></math> 是二进制或运算。 Abathur 认为复杂度小于 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>M</mi><annotation encoding="application/x-tex">M</annotation></semantics></math> 的进化的被认为是温和的。它希望计算出温和的进化的对数。</p>
+<p>Abathur 采集了一系列 Primal Zerg 的基因样本，这些基因构成了一个完整的进化链。为了方便，我们用 <span class="math inline">\(A_0,A_1,\cdots,A_{n-1}\)</span> 这 <span class="math inline">\(n\)</span> 个正整数描述它们。 一个基因 <span class="math inline">\(A_x\)</span> 可以进化为序列中在它之后的基因 <span class="math inline">\(A_y\)</span> 。这个进化的复杂度，等于 <span class="math inline">\(A_x|A_{x+1}|\cdots|A_{y-1}|A_y\)</span> 的值，其中 <span class="math inline">\(|\)</span> 是二进制或运算。 Abathur 认为复杂度小于 <span class="math inline">\(M\)</span> 的进化的被认为是温和的。它希望计算出温和的进化的对数。</p>
 <h3 id="题解-1">题解</h3>
 <p>做法其实很多，这里采用了来自 <a href="https://stdquantum.gitee.io">STDquantum</a> 的ST表+二分的做法。</p>
-<p>用ST表做到 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">O(1)</annotation></semantics></math> 查询区间或，枚举每个右端点，二分最靠左的可行端点统计答案。</p>
+<p>用ST表做到 <span class="math inline">\(O(1)\)</span> 查询区间或，枚举每个右端点，二分最靠左的可行端点统计答案。</p>
 <h2 id="饥饿的小鸟">「饥饿的小鸟」</h2>
 <h3 id="题目描述-2">题目描述</h3>
-<p>一群饥饿的小鸟，要到河对岸吃东西。河的宽度为 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>N</mi><annotation encoding="application/x-tex">N</annotation></semantics></math> 米，小鸟每飞行 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>L</mi><annotation encoding="application/x-tex">L</annotation></semantics></math> 米就必须在一片荷叶上休息一下，才能够继续飞行。当然，小鸟们也可以选择没飞够 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>L</mi><annotation encoding="application/x-tex">L</annotation></semantics></math> 米就先休息一下，但不能一次飞超过 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>L</mi><annotation encoding="application/x-tex">L</annotation></semantics></math> 米。距离小鸟们出发的河岸一侧距离为 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math> 的荷叶共有 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>A</mi><mi>i</mi></msub><annotation encoding="application/x-tex">A_i</annotation></semantics></math> 片，每片荷叶在有小鸟停于上方休息后，就会沉入水底，不能够再供其他小鸟休息。现在想要知道，至多有多少只小鸟能够抵达对岸。</p>
+<p>一群饥饿的小鸟，要到河对岸吃东西。河的宽度为 <span class="math inline">\(N\)</span> 米，小鸟每飞行 <span class="math inline">\(L\)</span> 米就必须在一片荷叶上休息一下，才能够继续飞行。当然，小鸟们也可以选择没飞够 <span class="math inline">\(L\)</span> 米就先休息一下，但不能一次飞超过 <span class="math inline">\(L\)</span> 米。距离小鸟们出发的河岸一侧距离为 <span class="math inline">\(i\)</span> 的荷叶共有 <span class="math inline">\(A_i\)</span> 片，每片荷叶在有小鸟停于上方休息后，就会沉入水底，不能够再供其他小鸟休息。现在想要知道，至多有多少只小鸟能够抵达对岸。</p>
 <h3 id="题解-2">题解</h3>
 <p>贪心乱搞。一只鸟一定跳到能跳到的最远的地方最优。注意实现的时候要一堆一堆的跳。</p>
 <h2 id="旅行">「旅行」</h2>
 <h3 id="题目描述-3">题目描述</h3>
-<p>给定一棵树。将1号节点作为整棵树的根。 每个节点有一个旅游热度 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>A</mi><mi>i</mi></msub><annotation encoding="application/x-tex">A_i</annotation></semantics></math> 和影响力 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>D</mi><mi>i</mi></msub><annotation encoding="application/x-tex">D_i</annotation></semantics></math> 。每个节点设置了一个向往值 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>f</mi><mi>i</mi></msub><annotation encoding="application/x-tex">f_i</annotation></semantics></math> ，它等于所有的 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>A</mi><mi>j</mi></msub><annotation encoding="application/x-tex">A_j</annotation></semantics></math> 之和，满足 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math> 点在 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>j</mi><annotation encoding="application/x-tex">j</annotation></semantics></math> 点向根节点走 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>D</mi><mi>j</mi></msub><annotation encoding="application/x-tex">D_j</annotation></semantics></math> 步的路径上（经过一条边算一步，<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>=</mo><mi>j</mi></mrow><annotation encoding="application/x-tex">i=j</annotation></semantics></math> 也会 被统计，如果 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>D</mi><mi>j</mi></msub><annotation encoding="application/x-tex">D_j</annotation></semantics></math> 步超过了根节点，则超出部分不用管）。每条边将有一定的概率出现。现在他有 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Q</mi><annotation encoding="application/x-tex">Q</annotation></semantics></math> 个询问，每次询问某个节点所在的联通块中所有节点的 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>f</mi><mi>i</mi></msub><annotation encoding="application/x-tex">f_i</annotation></semantics></math> 值的和的平方的期望（对998244353取模）</p>
+<p>给定一棵树。将1号节点作为整棵树的根。 每个节点有一个旅游热度 <span class="math inline">\(A_i\)</span> 和影响力 <span class="math inline">\(D_i\)</span> 。每个节点设置了一个向往值 <span class="math inline">\(f_i\)</span> ，它等于所有的 <span class="math inline">\(A_j\)</span> 之和，满足 <span class="math inline">\(i\)</span> 点在 <span class="math inline">\(j\)</span> 点向根节点走 <span class="math inline">\(D_j\)</span> 步的路径上（经过一条边算一步，<span class="math inline">\(i=j\)</span> 也会 被统计，如果 <span class="math inline">\(D_j\)</span> 步超过了根节点，则超出部分不用管）。每条边将有一定的概率出现。现在他有 <span class="math inline">\(Q\)</span> 个询问，每次询问某个节点所在的联通块中所有节点的 <span class="math inline">\(f_i\)</span> 值的和的平方的期望（对998244353取模）</p>
 <h3 id="题解-3">题解</h3>
-<p>第一步先求出每个点的 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>f</mi><mi>i</mi></msub><annotation encoding="application/x-tex">f_i</annotation></semantics></math> ，这个可以用栈维护一个点到根路径上的所有点，树上差分一下就好了。 第二步考虑求期望，先考虑以1为根，树形DP一下</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>E</mi><mi>x</mi></msub><mo>=</mo><munder><mo>∑</mo><mrow><mi>v</mi><mo>∈</mo><mi>s</mi><mi>o</mi><msub><mi>n</mi><mi>x</mi></msub></mrow></munder><msub><mi>E</mi><mi>v</mi></msub><mo>⋅</mo><mi>w</mi></mrow><annotation encoding="application/x-tex">
+<p>第一步先求出每个点的 <span class="math inline">\(f_i\)</span> ，这个可以用栈维护一个点到根路径上的所有点，树上差分一下就好了。 第二步考虑求期望，先考虑以1为根，树形DP一下</p>
+<p><span class="math display">\[
 E_x = \sum_{v \in son_x} E_v \cdot w
-</annotation></semantics></math></p>
+\]</span></p>
 <p>最后换根DP一下，平方的话套公式就好了</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>E</mi><msup><mrow><mi>x</mi><mo>+</mo><mi>v</mi></mrow><mn>2</mn></msup></msub><mo>=</mo><msub><mi>E</mi><msup><mi>x</mi><mn>2</mn></msup></msub><mo>+</mo><msub><mi>E</mi><msup><mi>v</mi><mn>2</mn></msup></msub><mo>+</mo><mn>2</mn><msub><mi>E</mi><mi>x</mi></msub><msub><mi>E</mi><mi>v</mi></msub></mrow><annotation encoding="application/x-tex">
+<p><span class="math display">\[
 E_{{x+v}^2} = E_{x^2} + E_{v^2} + 2E_x E_v
-</annotation></semantics></math></p>
+\]</span></p>
   </body>
 
 </html>
