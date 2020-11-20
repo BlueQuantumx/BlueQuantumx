@@ -3,7 +3,6 @@ var flag = false;
 var offsX = document.documentElement.clientWidth * 0.5;
 var offsY = document.documentElement.clientHeight * 0.5;
 var mainContainer = document.getElementsByTagName("main")[0];
-var sway = document.getElementById("sway");
 var topPanel = document.getElementById("top-panel");
 var height = document.documentElement.clientHeight;
 
@@ -13,12 +12,13 @@ function mouseMoveThrottle() {
     let now = Date.now();
     if (now - previous > 16) {
       if (flag == false)
-        sway.style.transform = "translate(" + (event.pageX - offsX) * 0.1 + "px" + "," + (event.pageY - offsY) * 0.1 + "px)";
+        sway.style.transform = "translate3D(" + (event.pageX - offsX) * 0.1 + "px" + "," + (event.pageY - offsY) * 0.1 + "px, 0px)";
       previous = now;
     }
   }
 }
-window.onmousemove = mouseMoveThrottle()
+
+document.getElementById("index-show").onmousemove = mouseMoveThrottle();
 
 function scrollThrottle() {
   let previous = 0;
@@ -28,7 +28,7 @@ function scrollThrottle() {
       if (document.documentElement.scrollTop < 0.001) {
         topPanel.style.boxShadow = "0 0 0 black";
       } else {
-        topPanel.style.boxShadow = "0 0 8px rgba(0, 0, 0, 0.4)";
+        topPanel.style.boxShadow = "0 0 15px rgba(0, 0, 0, 0.4)";
       }
       if (flag == false && document.documentElement.scrollTop > height * 0.75) {
         mainContainer.style.animation = "cutin 1s ease";

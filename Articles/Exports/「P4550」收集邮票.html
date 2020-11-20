@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="author" content="BlueQuantum" />
+  <link rel="icon" type="image/png" sizes="512x512" href="../../Resources/blog.png" />
+  <link rel="stylesheet" type="text/css" href="../../Resources/ArticleTheme.css" />
+  <script src="../../Resources/ArticleJS.js"></script>
+  <script id="MathJax-script" async="" src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.1.2/es5/tex-chtml.js"></script>
+      <title>「P4550」收集邮票</title>
+  </head>
+
+<body id="write">
+    <h1 id="p4550-收集邮票">「P4550」 收集邮票</h1>
+<p>​一眼看上去就是期望 DP，然而蒟蒻不会，在同机房神仙讲解下豁然开朗，于是写篇题解。</p>
+<h2 id="solution">Solution</h2>
+<p>​直接设期望买完的钱数不很好搞，因为每次买邮票所需的钱数是随购买次数变化的，所以我们绕个路</p>
+<p>​设 <span class="math inline">\(f_i\)</span> 表示已经买到 <span class="math inline">\(i\)</span> <strong>种</strong>邮票，若要买完剩下的邮票还需买多少<strong>次</strong>，转移如下：</p>
+<p><span class="math display">\[
+f_i = \frac i n f_i + \frac {n-i} n f_{i+1} + 1
+\]</span></p>
+<p>​初始状态是 <span class="math inline">\(f_n = 0\)</span> ，<span class="math inline">\(\frac i n f_i\)</span> 含义是你有 <span class="math inline">\(\frac i n\)</span> 的概率买到已经买到的 <span class="math inline">\(i\)</span> 种邮票之一，状态仍然是 <span class="math inline">\(f_i\)</span> ， <span class="math inline">\(\frac {n-i} n f_{i+1}\)</span> 含义是你有 <span class="math inline">\(\frac {n-i} n\)</span> 的概率买到还没买到的 <span class="math inline">\(n - i\)</span> 种邮票之一，状态是 <span class="math inline">\(f_{i+1}\)</span> ，最后在加上这次买的一次贡献。</p>
+<p>​再设 <span class="math inline">\(g_i\)</span> 表示已经买到 <span class="math inline">\(i\)</span> <strong>种</strong>邮票，若要买完剩下的邮票还需买多少<strong>钱</strong>，转移如下：</p>
+<p><span class="math display">\[
+g_i = \frac i n (g_i + f_i + 1) + \frac {n-i} n (g_{i+1} + f_{i+1} + 1)
+\]</span></p>
+<p>​初始状态是 <span class="math inline">\(g_n = 0\)</span> ，仍然很好想。那 <span class="math inline">\(\frac i n (g_i + f_i + 1)\)</span> 是什么意思呢？放图镇楼：</p>
+<p><img src="https://cdn.luogu.com.cn/upload/image_hosting/z98xu37p.png" /></p>
+<p>​里面加的那个 <span class="math inline">\(f_i + 1\)</span> 其实就是给后面的每一次购买都+1，因为当你这次购买后，比如后面的某次是原来是第 <span class="math inline">\(h\)</span> 次，现在就是第 <span class="math inline">\(h + 1\)</span> 次，价格+1，那么后面有几次购买呢？就是 <span class="math inline">\(f_i\)</span> 次，最后别忘了你这第 <span class="math inline">\(i\)</span> 次也要+1。 <span class="math inline">\(\frac {n-i} n (g_{i+1} + f_{i+1} + 1)\)</span> 同理。</p>
+<p>最后，把 <span class="math inline">\(f_i, g_i\)</span> 移项化简一下就好了：</p>
+<p><span class="math display">\[
+f_i = f_{i+1} + \frac n {n-i} \\
+g_i = \frac i {n-i} f_i + g_{i+1} + f_{i+1} + \frac n {n-i}
+\]</span></p>
+<p>Talk is cheap, show me your code:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><a class="sourceLine" id="cb1-1" title="1"><span class="pp">#include </span><span class="im">&lt;cstdio&gt;</span></a>
+<a class="sourceLine" id="cb1-2" title="2"></a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="at">const</span> <span class="dt">int</span> N = <span class="dv">10005</span>;</a>
+<a class="sourceLine" id="cb1-4" title="4"><span class="dt">int</span> n;</a>
+<a class="sourceLine" id="cb1-5" title="5"><span class="dt">double</span> f[N], g[N];</a>
+<a class="sourceLine" id="cb1-6" title="6"></a>
+<a class="sourceLine" id="cb1-7" title="7"><span class="dt">int</span> main() {</a>
+<a class="sourceLine" id="cb1-8" title="8"><span class="pp">#ifndef ONLINE_JUDGE</span></a>
+<a class="sourceLine" id="cb1-9" title="9"><span class="pp">#ifdef LOCAL</span></a>
+<a class="sourceLine" id="cb1-10" title="10">  freopen(<span class="st">&quot;testdata.in&quot;</span>, <span class="st">&quot;r&quot;</span>, stdin);</a>
+<a class="sourceLine" id="cb1-11" title="11">  freopen(<span class="st">&quot;testdata.out&quot;</span>, <span class="st">&quot;w&quot;</span>, stdout);</a>
+<a class="sourceLine" id="cb1-12" title="12"><span class="pp">#endif</span></a>
+<a class="sourceLine" id="cb1-13" title="13"><span class="pp">#ifndef LOCAL</span></a>
+<a class="sourceLine" id="cb1-14" title="14">  freopen(<span class="st">&quot;CppTest.in&quot;</span>, <span class="st">&quot;r&quot;</span>, stdin);</a>
+<a class="sourceLine" id="cb1-15" title="15">  freopen(<span class="st">&quot;CppTest.out&quot;</span>, <span class="st">&quot;w&quot;</span>, stdout);</a>
+<a class="sourceLine" id="cb1-16" title="16"><span class="pp">#endif</span></a>
+<a class="sourceLine" id="cb1-17" title="17"><span class="pp">#endif</span></a>
+<a class="sourceLine" id="cb1-18" title="18"></a>
+<a class="sourceLine" id="cb1-19" title="19">  scanf(<span class="st">&quot;</span><span class="sc">%d</span><span class="st">&quot;</span>, &amp;n);</a>
+<a class="sourceLine" id="cb1-20" title="20">  <span class="cf">for</span> (<span class="dt">int</span> i = n - <span class="dv">1</span>; ~i; --i) {</a>
+<a class="sourceLine" id="cb1-21" title="21">    f[i] = f[i + <span class="dv">1</span>] + <span class="fl">1.0</span> * n / (n - i);</a>
+<a class="sourceLine" id="cb1-22" title="22">  }</a>
+<a class="sourceLine" id="cb1-23" title="23">  <span class="cf">for</span> (<span class="dt">int</span> i = n - <span class="dv">1</span>; ~i; --i) {</a>
+<a class="sourceLine" id="cb1-24" title="24">    g[i] = <span class="fl">1.0</span> * i / (n - i) * f[i] + g[i + <span class="dv">1</span>] + f[i + <span class="dv">1</span>] + <span class="fl">1.0</span> * n / (n - i);</a>
+<a class="sourceLine" id="cb1-25" title="25">  }</a>
+<a class="sourceLine" id="cb1-26" title="26">  printf(<span class="st">&quot;%.2lf&quot;</span>, g[<span class="dv">0</span>]);</a>
+<a class="sourceLine" id="cb1-27" title="27">  <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb1-28" title="28">}</a></code></pre></div>
+  </body>
+
+</html>

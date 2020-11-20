@@ -1,1075 +1,176 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-cmn-Hans">
+
 <head>
-    <meta charset="utf-8">
-    <meta name="generator" content="VNote">
-
-    <title>ExLucas</title>
-    <link rel="icon" href="https://github.com/tamlok/vnote/raw/master/src/resources/icons/vnote.ico">
-
-    <style type="text/css">
-    /* STYLE_GLOBAL_PLACE_HOLDER */
-    </style>
-
-    <style type="text/css">
-    *,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-.container-fluid {
-    width: 100%;
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto;
-}
-
-.col, .col-1, .col-10, .col-11, .col-12, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-auto, .col-lg, .col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-auto, .col-md, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-auto, .col-sm, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-auto, .col-xl, .col-xl-1, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-auto {
-    position: relative;
-    width: 100%;
-    min-height: 1px;
-    padding-right: 15px;
-    padding-left: 15px;
-}
-
-.col-12 {
-    -webkit-box-flex: 0;
-    -ms-flex: 0 0 100%;
-    flex: 0 0 100%;
-    max-width: 100%;
-}
-
-@media (min-width: 768px) {
-    .col-md-3 {
-        -webkit-box-flex: 0;
-        -ms-flex: 0 0 25%;
-        flex: 0 0 25%;
-        max-width: 25%;
-    }
-}
-
-@media (min-width: 768px) {
-    .col-md-9 {
-        -webkit-box-flex: 0;
-        -ms-flex: 0 0 75%;
-        flex: 0 0 75%;
-        max-width: 75%;
-    }
-}
-
-@media (min-width: 1200px) {
-    .col-xl-2 {
-        -webkit-box-flex: 0;
-        -ms-flex: 0 0 16.666667%;
-        flex: 0 0 16.666667%;
-        max-width: 16.666667%;
-    }
-}
-
-@media (min-width: 1200px) {
-    .col-xl-10 {
-        -webkit-box-flex: 0;
-        -ms-flex: 0 0 83.333333%;
-        flex: 0 0 83.333333%;
-        max-width: 83.333333%;
-    }
-}
-
-@media (min-width: 768px) {
-    .pt-md-3, .py-md-3 {
-        padding-top: 1rem!important;
-    }
-}
-
-@media (min-width: 768px) {
-    .pb-md-3, .py-md-3 {
-        padding-bottom: 1rem!important;
-    }
-}
-
-@media (min-width: 768px) {
-    .pl-md-5, .px-md-5 {
-        padding-left: 3rem!important;
-    }
-}
-
-.d-none {
-    display: none!important;
-}
-
-@media (min-width: 1200px) {
-    .d-xl-block {
-        display: block!important;
-    }
-}
-
-@media (min-width: 768px) {
-    .d-md-block {
-        display: block!important;
-    }
-}
-
-.bd-content {
-    -webkit-box-ordinal-group: 1;
-    -ms-flex-order: 0;
-    order: 0;
-}
-
-.bd-toc {
-    position: -webkit-sticky;
-    position: sticky;
-    top: 4rem;
-    height: calc(100vh - 10rem);
-    overflow-y: auto;
-}
-
-.bd-toc {
-    -webkit-box-ordinal-group: 2;
-    -ms-flex-order: 1;
-    order: 1;
-    padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
-    font-size: .875rem;
-}
-
-.section-nav {
-    padding-left: 0;
-}
-
-.section-nav ul {
-    font-size: .875rem;
-    list-style-type: none;
-}
-
-.section-nav li {
-    font-size: .875rem;
-}
-
-.section-nav a {
-    color: inherit !important;
-}
-
-.row {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
-    margin-right: -15px;
-    margin-left: -15px;
-}
-
-@media (min-width: 1200px) {
-    .flex-xl-nowrap {
-        flex-wrap: nowrap !important;
-    }
-}
-
-#floating-button {
-    width: 2.5rem;
-    height: 2.5rem;
-    border-radius: 50%;
-    background: #00897B;
-    position: fixed;
-    top: .5rem;
-    right: .5rem;
-    cursor: pointer;
-    box-shadow: 0px 2px 5px #666;
-}
-
-#floating-button .more {
-    color: #F5F5F5;
-    position: absolute;
-    top: 0;
-    display: block;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    text-align: center;
-    padding: 0;
-    margin: 0;
-    line-height: 2.5rem;
-    font-size: 2rem;
-    font-family: 'monospace';
-    font-weight: 300;
-}
-
-.hide-none {
-    display: none !important;
-}
-
-.col-expand {
-    -webkit-box-flex: 0;
-    -ms-flex: 0 0 100% !important;
-    flex: 0 0 100% !important;
-    max-width: 100% !important;
-    padding-right: 3rem !important;
-}
-
-.outline-bold {
-    font-weight: bolder !important;
-}
-
-@media print {
-    #floating-button {
-        display: none !important;
-    }
-}
-
-    @keyframes flash { 
-  0% { color: rgb(128, 203, 196); }
-  10% { color: rgb(0, 137, 123); }
-  40% { color: rgb(0, 137, 123); }
-  50% { color: rgb(128, 203, 196); }
-  60% { color: rgb(0, 137, 123); }
-  90% { color: rgb(0, 137, 123); }
-}
-.highlighted-anchor { animation: flash 1s; }
-div.mark-rect { background: transparent; border: 5px solid rgb(87, 104, 196); border-radius: 2px; position: absolute; }
-#vnote-footer { width: 100%; text-align: center; opacity: 0.2; margin-top: 3rem; }
-#vnote-footer p { font-size: 0.8rem; }
-#vnote-footer a { color: inherit !important; }
-x-eqs { display: flex; flex-direction: row; align-content: space-between; align-items: center; }
-x-eqs > x-eqn { width: 100%; margin-left: 3rem; }
-x-eqs > span { text-align: right; }
-.view-image, .view-svg { transition: 0.3s; }
-.modal-box { display: none; position: fixed; z-index: 1000; padding-top: 50px; left: 0px; top: 0px; width: 100%; height: 100%; overflow: hidden; background-color: rgba(68, 68, 68, 0.952941); }
-.modal-content { margin: auto; display: block; width: auto; height: auto; cursor: move; }
-.modal-content { animation-name: zoom; animation-duration: 0.6s; }
-@-webkit-keyframes zoom { 
-  0% { transform: scale(0); }
-  100% { transform: scale(1); }
-}
-@keyframes zoom { 
-  0% { transform: scale(0); }
-  100% { transform: scale(1); }
-}
-span.modal-close { position: absolute; z-index: 1000; top: 15px; right: 35px; color: rgb(218, 218, 218); font-size: 40px; font-weight: bold; transition: 0.3s; }
-span.modal-close:hover, span.modal-close:focus { color: rgb(238, 238, 238); text-decoration: none; cursor: pointer; }
-@media print {
-  pre, pre code, td.hljs-ln-code { white-space: pre-wrap !important; word-break: break-all !important; }
-  code, a { word-break: break-all !important; }
-  div.flowchart-diagram, div.mermaid-diagram, div.plantuml-diagram { overflow: hidden !important; }
-  img { max-width: 100% !important; height: auto !important; }
-  #vnote-footer { display: none !important; }
-}
-.alert { position: relative; padding: 0.75rem 1.25rem; margin-bottom: 1rem; border: 1px solid transparent; border-radius: 0.25rem; }
-.alert-primary { color: rgb(0, 64, 133); background-color: rgb(204, 229, 255); border-color: rgb(184, 218, 255); }
-.alert-secondary { color: rgb(56, 61, 65); background-color: rgb(226, 227, 229); border-color: rgb(214, 216, 219); }
-.alert-success { color: rgb(21, 87, 36); background-color: rgb(212, 237, 218); border-color: rgb(195, 230, 203); }
-.alert-info { color: rgb(12, 84, 96); background-color: rgb(209, 236, 241); border-color: rgb(190, 229, 235); }
-.alert-warning { color: rgb(133, 100, 4); background-color: rgb(255, 243, 205); border-color: rgb(255, 238, 186); }
-.alert-danger { color: rgb(114, 28, 36); background-color: rgb(248, 215, 218); border-color: rgb(245, 198, 203); }
-.alert-light { color: rgb(129, 129, 130); background-color: rgb(254, 254, 254); border-color: rgb(253, 253, 254); }
-.alert-dark { color: rgb(27, 30, 33); background-color: rgb(214, 216, 217); border-color: rgb(198, 200, 202); }
-.vnote-anchor { font-weight: 400; color: rgba(0, 123, 255, 0.498039); transition: color 0.16s linear; padding-left: 0.375em; -webkit-font-smoothing: antialiased; text-decoration: none; opacity: 0; }
-.vnote-anchor:hover { color: rgb(0, 123, 255); text-decoration: none; opacity: 1; }
-.vnote-anchor::after { content: attr(data-anchor-icon); }
-.vnote-btn { position: relative; display: inline-block; padding: 6px 12px; font-size: 13px; font-weight: 700; line-height: 20px; white-space: nowrap; vertical-align: middle; cursor: pointer; border: none; user-select: none; -webkit-appearance: none; }
-.vnote-copy-clipboard-btn { transition: opacity 0.3s ease-in-out; opacity: 0; padding: 2px 6px; position: absolute; top: 5px; right: 5px; }
-pre:hover .vnote-copy-clipboard-btn { opacity: 1; }
-pre.vnote-snippet { position: relative; }
-body { margin: 0px auto; font-family: "Segoe UI", Helvetica, sans-serif, Tahoma, Arial, Geneva, Georgia, Palatino, "Times New Roman", "Hiragino Sans GB", 冬青黑体, "Microsoft YaHei", 微软雅黑, "Microsoft YaHei UI", "WenQuanYi Micro Hei", 文泉驿雅黑, Dengxian, 等线体, STXihei, 华文细黑, "Liberation Sans", "Droid Sans", NSimSun, 新宋体, SimSun, 宋体; color: rgb(34, 34, 34); line-height: 1.5; padding: 15px; background: rgb(238, 238, 238); font-size: 16px; }
-h1, h2, h3, h4, h5, h6 { color: rgb(34, 34, 34); font-weight: bold; margin-top: 20px; margin-bottom: 10px; padding: 0px; }
-p { padding: 0px; margin-top: 16px; margin-bottom: 16px; }
-h1 { font-size: 26px; }
-h2 { font-size: 24px; }
-h3 { font-size: 22px; }
-h4 { font-size: 20px; }
-h5 { font-size: 19px; }
-h6 { font-size: 18px; }
-a { color: rgb(0, 153, 255); margin: 0px; padding: 0px; vertical-align: baseline; text-decoration: none; word-break: break-word; }
-a:hover { text-decoration: underline; color: rgb(255, 102, 0); }
-a:visited { color: purple; }
-ul, ol { padding: 0px 0px 0px 24px; }
-li { line-height: 24px; }
-li ul, li ol { margin-left: 16px; }
-p, ul, ol { font-size: 16px; line-height: 24px; }
-pre { display: block; overflow-y: hidden; overflow-x: auto; tab-size: 4; }
-code { font-family: Consolas, Monaco, monospace, Courier; color: rgb(142, 36, 170); word-break: break-word; }
-pre code { display: block; overflow-x: auto; padding: 0.5em; color: rgb(34, 34, 34); background-color: rgb(224, 224, 224); border-left: 0.5em solid rgb(0, 137, 123); line-height: 1.5; font-family: Consolas, Monaco, monospace, Courier; white-space: pre; tab-size: 4; }
-pre code.markdown-metadata { border-left: 0.5em solid rgb(128, 203, 196); }
-aside { display: block; float: right; width: 390px; }
-blockquote { color: rgb(102, 102, 102); border-left: 0.5em solid rgb(122, 122, 122); padding: 0px 1em; margin-left: 0px; }
-blockquote p { color: rgb(102, 102, 102); }
-hr { display: block; text-align: left; margin: 1em 0px; border: none; height: 2px; background: rgb(153, 153, 153); }
-table { padding: 0px; margin: 1rem 0.5rem; border-collapse: collapse; }
-table tr { border-top: 2px solid rgb(204, 204, 204); background-color: white; margin: 0px; padding: 0px; }
-table tr:nth-child(2n) { background-color: rgb(248, 248, 248); }
-table tr th { font-weight: bold; border: 2px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px; }
-table tr td { border: 2px solid rgb(204, 204, 204); margin: 0px; padding: 6px 13px; }
-table tr th :first-child, table tr td :first-child { margin-top: 0px; }
-table tr th :last-child, table tr td :last-child { margin-bottom: 0px; }
-div.mermaid-diagram { margin: 16px 0px; overflow-y: hidden; }
-div.flowchart-diagram { padding: 0px 5px; margin: 16px 0px; width: fit-content; overflow: hidden; }
-div.wavedrom-diagram { padding: 0px 5px; margin: 16px 0px; width: fit-content; overflow: hidden; }
-div.plantuml-diagram { padding: 5px 5px 0px; margin: 16px 0px; width: fit-content; overflow: hidden; }
-.img-package { text-align: center; }
-img.img-center { display: block; margin-left: auto; margin-right: auto; }
-span.img-caption { min-width: 20%; max-width: 80%; display: inline-block; padding: 10px; margin: 0px auto; border-bottom: 1px solid rgb(192, 192, 192); color: rgb(108, 108, 108); text-align: center; line-height: 1.5; }
-.emoji_zero, .emoji_one, .emoji_two, .emoji_three, .emoji_four, .emoji_five, .emoji_six, .emoji_seven, .emoji_eight, .emoji_nine { margin-left: 5px; margin-right: 8px; }
-div.preview-hint { opacity: 0.5; margin-top: 30%; margin-bottom: 30%; align-items: center; display: flex; flex-direction: column; justify-content: center; }
-table.hljs-ln tr { border: none; background-color: transparent; }
-table.hljs-ln tr td { border: none; background-color: transparent; }
-table.hljs-ln tr td.hljs-ln-numbers { user-select: none; text-align: center; color: rgb(170, 170, 170); border-right: 1px solid rgb(204, 204, 204); vertical-align: top; padding-right: 5px; white-space: nowrap; }
-table.hljs-ln tr td.hljs-ln-code { padding-left: 10px; }
-::-webkit-scrollbar { background-color: rgb(234, 234, 234); width: 14px; height: 14px; border: none; }
-::-webkit-scrollbar-corner { background-color: rgb(234, 234, 234); }
-::-webkit-scrollbar-button { height: 14px; width: 14px; background-color: rgb(234, 234, 234); }
-::-webkit-scrollbar-button:hover { background-color: rgb(208, 208, 208); }
-::-webkit-scrollbar-button:active { background-color: rgb(178, 178, 178); }
-::-webkit-scrollbar-track { background-color: rgb(234, 234, 234); }
-::-webkit-scrollbar-thumb { border: none; background-color: rgb(218, 218, 218); }
-::-webkit-scrollbar-thumb:hover { background-color: rgb(208, 208, 208); }
-::-webkit-scrollbar-thumb:active { background-color: rgb(178, 178, 178); }
-::-webkit-scrollbar-button:horizontal:increment { background-image: url('data:image/svg+xml;utf8,<svg width="512" height="512" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg"> <g>    <g transform="rotate(-90 256.00000000000006,256) " id="svg_1">   <polygon fill="%23333333" id="svg_2" points="128,192 256,320 384,192  "/>  </g> </g></svg>'); background-repeat: no-repeat; background-size: contain; }
-::-webkit-scrollbar-button:horizontal:decrement { background-image: url('data:image/svg+xml;utf8,<svg width="512" height="512" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg"> <g>    <g transform="rotate(90 255.99999999999997,256.00000000000006) " id="svg_1">   <polygon points="128,192 256,320 384,192  " id="svg_2" fill="%23333333"/>  </g> </g></svg>'); background-repeat: no-repeat; background-size: contain; }
-::-webkit-scrollbar-button:vertical:increment { background-image: url('data:image/svg+xml;utf8,<svg width="512" height="512" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg"> <g>    <g transform="null" id="svg_1">   <polygon points="128,192 256,320 384,192  " id="svg_2" fill="%23333333"/>  </g> </g></svg>'); background-repeat: no-repeat; background-size: contain; }
-::-webkit-scrollbar-button:vertical:decrement { background-image: url('data:image/svg+xml;utf8,<svg width="512" height="512" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg"> <g>    <g transform="rotate(180 255.99999999999997,256) " id="svg_1">   <polygon points="128,192 256,320 384,192  " id="svg_2" fill="%23333333"/>  </g> </g></svg>'); background-repeat: no-repeat; background-size: contain; }
-::selection { background: rgb(25, 118, 210); color: rgb(238, 238, 238); }
-.modal-box { background-color: rgba(234, 234, 234, 0.952941); }
-span.modal-close { color: rgb(102, 102, 102); }
-span.modal-close:hover, span.modal-close:focus { color: rgb(34, 34, 34); }
-.hljs { display: block; overflow-x: auto; padding: 0.5em; background: rgb(224, 224, 224); }
-.hljs, .hljs-subst { color: rgb(54, 54, 54); }
-.hljs-comment { color: rgb(118, 118, 118); }
-.hljs-keyword, .hljs-attribute, .hljs-selector-tag, .hljs-meta-keyword, .hljs-doctag, .hljs-name { color: rgb(0, 0, 238); }
-.hljs-type, .hljs-string, .hljs-number, .hljs-selector-id, .hljs-selector-class, .hljs-quote, .hljs-template-tag, .hljs-deletion { color: rgb(136, 0, 0); }
-.hljs-title, .hljs-section { color: rgb(136, 0, 0); font-weight: bold; }
-.hljs-regexp, .hljs-symbol, .hljs-variable, .hljs-template-variable, .hljs-link, .hljs-selector-attr, .hljs-selector-pseudo { color: rgb(188, 96, 96); }
-.hljs-literal { color: rgb(175, 0, 215); }
-.hljs-built_in, .hljs-bullet, .hljs-code, .hljs-addition { color: rgb(0, 135, 0); }
-.hljs-meta { color: rgb(31, 113, 153); }
-.hljs-meta-string { color: rgb(77, 153, 191); }
-.hljs-emphasis { font-style: italic; }
-.hljs-strong { font-weight: bold; }
-.CtxtMenu_InfoClose { top: 0.2em; right: 0.2em; }
-.CtxtMenu_InfoContent { overflow: auto; text-align: left; font-size: 80%; padding: 0.4em 0.6em; border: 1px inset; margin: 1em 0px; max-height: 20em; max-width: 30em; background-color: rgb(238, 238, 238); white-space: normal; }
-.CtxtMenu_Info.CtxtMenu_MousePost { outline: none; }
-.CtxtMenu_Info { position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: rgb(221, 221, 221); color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0px; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; box-shadow: rgb(128, 128, 128) 0px 10px 20px; }
-.CtxtMenu_MenuClose { position: absolute; cursor: pointer; display: inline-block; border: 2px solid rgb(170, 170, 170); border-radius: 18px; font-family: "Courier New", Courier; font-size: 24px; color: rgb(240, 240, 240); }
-.CtxtMenu_MenuClose span { display: block; background-color: rgb(170, 170, 170); border: 1.5px solid; border-radius: 18px; line-height: 0; padding: 8px 0px 6px; }
-.CtxtMenu_MenuClose:hover { color: white !important; border: 2px solid rgb(204, 204, 204) !important; }
-.CtxtMenu_MenuClose:hover span { background-color: rgb(204, 204, 204) !important; }
-.CtxtMenu_MenuClose:hover:focus { outline: none; }
-.CtxtMenu_Menu { position: absolute; background-color: white; color: black; width: auto; padding: 5px 0px; border: 1px solid rgb(204, 204, 204); margin: 0px; cursor: default; font-style: normal; font-weight: normal; font-size: 16px; font-family: Arial; font-stretch: normal; font-variant: normal; text-align: left; text-indent: 0px; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 5px; box-shadow: rgb(128, 128, 128) 0px 10px 20px; }
-.CtxtMenu_MenuItem { padding: 1px 2em; background: transparent; }
-.CtxtMenu_MenuArrow { position: absolute; right: 0.5em; padding-top: 0.25em; color: rgb(102, 102, 102); font-family: null; font-size: 0.75em; }
-.CtxtMenu_MenuActive .CtxtMenu_MenuArrow { color: white; }
-.CtxtMenu_MenuArrow.CtxtMenu_RTL { left: 0.5em; right: auto; }
-.CtxtMenu_MenuCheck { position: absolute; left: 0.7em; font-family: null; }
-.CtxtMenu_MenuCheck.CtxtMenu_RTL { right: 0.7em; left: auto; }
-.CtxtMenu_MenuRadioCheck { position: absolute; left: 0.7em; }
-.CtxtMenu_MenuRadioCheck.CtxtMenu_RTL { right: 0.7em; left: auto; }
-.CtxtMenu_MenuInputBox { padding-left: 1em; right: 0.5em; color: rgb(102, 102, 102); font-family: null; }
-.CtxtMenu_MenuInputBox.CtxtMenu_RTL { left: 0.1em; }
-.CtxtMenu_MenuComboBox { left: 0.1em; padding-bottom: 0.5em; }
-.CtxtMenu_MenuSlider { left: 0.1em; }
-.CtxtMenu_SliderValue { position: absolute; right: 0.1em; padding-top: 0.25em; color: rgb(51, 51, 51); font-size: 0.75em; }
-.CtxtMenu_SliderBar { outline: none; background: rgb(211, 211, 211); }
-.CtxtMenu_MenuLabel { padding: 1px 2em 3px 1.33em; font-style: italic; }
-.CtxtMenu_MenuRule { border-top: 1px solid rgb(221, 221, 221); margin: 4px 3px; }
-.CtxtMenu_MenuDisabled { color: graytext; }
-.CtxtMenu_MenuActive { background-color: rgb(96, 104, 114); color: white; }
-.CtxtMenu_MenuDisabled:focus { background-color: rgb(232, 232, 232); }
-.CtxtMenu_MenuLabel:focus { background-color: rgb(232, 232, 232); }
-.CtxtMenu_ContextMenu:focus { outline: none; }
-.CtxtMenu_ContextMenu .CtxtMenu_MenuItem:focus { outline: none; }
-.CtxtMenu_SelectionMenu { position: relative; float: left; border-bottom: none; box-shadow: none; border-radius: 0px; }
-.CtxtMenu_SelectionItem { padding-right: 1em; }
-.CtxtMenu_Selection { right: 40%; width: 50%; }
-.CtxtMenu_SelectionBox { padding: 0em; max-height: 20em; max-width: none; background-color: rgb(255, 255, 255); }
-.CtxtMenu_SelectionDivider { clear: both; border-top: 2px solid rgb(0, 0, 0); }
-.CtxtMenu_Menu .CtxtMenu_MenuClose { top: -10px; left: -10px; }
-mjx-container[jax="CHTML"] { line-height: 0; }
-mjx-container [space="1"] { margin-left: 0.111em; }
-mjx-container [space="2"] { margin-left: 0.167em; }
-mjx-container [space="3"] { margin-left: 0.222em; }
-mjx-container [space="4"] { margin-left: 0.278em; }
-mjx-container [space="5"] { margin-left: 0.333em; }
-mjx-container [rspace="1"] { margin-right: 0.111em; }
-mjx-container [rspace="2"] { margin-right: 0.167em; }
-mjx-container [rspace="3"] { margin-right: 0.222em; }
-mjx-container [rspace="4"] { margin-right: 0.278em; }
-mjx-container [rspace="5"] { margin-right: 0.333em; }
-mjx-container [size="s"] { font-size: 70.7%; }
-mjx-container [size="ss"] { font-size: 50%; }
-mjx-container [size="Tn"] { font-size: 60%; }
-mjx-container [size="sm"] { font-size: 85%; }
-mjx-container [size="lg"] { font-size: 120%; }
-mjx-container [size="Lg"] { font-size: 144%; }
-mjx-container [size="LG"] { font-size: 173%; }
-mjx-container [size="hg"] { font-size: 207%; }
-mjx-container [size="HG"] { font-size: 249%; }
-mjx-container [width="full"] { width: 100%; }
-mjx-box { display: inline-block; }
-mjx-block { display: block; }
-mjx-itable { display: inline-table; }
-mjx-row { display: table-row; }
-mjx-row > * { display: table-cell; }
-mjx-mtext { display: inline-block; text-align: left; }
-mjx-mstyle { display: inline-block; }
-mjx-merror { display: inline-block; color: red; background-color: yellow; }
-mjx-mphantom { visibility: hidden; }
-mjx-assistive-mml { top: 0px; left: 0px; clip: rect(1px 1px 1px 1px); user-select: none; position: absolute !important; padding: 1px 0px 0px !important; border: 0px !important; display: block !important; width: auto !important; overflow: hidden !important; }
-mjx-assistive-mml[display="block"] { width: 100% !important; }
-mjx-math { display: inline-block; text-align: left; line-height: 0; text-indent: 0px; font-style: normal; font-weight: normal; font-size: 100%; letter-spacing: normal; word-wrap: normal; word-spacing: normal; white-space: nowrap; direction: ltr; padding: 1px 0px; }
-mjx-container[jax="CHTML"][display="true"] { display: block; text-align: center; margin: 1em 0px; }
-mjx-container[jax="CHTML"][display="true"][width="full"] { display: flex; }
-mjx-container[jax="CHTML"][display="true"] mjx-math { padding: 0px; }
-mjx-container[jax="CHTML"][justify="left"] { text-align: left; }
-mjx-container[jax="CHTML"][justify="right"] { text-align: right; }
-mjx-mrow { display: inline-block; text-align: left; }
-mjx-inferredmrow { display: inline-block; text-align: left; }
-mjx-mi { display: inline-block; text-align: left; }
-mjx-mo { display: inline-block; text-align: left; }
-mjx-stretchy-h { display: inline-table; width: 100%; }
-mjx-stretchy-h > * { display: table-cell; width: 0px; }
-mjx-stretchy-h > * > mjx-c { display: inline-block; transform: scaleX(1); }
-mjx-stretchy-h > * > mjx-c::before { display: inline-block; padding: 0.001em 0px; width: initial; }
-mjx-stretchy-h > mjx-ext { overflow: hidden; width: 100%; }
-mjx-stretchy-h > mjx-ext > mjx-c::before { transform: scaleX(500); }
-mjx-stretchy-h > mjx-ext > mjx-c { width: 0px; }
-mjx-stretchy-h > mjx-beg > mjx-c { margin-right: -0.1em; }
-mjx-stretchy-h > mjx-end > mjx-c { margin-left: -0.1em; }
-mjx-stretchy-v { display: inline-block; }
-mjx-stretchy-v > * { display: block; }
-mjx-stretchy-v > mjx-beg { height: 0px; }
-mjx-stretchy-v > mjx-end > mjx-c { display: block; }
-mjx-stretchy-v > * > mjx-c { transform: scaleY(1); transform-origin: left center 0px; overflow: hidden; }
-mjx-stretchy-v > mjx-ext { display: block; height: 100%; box-sizing: border-box; border: 0px solid transparent; overflow: hidden; }
-mjx-stretchy-v > mjx-ext > mjx-c::before { width: initial; }
-mjx-stretchy-v > mjx-ext > mjx-c { transform: scaleY(500) translateY(0.1em); overflow: visible; }
-mjx-mark { display: inline-block; height: 0px; }
-mjx-mn { display: inline-block; text-align: left; }
-mjx-ms { display: inline-block; text-align: left; }
-mjx-mspace { display: inline-block; text-align: left; }
-mjx-mpadded { display: inline-block; text-align: left; }
-mjx-rbox { display: inline-block; position: relative; }
-mjx-menclose { display: inline-block; text-align: left; position: relative; }
-mjx-menclose > mjx-dstrike { display: inline-block; left: 0px; top: 0px; position: absolute; border-top: 0.067em solid; transform-origin: left top 0px; }
-mjx-menclose > mjx-ustrike { display: inline-block; left: 0px; bottom: 0px; position: absolute; border-top: 0.067em solid; transform-origin: left bottom 0px; }
-mjx-menclose > mjx-hstrike { border-top: 0.067em solid; position: absolute; left: 0px; right: 0px; bottom: 50%; transform: translateY(0.034em); }
-mjx-menclose > mjx-vstrike { border-left: 0.067em solid; position: absolute; top: 0px; bottom: 0px; right: 50%; transform: translateX(0.034em); }
-mjx-menclose > mjx-rbox { position: absolute; top: 0px; bottom: 0px; right: 0px; left: 0px; border: 0.067em solid; border-radius: 0.267em; }
-mjx-menclose > mjx-cbox { position: absolute; top: 0px; bottom: 0px; right: 0px; left: 0px; border: 0.067em solid; border-radius: 50%; }
-mjx-menclose > mjx-arrow { position: absolute; left: 0px; bottom: 50%; height: 0px; width: 0px; }
-mjx-menclose > mjx-arrow > * { display: block; position: absolute; transform-origin: center bottom 0px; border-left: 0.268em solid; border-right: 0px; box-sizing: border-box; }
-mjx-menclose > mjx-arrow > mjx-aline { left: 0px; top: -0.034em; right: 0.201em; height: 0px; border-top: 0.067em solid; border-left: 0px; }
-mjx-menclose > mjx-arrow[double] > mjx-aline { left: 0.201em; height: 0px; }
-mjx-menclose > mjx-arrow > mjx-rthead { transform: skewX(0.464rad); right: 0px; bottom: -1px; border-bottom: 1px solid transparent; border-top: 0.134em solid transparent; }
-mjx-menclose > mjx-arrow > mjx-rbhead { transform: skewX(-0.464rad); transform-origin: center top 0px; right: 0px; top: -1px; border-top: 1px solid transparent; border-bottom: 0.134em solid transparent; }
-mjx-menclose > mjx-arrow > mjx-lthead { transform: skewX(-0.464rad); left: 0px; bottom: -1px; border-width: 0.134em 0.268em 1px 0px; border-left-style: initial; border-left-color: initial; border-right-style: solid; border-right-color: initial; border-bottom-style: solid; border-bottom-color: transparent; border-top-style: solid; border-top-color: transparent; }
-mjx-menclose > mjx-arrow > mjx-lbhead { transform: skewX(0.464rad); transform-origin: center top 0px; left: 0px; top: -1px; border-width: 1px 0.268em 0.134em 0px; border-left-style: initial; border-left-color: initial; border-right-style: solid; border-right-color: initial; border-top-style: solid; border-top-color: transparent; border-bottom-style: solid; border-bottom-color: transparent; }
-mjx-menclose > dbox { position: absolute; top: 0px; bottom: 0px; left: -0.3em; width: 0.6em; border: 0.067em solid; border-radius: 50%; clip-path: inset(0px 0px 0px 0.3em); box-sizing: border-box; }
-mjx-mfrac { display: inline-block; text-align: left; }
-mjx-frac { display: inline-block; vertical-align: 0.17em; padding: 0px 0.22em; }
-mjx-frac[type="d"] { vertical-align: 0.04em; }
-mjx-frac[delims] { padding: 0px 0.1em; }
-mjx-frac[atop] { padding: 0px 0.12em; }
-mjx-frac[atop][delims] { padding: 0px; }
-mjx-dtable { display: inline-table; width: 100%; }
-mjx-dtable > * { font-size: 2000%; }
-mjx-dbox { display: block; font-size: 5%; }
-mjx-num { display: block; text-align: center; }
-mjx-den { display: block; text-align: center; }
-mjx-mfrac[bevelled] > mjx-num { display: inline-block; }
-mjx-mfrac[bevelled] > mjx-den { display: inline-block; }
-mjx-den[align="right"], mjx-num[align="right"] { text-align: right; }
-mjx-den[align="left"], mjx-num[align="left"] { text-align: left; }
-mjx-nstrut { display: inline-block; height: 0.054em; width: 0px; vertical-align: -0.054em; }
-mjx-nstrut[type="d"] { height: 0.217em; vertical-align: -0.217em; }
-mjx-dstrut { display: inline-block; height: 0.505em; width: 0px; }
-mjx-dstrut[type="d"] { height: 0.726em; }
-mjx-line { display: block; box-sizing: border-box; min-height: 1px; height: 0.06em; border-top: 0.06em solid; margin: 0.06em -0.1em; overflow: hidden; }
-mjx-line[type="d"] { margin: 0.18em -0.1em; }
-mjx-msqrt { display: inline-block; text-align: left; }
-mjx-root { display: inline-block; white-space: nowrap; }
-mjx-surd { display: inline-block; vertical-align: top; }
-mjx-sqrt { display: inline-block; padding-top: 0.07em; }
-mjx-sqrt > mjx-box { border-top: 0.07em solid; }
-mjx-sqrt.mjx-tall > mjx-box { padding-left: 0.3em; margin-left: -0.3em; }
-mjx-mroot { display: inline-block; text-align: left; }
-mjx-msub { display: inline-block; text-align: left; }
-mjx-msup { display: inline-block; text-align: left; }
-mjx-msubsup { display: inline-block; text-align: left; }
-mjx-script { display: inline-block; padding-right: 0.05em; }
-mjx-script > * { display: block; }
-mjx-munder { display: inline-block; text-align: left; }
-mjx-over { text-align: left; }
-mjx-munder:not([limits="false"]) { display: inline-table; }
-mjx-munder > mjx-row { text-align: left; }
-mjx-under { padding-bottom: 0.1em; }
-mjx-mover { display: inline-block; text-align: left; }
-mjx-mover:not([limits="false"]) { padding-top: 0.1em; }
-mjx-mover:not([limits="false"]) > * { display: block; text-align: left; }
-mjx-munderover { display: inline-block; text-align: left; }
-mjx-munderover:not([limits="false"]) { padding-top: 0.1em; }
-mjx-munderover:not([limits="false"]) > * { display: block; }
-mjx-mmultiscripts { display: inline-block; text-align: left; }
-mjx-prescripts { display: inline-table; padding-left: 0.05em; }
-mjx-scripts { display: inline-table; padding-right: 0.05em; }
-mjx-prescripts > mjx-row > mjx-cell { text-align: right; }
-mjx-mfenced { display: inline-block; text-align: left; }
-mjx-mtable { display: inline-block; text-align: center; vertical-align: 0.25em; position: relative; box-sizing: border-box; }
-mjx-labels { position: absolute; left: 0px; top: 0px; }
-mjx-table { display: inline-block; vertical-align: -0.5ex; }
-mjx-table > mjx-itable { vertical-align: middle; text-align: left; box-sizing: border-box; }
-mjx-labels > mjx-itable { position: absolute; top: 0px; }
-mjx-mtable[justify="left"] { text-align: left; }
-mjx-mtable[justify="right"] { text-align: right; }
-mjx-mtable[justify="left"][side="left"] { padding-right: 0px !important; }
-mjx-mtable[justify="left"][side="right"] { padding-left: 0px !important; }
-mjx-mtable[justify="right"][side="left"] { padding-right: 0px !important; }
-mjx-mtable[justify="right"][side="right"] { padding-left: 0px !important; }
-mjx-mtable[align] { vertical-align: baseline; }
-mjx-mtable[align="top"] > mjx-table { vertical-align: top; }
-mjx-mtable[align="bottom"] > mjx-table { vertical-align: bottom; }
-mjx-mtable[side="right"] mjx-labels { min-width: 100%; }
-mjx-mtr { display: table-row; text-align: left; }
-mjx-mtr[rowalign="top"] > mjx-mtd { vertical-align: top; }
-mjx-mtr[rowalign="center"] > mjx-mtd { vertical-align: middle; }
-mjx-mtr[rowalign="bottom"] > mjx-mtd { vertical-align: bottom; }
-mjx-mtr[rowalign="baseline"] > mjx-mtd { vertical-align: baseline; }
-mjx-mtr[rowalign="axis"] > mjx-mtd { vertical-align: 0.25em; }
-mjx-mlabeledtr { display: table-row; text-align: left; }
-mjx-mlabeledtr[rowalign="top"] > mjx-mtd { vertical-align: top; }
-mjx-mlabeledtr[rowalign="center"] > mjx-mtd { vertical-align: middle; }
-mjx-mlabeledtr[rowalign="bottom"] > mjx-mtd { vertical-align: bottom; }
-mjx-mlabeledtr[rowalign="baseline"] > mjx-mtd { vertical-align: baseline; }
-mjx-mlabeledtr[rowalign="axis"] > mjx-mtd { vertical-align: 0.25em; }
-mjx-mtd { display: table-cell; text-align: center; padding: 0.215em 0.4em; }
-mjx-mtd:first-child { padding-left: 0px; }
-mjx-mtd:last-child { padding-right: 0px; }
-mjx-mtable > * > mjx-itable > :first-child > mjx-mtd { padding-top: 0px; }
-mjx-mtable > * > mjx-itable > :last-child > mjx-mtd { padding-bottom: 0px; }
-mjx-tstrut { display: inline-block; height: 1em; vertical-align: -0.25em; }
-mjx-labels[align="left"] > mjx-mtr > mjx-mtd { text-align: left; }
-mjx-labels[align="right"] > mjx-mtr > mjx-mtd { text-align: right; }
-mjx-mtr mjx-mtd[rowalign="top"], mjx-mlabeledtr mjx-mtd[rowalign="top"] { vertical-align: top; }
-mjx-mtr mjx-mtd[rowalign="center"], mjx-mlabeledtr mjx-mtd[rowalign="center"] { vertical-align: middle; }
-mjx-mtr mjx-mtd[rowalign="bottom"], mjx-mlabeledtr mjx-mtd[rowalign="bottom"] { vertical-align: bottom; }
-mjx-mtr mjx-mtd[rowalign="baseline"], mjx-mlabeledtr mjx-mtd[rowalign="baseline"] { vertical-align: baseline; }
-mjx-mtr mjx-mtd[rowalign="axis"], mjx-mlabeledtr mjx-mtd[rowalign="axis"] { vertical-align: 0.25em; }
-mjx-maction { display: inline-block; text-align: left; position: relative; }
-mjx-maction > mjx-tool { display: none; position: absolute; bottom: 0px; right: 0px; width: 0px; height: 0px; z-index: 500; }
-mjx-tool > mjx-tip { display: inline-block; padding: 0.2em; border: 1px solid rgb(136, 136, 136); font-size: 70%; background-color: rgb(248, 248, 248); color: black; box-shadow: rgb(170, 170, 170) 2px 2px 5px; }
-mjx-maction[toggle] { cursor: pointer; }
-mjx-status { display: block; position: fixed; left: 1em; bottom: 1em; min-width: 25%; padding: 0.2em 0.4em; border: 1px solid rgb(136, 136, 136); font-size: 90%; background-color: rgb(248, 248, 248); color: black; }
-mjx-mglyph { display: inline-block; text-align: left; }
-mjx-mglyph > img { display: inline-block; border: 0px; padding: 0px; }
-mjx-semantics { display: inline-block; text-align: left; }
-mjx-annotation { display: inline-block; text-align: left; }
-mjx-annotation-xml { display: inline-block; text-align: left; font-family: initial; line-height: normal; }
-mjx-texatom { display: inline-block; text-align: left; }
-mjx-c { display: inline-block; }
-mjx-utext { display: inline-block; padding: 0.75em 0px 0.2em; }
-mjx-c::before { display: block; width: 0px; }
-.MJX-TEX { font-family: MJXZERO, MJXTEX; }
-.TEX-B { font-family: MJXZERO, MJXTEX-B; }
-.TEX-I { font-family: MJXZERO, MJXTEX-I; }
-.TEX-MI { font-family: MJXZERO, MJXTEX-MI; }
-.TEX-BI { font-family: MJXZERO, MJXTEX-BI; }
-.TEX-S1 { font-family: MJXZERO, MJXTEX-S1; }
-.TEX-S2 { font-family: MJXZERO, MJXTEX-S2; }
-.TEX-S3 { font-family: MJXZERO, MJXTEX-S3; }
-.TEX-S4 { font-family: MJXZERO, MJXTEX-S4; }
-.TEX-A { font-family: MJXZERO, MJXTEX-A; }
-.TEX-C { font-family: MJXZERO, MJXTEX-C; }
-.TEX-CB { font-family: MJXZERO, MJXTEX-CB; }
-.TEX-FR { font-family: MJXZERO, MJXTEX-FR; }
-.TEX-FRB { font-family: MJXZERO, MJXTEX-FRB; }
-.TEX-SS { font-family: MJXZERO, MJXTEX-SS; }
-.TEX-SSB { font-family: MJXZERO, MJXTEX-SSB; }
-.TEX-SSI { font-family: MJXZERO, MJXTEX-SSI; }
-.TEX-SC { font-family: MJXZERO, MJXTEX-SC; }
-.TEX-T { font-family: MJXZERO, MJXTEX-T; }
-.TEX-V { font-family: MJXZERO, MJXTEX-V; }
-.TEX-VB { font-family: MJXZERO, MJXTEX-VB; }
-mjx-stretchy-v mjx-c, mjx-stretchy-h mjx-c { font-family: MJXZERO, MJXTEX-S1, MJXTEX-S4, MJXTEX, MJXTEX-A !important; }
-@font-face { font-family: MJXZERO; src: url("file:///home/bluequantum/.local/lib/MathJax-3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Zero.woff") format("woff"); }
-@font-face { font-family: MJXTEX; src: url("file:///home/bluequantum/.local/lib/MathJax-3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Main-Regular.woff") format("woff"); }
-@font-face { font-family: MJXTEX-B; src: url("file:///home/bluequantum/.local/lib/MathJax-3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Main-Bold.woff") format("woff"); }
-@font-face { font-family: MJXTEX-I; src: url("file:///home/bluequantum/.local/lib/MathJax-3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Math-Italic.woff") format("woff"); }
-@font-face { font-family: MJXTEX-MI; src: url("file:///home/bluequantum/.local/lib/MathJax-3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Main-Italic.woff") format("woff"); }
-@font-face { font-family: MJXTEX-BI; src: url("file:///home/bluequantum/.local/lib/MathJax-3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Math-BoldItalic.woff") format("woff"); }
-@font-face { font-family: MJXTEX-S1; src: url("file:///home/bluequantum/.local/lib/MathJax-3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Size1-Regular.woff") format("woff"); }
-@font-face { font-family: MJXTEX-S2; src: url("file:///home/bluequantum/.local/lib/MathJax-3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Size2-Regular.woff") format("woff"); }
-@font-face { font-family: MJXTEX-S3; src: url("file:///home/bluequantum/.local/lib/MathJax-3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Size3-Regular.woff") format("woff"); }
-@font-face { font-family: MJXTEX-S4; src: url("file:///home/bluequantum/.local/lib/MathJax-3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Size4-Regular.woff") format("woff"); }
-@font-face { font-family: MJXTEX-A; src: url("file:///home/bluequantum/.local/lib/MathJax-3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_AMS-Regular.woff") format("woff"); }
-@font-face { font-family: MJXTEX-C; src: url("file:///home/bluequantum/.local/lib/MathJax-3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Calligraphic-Regular.woff") format("woff"); }
-@font-face { font-family: MJXTEX-CB; src: url("file:///home/bluequantum/.local/lib/MathJax-3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Calligraphic-Bold.woff") format("woff"); }
-@font-face { font-family: MJXTEX-FR; src: url("file:///home/bluequantum/.local/lib/MathJax-3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Fraktur-Regular.woff") format("woff"); }
-@font-face { font-family: MJXTEX-FRB; src: url("file:///home/bluequantum/.local/lib/MathJax-3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Fraktur-Bold.woff") format("woff"); }
-@font-face { font-family: MJXTEX-SS; src: url("file:///home/bluequantum/.local/lib/MathJax-3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_SansSerif-Regular.woff") format("woff"); }
-@font-face { font-family: MJXTEX-SSB; src: url("file:///home/bluequantum/.local/lib/MathJax-3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_SansSerif-Bold.woff") format("woff"); }
-@font-face { font-family: MJXTEX-SSI; src: url("file:///home/bluequantum/.local/lib/MathJax-3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_SansSerif-Italic.woff") format("woff"); }
-@font-face { font-family: MJXTEX-SC; src: url("file:///home/bluequantum/.local/lib/MathJax-3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Script-Regular.woff") format("woff"); }
-@font-face { font-family: MJXTEX-T; src: url("file:///home/bluequantum/.local/lib/MathJax-3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Typewriter-Regular.woff") format("woff"); }
-@font-face { font-family: MJXTEX-V; src: url("file:///home/bluequantum/.local/lib/MathJax-3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Vector-Regular.woff") format("woff"); }
-@font-face { font-family: MJXTEX-VB; src: url("file:///home/bluequantum/.local/lib/MathJax-3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Vector-Bold.woff") format("woff"); }
-mjx-stretchy-v.mjx-c7B mjx-beg mjx-c::before { content: "⎧"; padding: 0.899em 0.889em 0.01em 0px; }
-mjx-stretchy-v.mjx-c7B mjx-ext mjx-c::before { content: "⎪"; }
-mjx-stretchy-v.mjx-c7B mjx-end mjx-c::before { content: "⎩"; padding: 0.01em 0.889em 0.899em 0px; }
-mjx-stretchy-v.mjx-c7B mjx-mid mjx-c::before { content: "⎨"; padding: 1.16em 0.889em 0.66em 0px; }
-mjx-stretchy-v.mjx-c7B > mjx-mid { margin-top: -0.91em; margin-bottom: -0.91em; }
-mjx-stretchy-v.mjx-c7B > mjx-end { margin-top: -0.909em; }
-mjx-stretchy-v.mjx-c7B > mjx-ext { height: 50%; border-top-width: 0.879em; border-bottom-width: 0.879em; }
-mjx-c.mjx-c21::before { padding: 0.716em 0.278em 0px 0px; content: "!"; }
-mjx-c.mjx-c28::before { padding: 0.75em 0.389em 0.25em 0px; content: "("; }
-mjx-c.mjx-c29::before { padding: 0.75em 0.389em 0.25em 0px; content: ")"; }
-mjx-c.mjx-c2B::before { padding: 0.583em 0.778em 0.082em 0px; content: "+"; }
-mjx-c.mjx-c31::before { padding: 0.666em 0.5em 0px 0px; content: "1"; }
-mjx-c.mjx-c32::before { padding: 0.666em 0.5em 0px 0px; content: "2"; }
-mjx-c.mjx-c33::before { padding: 0.665em 0.5em 0.022em 0px; content: "3"; }
-mjx-c.mjx-c3D::before { padding: 0.583em 0.778em 0.082em 0px; content: "="; }
-mjx-c.mjx-c5B::before { padding: 0.75em 0.278em 0.25em 0px; content: "["; }
-mjx-c.mjx-c5D::before { padding: 0.75em 0.278em 0.25em 0px; content: "]"; }
-mjx-c.mjx-c64::before { padding: 0.694em 0.556em 0.011em 0px; content: "d"; }
-mjx-c.mjx-c65::before { padding: 0.448em 0.444em 0.011em 0px; content: "e"; }
-mjx-c.mjx-c6D::before { padding: 0.442em 0.833em 0px 0px; content: "m"; }
-mjx-c.mjx-c6F::before { padding: 0.448em 0.5em 0.01em 0px; content: "o"; }
-mjx-c.mjx-c72::before { padding: 0.442em 0.392em 0px 0px; content: "r"; }
-mjx-c.mjx-c73::before { padding: 0.448em 0.394em 0.011em 0px; content: "s"; }
-mjx-c.mjx-c74::before { padding: 0.615em 0.389em 0.01em 0px; content: "t"; }
-mjx-c.mjx-cD7::before { padding: 0.491em 0.778em 0px 0px; content: "×"; }
-mjx-c.mjx-c2026::before { padding: 0.12em 1.172em 0px 0px; content: "…"; }
-mjx-c.mjx-c210E.TEX-I::before { padding: 0.694em 0.576em 0.011em 0px; content: "h"; }
-mjx-c.mjx-c2212::before { padding: 0.583em 0.778em 0.082em 0px; content: "−"; }
-mjx-c.mjx-c2224.TEX-A::before { padding: 0.75em 0.297em 0.252em 0px; content: "∤"; }
-[noic] mjx-c.mjx-c2224.TEX-A:last-child::before { padding-right: 0.278em; }
-mjx-c.mjx-c22C5::before { padding: 0.31em 0.278em 0px 0px; content: "⋅"; }
-mjx-c.mjx-c22EF::before { padding: 0.31em 1.172em 0px 0px; content: "⋯"; }
-mjx-c.mjx-c230A::before { padding: 0.75em 0.444em 0.25em 0px; content: "⌊"; }
-mjx-c.mjx-c230B::before { padding: 0.75em 0.444em 0.25em 0px; content: "⌋"; }
-mjx-c.mjx-c1D436.TEX-I::before { padding: 0.705em 0.76em 0.022em 0px; content: "C"; }
-[noic] mjx-c.mjx-c1D436.TEX-I:last-child::before { padding-right: 0.715em; }
-mjx-c.mjx-c1D453.TEX-I::before { padding: 0.705em 0.55em 0.205em 0px; content: "f"; }
-[noic] mjx-c.mjx-c1D453.TEX-I:last-child::before { padding-right: 0.49em; }
-mjx-c.mjx-c1D456.TEX-I::before { padding: 0.661em 0.345em 0.011em 0px; content: "i"; }
-mjx-c.mjx-c1D458.TEX-I::before { padding: 0.694em 0.521em 0.011em 0px; content: "k"; }
-mjx-c.mjx-c1D45A.TEX-I::before { padding: 0.442em 0.878em 0.011em 0px; content: "m"; }
-mjx-c.mjx-c1D45B.TEX-I::before { padding: 0.442em 0.6em 0.011em 0px; content: "n"; }
-mjx-c.mjx-c1D45D.TEX-I::before { padding: 0.442em 0.503em 0.194em 0px; content: "p"; }
-mjx-c.mjx-c220F.TEX-S2::before { padding: 0.95em 1.278em 0.45em 0px; content: "∏"; }
-mjx-c.mjx-c28.TEX-S3::before { padding: 1.45em 0.736em 0.949em 0px; content: "("; }
-mjx-c.mjx-c29.TEX-S3::before { padding: 1.45em 0.736em 0.949em 0px; content: ")"; }
-
-    </style>
-
-    <script type="text/javascript">
-var toc = [];
-
-var setVisible = function(node, visible) {
-    var cl = 'hide-none';
-    if (visible) {
-        node.classList.remove(cl);
-    } else {
-        node.classList.add(cl);
-    }
-};
-
-var isVisible = function(node) {
-    var cl = 'hide-none';
-    return !node.classList.contains(cl);
-};
-
-var setPostContentExpanded = function(node, expanded) {
-    var cl = 'col-expand';
-    if (expanded) {
-        node.classList.add(cl);
-    } else {
-        node.classList.remove(cl);
-    }
-};
-
-var setOutlinePanelVisible = function(visible) {
-    var outlinePanel = document.getElementById('outline-panel');
-    var postContent = document.getElementById('post-content');
-
-    setVisible(outlinePanel, visible);
-    setPostContentExpanded(postContent, !visible);
-};
-
-var isOutlinePanelVisible = function() {
-    var outlinePanel = document.getElementById('outline-panel');
-    return isVisible(outlinePanel);
-};
-
-window.addEventListener('load', function() {
-    var outlinePanel = document.getElementById('outline-panel');
-    outlinePanel.style.display = 'initial';
-
-    var floatingContainer = document.getElementById('container-floating');
-    floatingContainer.style.display = 'initial';
-
-    var outlineContent = document.getElementById('outline-content');
-    var postContent = document.getElementById('post-content');
-
-    // Escape @text to Html.
-    var escapeHtml = function(text) {
-        var map = {
-            '&': '&amp;',
-            '<': '&lt;',
-            '>': '&gt;',
-            '"': '&quot;',
-            "'": '&#039;'
-        };
-
-        return text.replace(/[&<>"']/g, function(m) { return map[m]; });
-    }
-
-    // Fetch the outline.
-    var headers = postContent.querySelectorAll("h1, h2, h3, h4, h5, h6");
-    toc = [];
-    for (var i = 0; i < headers.length; ++i) {
-        var header = headers[i];
-
-        toc.push({
-            level: parseInt(header.tagName.substr(1)),
-            anchor: header.id,
-            title: escapeHtml(header.textContent)
-        });
-    }
-
-    if (toc.length == 0) {
-        setOutlinePanelVisible(false);
-        setVisible(floatingContainer, false);
-        return;
-    }
-
-    var baseLevel = baseLevelOfToc(toc);
-    var tocTree = tocToTree(toPerfectToc(toc, baseLevel), baseLevel);
-
-    outlineContent.innerHTML = tocTree;
-    setOutlinePanelVisible(true);
-    setVisible(floatingContainer, true);
-});
-
-// Return the topest level of @toc, starting from 1.
-var baseLevelOfToc = function(p_toc) {
-    var level = -1;
-    for (i in p_toc) {
-        if (level == -1) {
-            level = p_toc[i].level;
-        } else if (level > p_toc[i].level) {
-            level = p_toc[i].level;
-        }
-    }
-
-    if (level == -1) {
-        level = 1;
-    }
-
-    return level;
-};
-
-// Handle wrong title levels, such as '#' followed by '###'
-var toPerfectToc = function(p_toc, p_baseLevel) {
-    var i;
-    var curLevel = p_baseLevel - 1;
-    var perfToc = [];
-    for (i in p_toc) {
-        var item = p_toc[i];
-
-        // Insert empty header.
-        while (item.level > curLevel + 1) {
-            curLevel += 1;
-            var tmp = { level: curLevel,
-                        anchor: '',
-                        title: '[EMPTY]'
-                      };
-            perfToc.push(tmp);
-        }
-
-        perfToc.push(item);
-        curLevel = item.level;
-    }
-
-    return perfToc;
-};
-
-var itemToHtml = function(item) {
-    return '<a href="#' + item.anchor + '" data="' + item.anchor + '">' + item.title + '</a>';
-};
-
-// Turn a perfect toc to a tree using <ul>
-var tocToTree = function(p_toc, p_baseLevel) {
-    var i;
-    var front = '<li>';
-    var ending = ['</li>'];
-    var curLevel = p_baseLevel;
-    for (i in p_toc) {
-        var item = p_toc[i];
-        if (item.level == curLevel) {
-            front += '</li>';
-            front += '<li>';
-            front += itemToHtml(item);
-        } else if (item.level > curLevel) {
-            // assert(item.level - curLevel == 1)
-            front += '<ul>';
-            ending.push('</ul>');
-            front += '<li>';
-            front += itemToHtml(item);
-            ending.push('</li>');
-            curLevel = item.level;
-        } else {
-            while (item.level < curLevel) {
-                var ele = ending.pop();
-                front += ele;
-                if (ele == '</ul>') {
-                    curLevel--;
-                }
-            }
-            front += '</li>';
-            front += '<li>';
-            front += itemToHtml(item);
-        }
-    }
-    while (ending.length > 0) {
-        front += ending.pop();
-    }
-    front = front.replace("<li></li>", "");
-    front = '<ul>' + front + '</ul>';
-    return front;
-};
-
-var toggleMore = function() {
-    if (toc.length == 0) {
-        return;
-    }
-
-    var p = document.getElementById('floating-more');
-    if (isOutlinePanelVisible()) {
-        p.textContent = '<';
-        setOutlinePanelVisible(false);
-    } else {
-        p.textContent = '>';
-        setOutlinePanelVisible(true);
-    }
-};
-
-window.addEventListener('scroll', function() {
-    if (toc.length == 0 || !isOutlinePanelVisible()) {
-        return;
-    }
-
-    var postContent = document.getElementById('post-content');
-    var scrollTop = document.documentElement.scrollTop
-                    || document.body.scrollTop
-                    || window.pageYOffset;
-    var eles = postContent.querySelectorAll("h1, h2, h3, h4, h5, h6");
-
-    if (eles.length == 0) {
-        return;
-    }
-
-    var idx = -1;
-    var biaScrollTop = scrollTop + 50;
-    for (var i = 0; i < eles.length; ++i) {
-        if (biaScrollTop >= eles[i].offsetTop) {
-            idx = i;
-        } else {
-            break;
-        }
-    }
-
-    var header = '';
-    if (idx != -1) {
-        header = eles[idx].id;
-    }
-
-    highlightItemOnlyInOutline(header);
-});
-
-var highlightItemOnlyInOutline = function(id) {
-    var cl = 'outline-bold';
-    var outlineContent = document.getElementById('outline-content');
-    var eles = outlineContent.querySelectorAll("a");
-    var target = null;
-    for (var i = 0; i < eles.length; ++i) {
-        var ele = eles[i];
-        if (ele.getAttribute('data') == id) {
-            target = ele;
-            ele.classList.add(cl);
-        } else {
-            ele.classList.remove(cl);
-        }
-    }
-
-    // TODO: scroll target into view within the outline panel scroll area.
-};
-
-</script>
-
-
-<!-- HEAD_PLACE_HOLDER -->
-</head>
-<body>
-<div class="container-fluid">
-<div class="row flex-xl-nowrap">
-    <div id="outline-panel" style="display:none;" class="d-none d-md-block d-xl-block col-md-3 col-xl-2 bd-toc">
-        <div id="outline-content" class="section-nav"></div>
-    </div>
-    <div id="post-content" class="col-12 col-md-9 col-xl-10 py-md-3 pl-md-5 bd-content">
-    <h1 id="toc_0">扩展卢卡斯定理<a class="vnote-anchor" href="#toc_0" data-anchor-icon="#"></a></h1>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="author" content="BlueQuantum" />
+  <link rel="icon" type="image/png" sizes="512x512" href="../../Resources/blog.png" />
+  <link rel="stylesheet" type="text/css" href="../../Resources/ArticleTheme.css" />
+  <script src="../../Resources/ArticleJS.js"></script>
+  <script id="MathJax-script" async="" src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.1.2/es5/tex-chtml.js"></script>
+      <title>ExLucas</title>
+  </head>
+
+<body id="write">
+    <h1 id="扩展卢卡斯定理">扩展卢卡斯定理</h1>
 <p>求：</p>
-<x-eqn class="tex-to-render"><mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" display="true" role="presentation" tabindex="0" ctxtmenu_counter="0" style="font-size: 127.3%; position: relative;"><mjx-math display="true" class="MJX-TEX" aria-hidden="true" style="margin-left: 0px; margin-right: 0px;"><mjx-mrow><mjx-texatom texclass="OPEN"><mjx-mo class="mjx-s3"><mjx-c class="mjx-c28 TEX-S3"></mjx-c></mjx-mo></mjx-texatom><mjx-mfrac><mjx-frac type="d" atop="true" delims="true" style="vertical-align: -0.686em;"><mjx-num style="padding-bottom: 0.909em;"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45B TEX-I"></mjx-c></mjx-mi></mjx-num><mjx-den><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45A TEX-I"></mjx-c></mjx-mi></mjx-den></mjx-frac></mjx-mfrac><mjx-texatom texclass="CLOSE"><mjx-mo class="mjx-s3"><mjx-c class="mjx-c29 TEX-S3"></mjx-c></mjx-mo></mjx-texatom></mjx-mrow><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c6D"></mjx-c><mjx-c class="mjx-c6F"></mjx-c><mjx-c class="mjx-c64"></mjx-c></mjx-mo><mjx-mi class="mjx-i" space="4"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi></mjx-math><mjx-assistive-mml role="presentation" unselectable="on" display="block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow data-mjx-texclass="ORD"><mrow data-mjx-texclass="OPEN"><mo minsize="2.047em" maxsize="2.047em">(</mo></mrow><mfrac linethickness="0"><mi>n</mi><mi>m</mi></mfrac><mrow data-mjx-texclass="CLOSE"><mo minsize="2.047em" maxsize="2.047em">)</mo></mrow></mrow><mo>mod</mo><mi>p</mi></math></mjx-assistive-mml></mjx-container></x-eqn><p>其中 <x-eq class="tex-to-render"><mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" role="presentation" tabindex="0" ctxtmenu_counter="1" style="font-size: 127.3%; position: relative;"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi></mjx-math><mjx-assistive-mml role="presentation" unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>p</mi></math></mjx-assistive-mml></mjx-container></x-eq> 不保证为质数。</p>
-<hr>
+<p><span class="math display">\[
+\binom n m \bmod p
+\]</span></p>
+<p>其中 <span class="math inline">\(p\)</span> 不保证为质数。</p>
+<hr />
 <p><strong>前置知识</strong></p>
 <p>中国剩余定理（CRT）</p>
 <p>ExGCD求逆元</p>
 <p>（应该都会吧）</p>
-<hr>
-<p>考虑令 <x-eq class="tex-to-render"><mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" role="presentation" tabindex="0" ctxtmenu_counter="2" style="font-size: 127.3%; position: relative;"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c3D"></mjx-c></mjx-mo><mjx-msubsup space="4"><mjx-mi class="mjx-i" noic="true"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi><mjx-script style="vertical-align: -0.297em;"><mjx-texatom size="s" texclass="ORD"><mjx-msub><mjx-mi class="mjx-i" noic="true"><mjx-c class="mjx-c1D458 TEX-I"></mjx-c></mjx-mi><mjx-script style="vertical-align: -0.15em;"><mjx-mn class="mjx-n" size="s"><mjx-c class="mjx-c31"></mjx-c></mjx-mn></mjx-script></mjx-msub></mjx-texatom><mjx-spacer style="margin-top: 0.18em;"></mjx-spacer><mjx-mn class="mjx-n" size="s"><mjx-c class="mjx-c31"></mjx-c></mjx-mn></mjx-script></mjx-msubsup><mjx-msubsup><mjx-mi class="mjx-i" noic="true"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi><mjx-script style="vertical-align: -0.297em;"><mjx-texatom size="s" texclass="ORD"><mjx-msub><mjx-mi class="mjx-i" noic="true"><mjx-c class="mjx-c1D458 TEX-I"></mjx-c></mjx-mi><mjx-script style="vertical-align: -0.15em;"><mjx-mn class="mjx-n" size="s"><mjx-c class="mjx-c32"></mjx-c></mjx-mn></mjx-script></mjx-msub></mjx-texatom><mjx-spacer style="margin-top: 0.18em;"></mjx-spacer><mjx-mn class="mjx-n" size="s"><mjx-c class="mjx-c32"></mjx-c></mjx-mn></mjx-script></mjx-msubsup><mjx-msubsup><mjx-mi class="mjx-i" noic="true"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi><mjx-script style="vertical-align: -0.297em;"><mjx-texatom size="s" texclass="ORD"><mjx-msub><mjx-mi class="mjx-i" noic="true"><mjx-c class="mjx-c1D458 TEX-I"></mjx-c></mjx-mi><mjx-script style="vertical-align: -0.15em;"><mjx-mn class="mjx-n" size="s"><mjx-c class="mjx-c33"></mjx-c></mjx-mn></mjx-script></mjx-msub></mjx-texatom><mjx-spacer style="margin-top: 0.18em;"></mjx-spacer><mjx-mn class="mjx-n" size="s"><mjx-c class="mjx-c33"></mjx-c></mjx-mn></mjx-script></mjx-msubsup><mjx-mo class="mjx-n" space="2"><mjx-c class="mjx-c2026"></mjx-c></mjx-mo></mjx-math><mjx-assistive-mml role="presentation" unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>p</mi><mo>=</mo><msubsup><mi>p</mi><mn>1</mn><mrow><msub><mi>k</mi><mn>1</mn></msub></mrow></msubsup><msubsup><mi>p</mi><mn>2</mn><mrow><msub><mi>k</mi><mn>2</mn></msub></mrow></msubsup><msubsup><mi>p</mi><mn>3</mn><mrow><msub><mi>k</mi><mn>3</mn></msub></mrow></msubsup><mo>…</mo></math></mjx-assistive-mml></mjx-container></x-eq></p>
+<hr />
+<p>考虑令 <span class="math inline">\(p=p_1^{k_1}p_2^{k_2}p_3^{k_3} \dots\)</span></p>
 <p>原问题转化为求：</p>
-<x-eqn class="tex-to-render"><mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" display="true" role="presentation" tabindex="0" ctxtmenu_counter="3" style="font-size: 127.3%; position: relative;"><mjx-math display="true" class="MJX-TEX" aria-hidden="true" style="margin-left: 0px; margin-right: 0px;"><mjx-mrow><mjx-mo class="mjx-n"><mjx-stretchy-v class="mjx-c7B" style="height: 5.369em; vertical-align: -2.435em;"><mjx-beg><mjx-c></mjx-c></mjx-beg><mjx-ext><mjx-c></mjx-c></mjx-ext><mjx-mid><mjx-c></mjx-c></mjx-mid><mjx-ext><mjx-c></mjx-c></mjx-ext><mjx-end><mjx-c></mjx-c></mjx-end><mjx-mark></mjx-mark></mjx-stretchy-v></mjx-mo><mjx-mtable style="min-width: 5.134em;"><mjx-table><mjx-itable><mjx-mtr><mjx-mtd style="text-align: left; padding-bottom: 0.1em;"><mjx-msubsup><mjx-mi class="mjx-i" noic="true"><mjx-c class="mjx-c1D436 TEX-I"></mjx-c></mjx-mi><mjx-script style="vertical-align: -0.247em;"><mjx-mi class="mjx-i" size="s" style="margin-left: 0.138em;"><mjx-c class="mjx-c1D45A TEX-I"></mjx-c></mjx-mi><mjx-spacer style="margin-top: 0.29em;"></mjx-spacer><mjx-mi class="mjx-i" size="s"><mjx-c class="mjx-c1D45B TEX-I"></mjx-c></mjx-mi></mjx-script></mjx-msubsup><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c6D"></mjx-c><mjx-c class="mjx-c6F"></mjx-c><mjx-c class="mjx-c64"></mjx-c></mjx-mo><mjx-msubsup space="4"><mjx-mi class="mjx-i" noic="true"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi><mjx-script style="vertical-align: -0.297em;"><mjx-texatom size="s" texclass="ORD"><mjx-msub><mjx-mi class="mjx-i" noic="true"><mjx-c class="mjx-c1D458 TEX-I"></mjx-c></mjx-mi><mjx-script style="vertical-align: -0.15em;"><mjx-mn class="mjx-n" size="s"><mjx-c class="mjx-c31"></mjx-c></mjx-mn></mjx-script></mjx-msub></mjx-texatom><mjx-spacer style="margin-top: 0.18em;"></mjx-spacer><mjx-mn class="mjx-n" size="s"><mjx-c class="mjx-c31"></mjx-c></mjx-mn></mjx-script></mjx-msubsup><mjx-tstrut></mjx-tstrut></mjx-mtd></mjx-mtr><mjx-mtr><mjx-mtd style="text-align: left; padding-top: 0.1em; padding-bottom: 0.1em;"><mjx-msubsup><mjx-mi class="mjx-i" noic="true"><mjx-c class="mjx-c1D436 TEX-I"></mjx-c></mjx-mi><mjx-script style="vertical-align: -0.247em;"><mjx-mi class="mjx-i" size="s" style="margin-left: 0.138em;"><mjx-c class="mjx-c1D45A TEX-I"></mjx-c></mjx-mi><mjx-spacer style="margin-top: 0.29em;"></mjx-spacer><mjx-mi class="mjx-i" size="s"><mjx-c class="mjx-c1D45B TEX-I"></mjx-c></mjx-mi></mjx-script></mjx-msubsup><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c6D"></mjx-c><mjx-c class="mjx-c6F"></mjx-c><mjx-c class="mjx-c64"></mjx-c></mjx-mo><mjx-msubsup space="4"><mjx-mi class="mjx-i" noic="true"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi><mjx-script style="vertical-align: -0.297em;"><mjx-texatom size="s" texclass="ORD"><mjx-msub><mjx-mi class="mjx-i" noic="true"><mjx-c class="mjx-c1D458 TEX-I"></mjx-c></mjx-mi><mjx-script style="vertical-align: -0.15em;"><mjx-mn class="mjx-n" size="s"><mjx-c class="mjx-c32"></mjx-c></mjx-mn></mjx-script></mjx-msub></mjx-texatom><mjx-spacer style="margin-top: 0.18em;"></mjx-spacer><mjx-mn class="mjx-n" size="s"><mjx-c class="mjx-c32"></mjx-c></mjx-mn></mjx-script></mjx-msubsup><mjx-tstrut></mjx-tstrut></mjx-mtd></mjx-mtr><mjx-mtr><mjx-mtd style="text-align: left; padding-top: 0.1em; padding-bottom: 0.1em;"><mjx-msubsup><mjx-mi class="mjx-i" noic="true"><mjx-c class="mjx-c1D436 TEX-I"></mjx-c></mjx-mi><mjx-script style="vertical-align: -0.247em;"><mjx-mi class="mjx-i" size="s" style="margin-left: 0.138em;"><mjx-c class="mjx-c1D45A TEX-I"></mjx-c></mjx-mi><mjx-spacer style="margin-top: 0.29em;"></mjx-spacer><mjx-mi class="mjx-i" size="s"><mjx-c class="mjx-c1D45B TEX-I"></mjx-c></mjx-mi></mjx-script></mjx-msubsup><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c6D"></mjx-c><mjx-c class="mjx-c6F"></mjx-c><mjx-c class="mjx-c64"></mjx-c></mjx-mo><mjx-msubsup space="4"><mjx-mi class="mjx-i" noic="true"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi><mjx-script style="vertical-align: -0.297em;"><mjx-texatom size="s" texclass="ORD"><mjx-msub><mjx-mi class="mjx-i" noic="true"><mjx-c class="mjx-c1D458 TEX-I"></mjx-c></mjx-mi><mjx-script style="vertical-align: -0.15em;"><mjx-mn class="mjx-n" size="s"><mjx-c class="mjx-c33"></mjx-c></mjx-mn></mjx-script></mjx-msub></mjx-texatom><mjx-spacer style="margin-top: 0.18em;"></mjx-spacer><mjx-mn class="mjx-n" size="s"><mjx-c class="mjx-c33"></mjx-c></mjx-mn></mjx-script></mjx-msubsup><mjx-tstrut></mjx-tstrut></mjx-mtd></mjx-mtr><mjx-mtr><mjx-mtd style="text-align: left; padding-top: 0.1em;"><mjx-mo class="mjx-n"><mjx-c class="mjx-c22EF"></mjx-c></mjx-mo><mjx-tstrut></mjx-tstrut></mjx-mtd></mjx-mtr></mjx-itable></mjx-table></mjx-mtable><mjx-mo class="mjx-n"></mjx-mo></mjx-mrow></mjx-math><mjx-assistive-mml role="presentation" unselectable="on" display="block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow data-mjx-texclass="INNER"><mo data-mjx-texclass="OPEN">{</mo><mtable columnalign="left left" columnspacing="1em" rowspacing=".2em"><mtr><mtd><msubsup><mi>C</mi><mi>n</mi><mi>m</mi></msubsup><mo>mod</mo><msubsup><mi>p</mi><mn>1</mn><mrow><msub><mi>k</mi><mn>1</mn></msub></mrow></msubsup></mtd></mtr><mtr><mtd><msubsup><mi>C</mi><mi>n</mi><mi>m</mi></msubsup><mo>mod</mo><msubsup><mi>p</mi><mn>2</mn><mrow><msub><mi>k</mi><mn>2</mn></msub></mrow></msubsup></mtd></mtr><mtr><mtd><msubsup><mi>C</mi><mi>n</mi><mi>m</mi></msubsup><mo>mod</mo><msubsup><mi>p</mi><mn>3</mn><mrow><msub><mi>k</mi><mn>3</mn></msub></mrow></msubsup></mtd></mtr><mtr><mtd><mo>⋯</mo></mtd></mtr></mtable><mo data-mjx-texclass="CLOSE" fence="true" stretchy="true" symmetric="true"></mo></mrow></math></mjx-assistive-mml></mjx-container></x-eqn><p>的一个解，使用中国剩余定理合并即可。</p>
-<p>针对其中一个式子 <x-eq class="tex-to-render"><mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" role="presentation" tabindex="0" ctxtmenu_counter="4" style="font-size: 127.3%; position: relative;"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-msubsup><mjx-mi class="mjx-i" noic="true"><mjx-c class="mjx-c1D436 TEX-I"></mjx-c></mjx-mi><mjx-script style="vertical-align: -0.247em;"><mjx-mi class="mjx-i" size="s" style="margin-left: 0.138em;"><mjx-c class="mjx-c1D45A TEX-I"></mjx-c></mjx-mi><mjx-spacer style="margin-top: 0.29em;"></mjx-spacer><mjx-mi class="mjx-i" size="s"><mjx-c class="mjx-c1D45B TEX-I"></mjx-c></mjx-mi></mjx-script></mjx-msubsup><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c6D"></mjx-c><mjx-c class="mjx-c6F"></mjx-c><mjx-c class="mjx-c64"></mjx-c></mjx-mo><mjx-msup space="4"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi><mjx-script style="vertical-align: 0.363em;"><mjx-texatom size="s" texclass="ORD"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D458 TEX-I"></mjx-c></mjx-mi></mjx-texatom></mjx-script></mjx-msup></mjx-math><mjx-assistive-mml role="presentation" unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><msubsup><mi>C</mi><mi>n</mi><mi>m</mi></msubsup><mo>mod</mo><msup><mi>p</mi><mrow><mi>k</mi></mrow></msup></math></mjx-assistive-mml></mjx-container></x-eq> 即 <x-eq class="tex-to-render"><mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" role="presentation" tabindex="0" ctxtmenu_counter="5" style="font-size: 127.3%; position: relative;"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-mfrac><mjx-frac><mjx-num><mjx-nstrut></mjx-nstrut><mjx-mrow size="s"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45B TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c21"></mjx-c></mjx-mo></mjx-mrow></mjx-num><mjx-dbox><mjx-dtable><mjx-line></mjx-line><mjx-row><mjx-den><mjx-dstrut></mjx-dstrut><mjx-mrow size="s"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45A TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c21"></mjx-c></mjx-mo><mjx-mo class="mjx-n"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45B TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c2212"></mjx-c></mjx-mo><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45A TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo><mjx-mo class="mjx-n"><mjx-c class="mjx-c21"></mjx-c></mjx-mo></mjx-mrow></mjx-den></mjx-row></mjx-dtable></mjx-dbox></mjx-frac></mjx-mfrac><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c6D"></mjx-c><mjx-c class="mjx-c6F"></mjx-c><mjx-c class="mjx-c64"></mjx-c></mjx-mo><mjx-msup space="4"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi><mjx-script style="vertical-align: 0.363em;"><mjx-mi class="mjx-i" size="s"><mjx-c class="mjx-c1D458 TEX-I"></mjx-c></mjx-mi></mjx-script></mjx-msup></mjx-math><mjx-assistive-mml role="presentation" unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mrow><mi>n</mi><mo>!</mo></mrow><mrow><mi>m</mi><mo>!</mo><mo stretchy="false">(</mo><mi>n</mi><mo>−</mo><mi>m</mi><mo stretchy="false">)</mo><mo>!</mo></mrow></mfrac><mo>mod</mo><msup><mi>p</mi><mi>k</mi></msup></math></mjx-assistive-mml></mjx-container></x-eq> ，使用求逆元的方法是不行的，因为 <x-eq class="tex-to-render"><mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" role="presentation" tabindex="0" ctxtmenu_counter="6" style="font-size: 127.3%; position: relative;"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi></mjx-math><mjx-assistive-mml role="presentation" unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>p</mi></math></mjx-assistive-mml></mjx-container></x-eq> 不保证为质数， <x-eq class="tex-to-render"><mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" role="presentation" tabindex="0" ctxtmenu_counter="7" style="font-size: 127.3%; position: relative;"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45A TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c21"></mjx-c></mjx-mo><mjx-mo class="mjx-n"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45B TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n" space="3"><mjx-c class="mjx-c2212"></mjx-c></mjx-mo><mjx-mi class="mjx-i" space="3"><mjx-c class="mjx-c1D45A TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo><mjx-mo class="mjx-n"><mjx-c class="mjx-c21"></mjx-c></mjx-mo></mjx-math><mjx-assistive-mml role="presentation" unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>m</mi><mo>!</mo><mo stretchy="false">(</mo><mi>n</mi><mo>−</mo><mi>m</mi><mo stretchy="false">)</mo><mo>!</mo></math></mjx-assistive-mml></mjx-container></x-eq> 可能不存在逆元。</p>
-<p>设 <x-eq class="tex-to-render"><mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" role="presentation" tabindex="0" ctxtmenu_counter="8" style="font-size: 127.3%; position: relative;"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D453 TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45B TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c3D"></mjx-c></mjx-mo><mjx-mi class="mjx-i" space="4"><mjx-c class="mjx-c1D45B TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c21"></mjx-c></mjx-mo><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c6D"></mjx-c><mjx-c class="mjx-c6F"></mjx-c><mjx-c class="mjx-c64"></mjx-c></mjx-mo><mjx-msup space="4"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi><mjx-script style="vertical-align: 0.363em;"><mjx-mi class="mjx-i" size="s"><mjx-c class="mjx-c1D458 TEX-I"></mjx-c></mjx-mi></mjx-script></mjx-msup></mjx-math><mjx-assistive-mml role="presentation" unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>f</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo><mo>=</mo><mi>n</mi><mo>!</mo><mo>mod</mo><msup><mi>p</mi><mi>k</mi></msup></math></mjx-assistive-mml></mjx-container></x-eq> ，进一步考虑，既然不互质，那就把他们的公因子都约掉，我们把阶乘展开看一看：</p>
-<x-eqn class="tex-to-render"><mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" display="true" role="presentation" tabindex="0" ctxtmenu_counter="9" style="font-size: 127.3%; position: relative;"><mjx-math display="true" class="MJX-TEX" aria-hidden="true" style="margin-left: 0px; margin-right: 0px;"><mjx-mtable style="min-width: 29.533em;"><mjx-table><mjx-itable><mjx-mtr><mjx-mtd style="text-align: right; padding-right: 0px; padding-bottom: 0.15em;"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45B TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c21"></mjx-c></mjx-mo><mjx-tstrut></mjx-tstrut></mjx-mtd><mjx-mtd style="text-align: left; padding-left: 0px; padding-bottom: 0.15em;"><mjx-mi class="mjx-n"></mjx-mi><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c3D"></mjx-c></mjx-mo><mjx-mn class="mjx-n" space="4"><mjx-c class="mjx-c31"></mjx-c></mjx-mn><mjx-mo class="mjx-n" space="3"><mjx-c class="mjx-cD7"></mjx-c></mjx-mo><mjx-mn class="mjx-n" space="3"><mjx-c class="mjx-c32"></mjx-c></mjx-mn><mjx-mo class="mjx-n" space="3"><mjx-c class="mjx-cD7"></mjx-c></mjx-mo><mjx-mn class="mjx-n" space="3"><mjx-c class="mjx-c33"></mjx-c></mjx-mn><mjx-mo class="mjx-n" space="2"><mjx-c class="mjx-c22EF"></mjx-c></mjx-mo><mjx-mi class="mjx-i" space="2"><mjx-c class="mjx-c1D45B TEX-I"></mjx-c></mjx-mi><mjx-tstrut></mjx-tstrut></mjx-mtd></mjx-mtr><mjx-mtr><mjx-mtd style="text-align: right; padding-right: 0px; padding-top: 0.15em; padding-bottom: 0.15em;"><mjx-tstrut></mjx-tstrut></mjx-mtd><mjx-mtd style="text-align: left; padding-left: 0px; padding-top: 0.15em; padding-bottom: 0.15em;"><mjx-mi class="mjx-n"></mjx-mi><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c3D"></mjx-c></mjx-mo><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n" space="3"><mjx-c class="mjx-c22C5"></mjx-c></mjx-mo><mjx-mn class="mjx-n" space="3"><mjx-c class="mjx-c32"></mjx-c></mjx-mn><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n" space="3"><mjx-c class="mjx-c22C5"></mjx-c></mjx-mo><mjx-mn class="mjx-n" space="3"><mjx-c class="mjx-c33"></mjx-c></mjx-mn><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n" space="2"><mjx-c class="mjx-c22EF"></mjx-c></mjx-mo><mjx-mo class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo><mjx-mo class="mjx-n" space="3"><mjx-c class="mjx-c22C5"></mjx-c></mjx-mo><mjx-mo class="mjx-n" space="3"><mjx-c class="mjx-c5B"></mjx-c></mjx-mo><mjx-mn class="mjx-n"><mjx-c class="mjx-c31"></mjx-c></mjx-mn><mjx-mo class="mjx-n" space="3"><mjx-c class="mjx-cD7"></mjx-c></mjx-mo><mjx-mn class="mjx-n" space="3"><mjx-c class="mjx-c32"></mjx-c></mjx-mn><mjx-mo class="mjx-n" space="3"><mjx-c class="mjx-cD7"></mjx-c></mjx-mo><mjx-mn class="mjx-n" space="3"><mjx-c class="mjx-c33"></mjx-c></mjx-mn><mjx-mo class="mjx-n" space="2"><mjx-c class="mjx-c22EF"></mjx-c></mjx-mo><mjx-mo class="mjx-n" space="2"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n" space="3"><mjx-c class="mjx-c2212"></mjx-c></mjx-mo><mjx-mn class="mjx-n" space="3"><mjx-c class="mjx-c31"></mjx-c></mjx-mn><mjx-mo class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo><mjx-mo class="mjx-n" space="3"><mjx-c class="mjx-c22C5"></mjx-c></mjx-mo><mjx-mo class="mjx-n" space="3"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n" space="3"><mjx-c class="mjx-c2B"></mjx-c></mjx-mo><mjx-mn class="mjx-n" space="3"><mjx-c class="mjx-c31"></mjx-c></mjx-mn><mjx-mo class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo><mjx-mo class="mjx-n" space="3"><mjx-c class="mjx-c22C5"></mjx-c></mjx-mo><mjx-mo class="mjx-n" space="3"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n" space="3"><mjx-c class="mjx-c2B"></mjx-c></mjx-mo><mjx-mn class="mjx-n" space="3"><mjx-c class="mjx-c32"></mjx-c></mjx-mn><mjx-mo class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo><mjx-mo class="mjx-n" space="2"><mjx-c class="mjx-c22EF"></mjx-c></mjx-mo><mjx-mo class="mjx-n"><mjx-c class="mjx-c5D"></mjx-c></mjx-mo><mjx-tstrut></mjx-tstrut></mjx-mtd></mjx-mtr><mjx-mtr><mjx-mtd style="text-align: right; padding-right: 0px; padding-top: 0.15em; padding-bottom: 0.15em;"><mjx-tstrut></mjx-tstrut></mjx-mtd><mjx-mtd style="text-align: left; padding-left: 0px; padding-top: 0.15em; padding-bottom: 0.15em;"><mjx-mi class="mjx-n"></mjx-mi><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c3D"></mjx-c></mjx-mo><mjx-msup space="4"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi><mjx-script style="vertical-align: 0.451em;"><mjx-texatom size="s" texclass="ORD"><mjx-mo class="mjx-n"><mjx-c class="mjx-c230A"></mjx-c></mjx-mo><mjx-mfrac><mjx-frac><mjx-num><mjx-nstrut></mjx-nstrut><mjx-mi class="mjx-i" size="s"><mjx-c class="mjx-c1D45B TEX-I"></mjx-c></mjx-mi></mjx-num><mjx-dbox><mjx-dtable><mjx-line></mjx-line><mjx-row><mjx-den><mjx-dstrut></mjx-dstrut><mjx-mi class="mjx-i" size="s"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi></mjx-den></mjx-row></mjx-dtable></mjx-dbox></mjx-frac></mjx-mfrac><mjx-mo class="mjx-n"><mjx-c class="mjx-c230B"></mjx-c></mjx-mo></mjx-texatom></mjx-script></mjx-msup><mjx-mo class="mjx-n"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mn class="mjx-n"><mjx-c class="mjx-c31"></mjx-c></mjx-mn><mjx-mo class="mjx-n" space="3"><mjx-c class="mjx-cD7"></mjx-c></mjx-mo><mjx-mn class="mjx-n" space="3"><mjx-c class="mjx-c32"></mjx-c></mjx-mn><mjx-mo class="mjx-n" space="3"><mjx-c class="mjx-cD7"></mjx-c></mjx-mo><mjx-mn class="mjx-n" space="3"><mjx-c class="mjx-c33"></mjx-c></mjx-mn><mjx-mo class="mjx-n" space="2"><mjx-c class="mjx-c22EF"></mjx-c></mjx-mo><mjx-mo class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo><mjx-mo class="mjx-n" space="3"><mjx-c class="mjx-c22C5"></mjx-c></mjx-mo><mjx-mo class="mjx-n" space="3"><mjx-c class="mjx-c5B"></mjx-c></mjx-mo><mjx-mn class="mjx-n"><mjx-c class="mjx-c31"></mjx-c></mjx-mn><mjx-mo class="mjx-n" space="3"><mjx-c class="mjx-cD7"></mjx-c></mjx-mo><mjx-mn class="mjx-n" space="3"><mjx-c class="mjx-c32"></mjx-c></mjx-mn><mjx-mo class="mjx-n" space="3"><mjx-c class="mjx-cD7"></mjx-c></mjx-mo><mjx-mn class="mjx-n" space="3"><mjx-c class="mjx-c33"></mjx-c></mjx-mn><mjx-mo class="mjx-n" space="2"><mjx-c class="mjx-c22EF"></mjx-c></mjx-mo><mjx-mo class="mjx-n" space="2"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n" space="3"><mjx-c class="mjx-c2212"></mjx-c></mjx-mo><mjx-mn class="mjx-n" space="3"><mjx-c class="mjx-c31"></mjx-c></mjx-mn><mjx-mo class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo><mjx-mo class="mjx-n"><mjx-c class="mjx-c5D"></mjx-c></mjx-mo><mjx-mo class="mjx-n" space="3"><mjx-c class="mjx-c22C5"></mjx-c></mjx-mo><mjx-mo class="mjx-n" space="3"><mjx-c class="mjx-c5B"></mjx-c></mjx-mo><mjx-mo class="mjx-n"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n" space="3"><mjx-c class="mjx-c2B"></mjx-c></mjx-mo><mjx-mn class="mjx-n" space="3"><mjx-c class="mjx-c31"></mjx-c></mjx-mn><mjx-mo class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo><mjx-mo class="mjx-n" space="3"><mjx-c class="mjx-c22C5"></mjx-c></mjx-mo><mjx-mo class="mjx-n" space="3"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n" space="3"><mjx-c class="mjx-c2B"></mjx-c></mjx-mo><mjx-mn class="mjx-n" space="3"><mjx-c class="mjx-c32"></mjx-c></mjx-mn><mjx-mo class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo><mjx-mo class="mjx-n" space="2"><mjx-c class="mjx-c22EF"></mjx-c></mjx-mo><mjx-mo class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo><mjx-mo class="mjx-n"><mjx-c class="mjx-c5D"></mjx-c></mjx-mo><mjx-tstrut></mjx-tstrut></mjx-mtd></mjx-mtr><mjx-mtr><mjx-mtd style="text-align: right; padding-right: 0px; padding-top: 0.15em; padding-bottom: 0.15em;"><mjx-tstrut></mjx-tstrut></mjx-mtd><mjx-mtd style="text-align: left; padding-left: 0px; padding-top: 0.15em; padding-bottom: 0.15em;"><mjx-mtext class="mjx-n"><mjx-utext variant="normal" style="font-size: 78.6%; padding: 0.954em 0px 0.255em; font-family: MJXZERO, serif;">注</mjx-utext><mjx-utext variant="normal" style="font-size: 78.6%; padding: 0.954em 0px 0.255em; font-family: MJXZERO, serif;">意</mjx-utext><mjx-utext variant="normal" style="font-size: 78.6%; padding: 0.954em 0px 0.255em; font-family: MJXZERO, serif;">，</mjx-utext><mjx-utext variant="normal" style="font-size: 78.6%; padding: 0.954em 0px 0.255em; font-family: MJXZERO, serif;">这</mjx-utext><mjx-utext variant="normal" style="font-size: 78.6%; padding: 0.954em 0px 0.255em; font-family: MJXZERO, serif;">里</mjx-utext><mjx-utext variant="normal" style="font-size: 78.6%; padding: 0.954em 0px 0.255em; font-family: MJXZERO, serif;">很</mjx-utext><mjx-utext variant="normal" style="font-size: 78.6%; padding: 0.954em 0px 0.255em; font-family: MJXZERO, serif;">重</mjx-utext><mjx-utext variant="normal" style="font-size: 78.6%; padding: 0.954em 0px 0.255em; font-family: MJXZERO, serif;">要</mjx-utext><mjx-utext variant="normal" style="font-size: 78.6%; padding: 0.954em 0px 0.255em; font-family: MJXZERO, serif;">！</mjx-utext><mjx-utext variant="normal" style="font-size: 78.6%; padding: 0.954em 0px 0.255em; font-family: MJXZERO, serif;">！</mjx-utext><mjx-utext variant="normal" style="font-size: 78.6%; padding: 0.954em 0px 0.255em; font-family: MJXZERO, serif;">！</mjx-utext></mjx-mtext><mjx-tstrut></mjx-tstrut></mjx-mtd></mjx-mtr><mjx-mtr><mjx-mtd style="text-align: right; padding-right: 0px; padding-top: 0.15em; padding-bottom: 0.15em;"><mjx-tstrut></mjx-tstrut></mjx-mtd><mjx-mtd style="text-align: left; padding-left: 0px; padding-top: 0.15em; padding-bottom: 0.15em;"><mjx-mi class="mjx-n"></mjx-mi><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c3D"></mjx-c></mjx-mo><mjx-mstyle size="lg" space="4"><mjx-msup><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi><mjx-script style="vertical-align: 0.451em;"><mjx-texatom size="s" texclass="ORD"><mjx-mo class="mjx-n"><mjx-c class="mjx-c230A"></mjx-c></mjx-mo><mjx-mfrac><mjx-frac><mjx-num><mjx-nstrut></mjx-nstrut><mjx-mi class="mjx-i" size="s"><mjx-c class="mjx-c1D45B TEX-I"></mjx-c></mjx-mi></mjx-num><mjx-dbox><mjx-dtable><mjx-line></mjx-line><mjx-row><mjx-den><mjx-dstrut></mjx-dstrut><mjx-mi class="mjx-i" size="s"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi></mjx-den></mjx-row></mjx-dtable></mjx-dbox></mjx-frac></mjx-mfrac><mjx-mo class="mjx-n"><mjx-c class="mjx-c230B"></mjx-c></mjx-mo></mjx-texatom></mjx-script></mjx-msup><mjx-mo class="mjx-n"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mfrac><mjx-frac type="d"><mjx-num><mjx-nstrut type="d"></mjx-nstrut><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45B TEX-I"></mjx-c></mjx-mi></mjx-num><mjx-dbox><mjx-dtable><mjx-line type="d"></mjx-line><mjx-row><mjx-den><mjx-dstrut type="d"></mjx-dstrut><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi></mjx-den></mjx-row></mjx-dtable></mjx-dbox></mjx-frac></mjx-mfrac><mjx-mo class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo><mjx-mo class="mjx-n"><mjx-c class="mjx-c21"></mjx-c></mjx-mo><mjx-munderover space="2"><mjx-over style="padding-bottom: 0.192em; padding-left: 0.427em;"><mjx-mi class="mjx-i" size="s"><mjx-c class="mjx-c1D45B TEX-I"></mjx-c></mjx-mi></mjx-over><mjx-box><mjx-munder><mjx-row><mjx-base><mjx-mo class="mjx-lop"><mjx-c class="mjx-c220F TEX-S2"></mjx-c></mjx-mo></mjx-base></mjx-row><mjx-row><mjx-under style="padding-top: 0.167em; padding-left: 0.234em;"><mjx-texatom size="s" texclass="ORD"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c2224 TEX-A"></mjx-c></mjx-mo><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D456 TEX-I"></mjx-c></mjx-mi></mjx-texatom></mjx-under></mjx-row></mjx-munder></mjx-box></mjx-munderover><mjx-mi class="mjx-i" space="2"><mjx-c class="mjx-c1D456 TEX-I"></mjx-c></mjx-mi></mjx-mstyle><mjx-tstrut></mjx-tstrut></mjx-mtd></mjx-mtr><mjx-mtr><mjx-mtd style="text-align: right; padding-right: 0px; padding-top: 0.15em;"><mjx-tstrut></mjx-tstrut></mjx-mtd><mjx-mtd style="text-align: left; padding-left: 0px; padding-top: 0.15em;"><mjx-mi class="mjx-n"></mjx-mi><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c3D"></mjx-c></mjx-mo><mjx-mstyle size="lg" space="4"><mjx-msup><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi><mjx-script style="vertical-align: 0.451em;"><mjx-texatom size="s" texclass="ORD"><mjx-mo class="mjx-n"><mjx-c class="mjx-c230A"></mjx-c></mjx-mo><mjx-mfrac><mjx-frac><mjx-num><mjx-nstrut></mjx-nstrut><mjx-mi class="mjx-i" size="s"><mjx-c class="mjx-c1D45B TEX-I"></mjx-c></mjx-mi></mjx-num><mjx-dbox><mjx-dtable><mjx-line></mjx-line><mjx-row><mjx-den><mjx-dstrut></mjx-dstrut><mjx-mi class="mjx-i" size="s"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi></mjx-den></mjx-row></mjx-dtable></mjx-dbox></mjx-frac></mjx-mfrac><mjx-mo class="mjx-n"><mjx-c class="mjx-c230B"></mjx-c></mjx-mo></mjx-texatom></mjx-script></mjx-msup><mjx-mo class="mjx-n"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mfrac><mjx-frac type="d"><mjx-num><mjx-nstrut type="d"></mjx-nstrut><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45B TEX-I"></mjx-c></mjx-mi></mjx-num><mjx-dbox><mjx-dtable><mjx-line type="d"></mjx-line><mjx-row><mjx-den><mjx-dstrut type="d"></mjx-dstrut><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi></mjx-den></mjx-row></mjx-dtable></mjx-dbox></mjx-frac></mjx-mfrac><mjx-mo class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo><mjx-mo class="mjx-n"><mjx-c class="mjx-c21"></mjx-c></mjx-mo><mjx-mo class="mjx-n"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-munderover><mjx-over style="padding-bottom: 0.111em; padding-left: 0.313em;"><mjx-texatom size="s" texclass="ORD"><mjx-msup><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi><mjx-script style="vertical-align: 0.363em;"><mjx-mi class="mjx-i" size="s"><mjx-c class="mjx-c1D458 TEX-I"></mjx-c></mjx-mi></mjx-script></mjx-msup></mjx-texatom></mjx-over><mjx-box><mjx-munder><mjx-row><mjx-base><mjx-mo class="mjx-lop"><mjx-c class="mjx-c220F TEX-S2"></mjx-c></mjx-mo></mjx-base></mjx-row><mjx-row><mjx-under style="padding-top: 0.167em; padding-left: 0.234em;"><mjx-texatom size="s" texclass="ORD"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c2224 TEX-A"></mjx-c></mjx-mo><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D456 TEX-I"></mjx-c></mjx-mi></mjx-texatom></mjx-under></mjx-row></mjx-munder></mjx-box></mjx-munderover><mjx-mi class="mjx-i" space="2"><mjx-c class="mjx-c1D456 TEX-I"></mjx-c></mjx-mi><mjx-msup><mjx-mo class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo><mjx-script style="vertical-align: 0.586em;"><mjx-texatom size="s" texclass="ORD"><mjx-mfrac><mjx-frac><mjx-num><mjx-nstrut></mjx-nstrut><mjx-mi class="mjx-i" size="s"><mjx-c class="mjx-c1D45B TEX-I"></mjx-c></mjx-mi></mjx-num><mjx-dbox><mjx-dtable><mjx-line></mjx-line><mjx-row><mjx-den><mjx-dstrut></mjx-dstrut><mjx-msup size="s"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi><mjx-script style="vertical-align: 0.289em;"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D458 TEX-I"></mjx-c></mjx-mi></mjx-script></mjx-msup></mjx-den></mjx-row></mjx-dtable></mjx-dbox></mjx-frac></mjx-mfrac></mjx-texatom></mjx-script></mjx-msup><mjx-mtext class="mjx-n"><mjx-c class="mjx-c72"></mjx-c><mjx-c class="mjx-c65"></mjx-c><mjx-c class="mjx-c73"></mjx-c><mjx-c class="mjx-c74"></mjx-c></mjx-mtext></mjx-mstyle><mjx-tstrut></mjx-tstrut></mjx-mtd></mjx-mtr></mjx-itable></mjx-table></mjx-mtable></mjx-math><mjx-assistive-mml role="presentation" unselectable="on" display="block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mtable displaystyle="true" columnalign="right left right left right left right left right left right left" columnspacing="0em 2em 0em 2em 0em 2em 0em 2em 0em 2em 0em" rowspacing="3pt"><mtr><mtd><mi>n</mi><mo>!</mo></mtd><mtd><mi></mi><mo>=</mo><mn>1</mn><mo>×</mo><mn>2</mn><mo>×</mo><mn>3</mn><mo>⋯</mo><mi>n</mi></mtd></mtr><mtr><mtd></mtd><mtd><mi></mi><mo>=</mo><mo stretchy="false">(</mo><mi>p</mi><mo>⋅</mo><mn>2</mn><mi>p</mi><mo>⋅</mo><mn>3</mn><mi>p</mi><mo>⋯</mo><mo stretchy="false">)</mo><mo>⋅</mo><mo stretchy="false">[</mo><mn>1</mn><mo>×</mo><mn>2</mn><mo>×</mo><mn>3</mn><mo>⋯</mo><mo stretchy="false">(</mo><mi>p</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><mo>⋅</mo><mo stretchy="false">(</mo><mi>p</mi><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo><mo>⋅</mo><mo stretchy="false">(</mo><mi>p</mi><mo>+</mo><mn>2</mn><mo stretchy="false">)</mo><mo>⋯</mo><mo stretchy="false">]</mo></mtd></mtr><mtr><mtd></mtd><mtd><mi></mi><mo>=</mo><msup><mi>p</mi><mrow><mo fence="false" stretchy="false">⌊</mo><mfrac><mi>n</mi><mi>p</mi></mfrac><mo fence="false" stretchy="false">⌋</mo></mrow></msup><mo stretchy="false">(</mo><mn>1</mn><mo>×</mo><mn>2</mn><mo>×</mo><mn>3</mn><mo>⋯</mo><mo stretchy="false">)</mo><mo>⋅</mo><mo stretchy="false">[</mo><mn>1</mn><mo>×</mo><mn>2</mn><mo>×</mo><mn>3</mn><mo>⋯</mo><mo stretchy="false">(</mo><mi>p</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><mo stretchy="false">]</mo><mo>⋅</mo><mo stretchy="false">[</mo><mo stretchy="false">(</mo><mi>p</mi><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo><mo>⋅</mo><mo stretchy="false">(</mo><mi>p</mi><mo>+</mo><mn>2</mn><mo stretchy="false">)</mo><mo>⋯</mo><mo stretchy="false">)</mo><mo stretchy="false">]</mo></mtd></mtr><mtr><mtd></mtd><mtd><mtext>注意，这里很重要！！！</mtext></mtd></mtr><mtr><mtd></mtd><mtd><mi></mi><mo>=</mo><mstyle mathsize="1.2em"><msup><mi>p</mi><mrow><mo fence="false" stretchy="false">⌊</mo><mfrac><mi>n</mi><mi>p</mi></mfrac><mo fence="false" stretchy="false">⌋</mo></mrow></msup><mo stretchy="false">(</mo><mfrac><mi>n</mi><mi>p</mi></mfrac><mo stretchy="false">)</mo><mo>!</mo><munderover><mo data-mjx-texclass="OP">∏</mo><mrow><mi>p</mi><mo>∤</mo><mi>i</mi></mrow><mi>n</mi></munderover><mi>i</mi></mstyle></mtd></mtr><mtr><mtd></mtd><mtd><mi></mi><mo>=</mo><mstyle mathsize="1.2em"><msup><mi>p</mi><mrow><mo fence="false" stretchy="false">⌊</mo><mfrac><mi>n</mi><mi>p</mi></mfrac><mo fence="false" stretchy="false">⌋</mo></mrow></msup><mo stretchy="false">(</mo><mfrac><mi>n</mi><mi>p</mi></mfrac><mo stretchy="false">)</mo><mo>!</mo><mo stretchy="false">(</mo><munderover><mo data-mjx-texclass="OP">∏</mo><mrow><mi>p</mi><mo>∤</mo><mi>i</mi></mrow><mrow><msup><mi>p</mi><mi>k</mi></msup></mrow></munderover><mi>i</mi><msup><mo stretchy="false">)</mo><mrow><mfrac><mi>n</mi><msup><mi>p</mi><mi>k</mi></msup></mfrac></mrow></msup><mtext>rest</mtext></mstyle></mtd></mtr></mtable></math></mjx-assistive-mml></mjx-container></x-eqn><p>其中 <x-eq class="tex-to-render"><mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" role="presentation" tabindex="0" ctxtmenu_counter="10" style="font-size: 127.3%; position: relative;"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-mtext class="mjx-n"><mjx-c class="mjx-c72"></mjx-c><mjx-c class="mjx-c65"></mjx-c><mjx-c class="mjx-c73"></mjx-c><mjx-c class="mjx-c74"></mjx-c></mjx-mtext></mjx-math><mjx-assistive-mml role="presentation" unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mtext>rest</mtext></math></mjx-assistive-mml></mjx-container></x-eq> 是指最后不够一整段 <x-eq class="tex-to-render"><mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" role="presentation" tabindex="0" ctxtmenu_counter="11" style="font-size: 127.3%; position: relative;"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-msup><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi><mjx-script style="vertical-align: 0.363em;"><mjx-mi class="mjx-i" size="s"><mjx-c class="mjx-c1D458 TEX-I"></mjx-c></mjx-mi></mjx-script></mjx-msup></mjx-math><mjx-assistive-mml role="presentation" unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>p</mi><mi>k</mi></msup></math></mjx-assistive-mml></mjx-container></x-eq> 的剩下的项， <x-eq class="tex-to-render"><mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" role="presentation" tabindex="0" ctxtmenu_counter="12" style="font-size: 127.3%; position: relative;"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-mstyle><mjx-mstyle size="lg"><mjx-mo class="mjx-n"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-munderover><mjx-over style="padding-bottom: 0.111em; padding-left: 0.313em;"><mjx-texatom size="s" texclass="ORD"><mjx-msup><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi><mjx-script style="vertical-align: 0.363em;"><mjx-mi class="mjx-i" size="s"><mjx-c class="mjx-c1D458 TEX-I"></mjx-c></mjx-mi></mjx-script></mjx-msup></mjx-texatom></mjx-over><mjx-box><mjx-munder><mjx-row><mjx-base><mjx-mo class="mjx-lop"><mjx-c class="mjx-c220F TEX-S2"></mjx-c></mjx-mo></mjx-base></mjx-row><mjx-row><mjx-under style="padding-top: 0.167em; padding-left: 0.234em;"><mjx-texatom size="s" texclass="ORD"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c2224 TEX-A"></mjx-c></mjx-mo><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D456 TEX-I"></mjx-c></mjx-mi></mjx-texatom></mjx-under></mjx-row></mjx-munder></mjx-box></mjx-munderover><mjx-mi class="mjx-i" space="2"><mjx-c class="mjx-c1D456 TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo></mjx-mstyle></mjx-mstyle></mjx-math><mjx-assistive-mml role="presentation" unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle displaystyle="true" scriptlevel="0"><mstyle mathsize="1.2em"><mo stretchy="false">(</mo><munderover><mo data-mjx-texclass="OP">∏</mo><mrow><mi>p</mi><mo>∤</mo><mi>i</mi></mrow><mrow><msup><mi>p</mi><mi>k</mi></msup></mrow></munderover><mi>i</mi><mo stretchy="false">)</mo></mstyle></mstyle></math></mjx-assistive-mml></mjx-container></x-eq> 是在 <x-eq class="tex-to-render"><mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" role="presentation" tabindex="0" ctxtmenu_counter="13" style="font-size: 127.3%; position: relative;"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-mo class="mjx-n"><mjx-c class="mjx-c6D"></mjx-c><mjx-c class="mjx-c6F"></mjx-c><mjx-c class="mjx-c64"></mjx-c></mjx-mo><mjx-msup space="4"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi><mjx-script style="vertical-align: 0.363em;"><mjx-mi class="mjx-i" size="s"><mjx-c class="mjx-c1D458 TEX-I"></mjx-c></mjx-mi></mjx-script></mjx-msup></mjx-math><mjx-assistive-mml role="presentation" unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>mod</mo><msup><mi>p</mi><mi>k</mi></msup></math></mjx-assistive-mml></mjx-container></x-eq> 意义下的一个循环节，这样的循环节有 <x-eq class="tex-to-render"><mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" role="presentation" tabindex="0" ctxtmenu_counter="14" style="font-size: 127.3%; position: relative;"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-mfrac><mjx-frac><mjx-num><mjx-nstrut></mjx-nstrut><mjx-mi class="mjx-i" size="s"><mjx-c class="mjx-c1D45B TEX-I"></mjx-c></mjx-mi></mjx-num><mjx-dbox><mjx-dtable><mjx-line></mjx-line><mjx-row><mjx-den><mjx-dstrut></mjx-dstrut><mjx-msup size="s"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi><mjx-script style="vertical-align: 0.289em;"><mjx-mi class="mjx-i" size="s"><mjx-c class="mjx-c1D458 TEX-I"></mjx-c></mjx-mi></mjx-script></mjx-msup></mjx-den></mjx-row></mjx-dtable></mjx-dbox></mjx-frac></mjx-mfrac></mjx-math><mjx-assistive-mml role="presentation" unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mi>n</mi><msup><mi>p</mi><mi>k</mi></msup></mfrac></math></mjx-assistive-mml></mjx-container></x-eq> 个。</p>
-<p>每这样一次，我们都可以从阶乘提取出 <x-eq class="tex-to-render"><mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" role="presentation" tabindex="0" ctxtmenu_counter="15" style="font-size: 127.3%; position: relative;"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-msup><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi><mjx-script style="vertical-align: 0.451em;"><mjx-texatom size="s" texclass="ORD"><mjx-mo class="mjx-n"><mjx-c class="mjx-c230A"></mjx-c></mjx-mo><mjx-mfrac><mjx-frac><mjx-num><mjx-nstrut></mjx-nstrut><mjx-mi class="mjx-i" size="s"><mjx-c class="mjx-c1D45B TEX-I"></mjx-c></mjx-mi></mjx-num><mjx-dbox><mjx-dtable><mjx-line></mjx-line><mjx-row><mjx-den><mjx-dstrut></mjx-dstrut><mjx-mi class="mjx-i" size="s"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi></mjx-den></mjx-row></mjx-dtable></mjx-dbox></mjx-frac></mjx-mfrac><mjx-mo class="mjx-n"><mjx-c class="mjx-c230B"></mjx-c></mjx-mo></mjx-texatom></mjx-script></mjx-msup></mjx-math><mjx-assistive-mml role="presentation" unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>p</mi><mrow><mo fence="false" stretchy="false">⌊</mo><mfrac><mi>n</mi><mi>p</mi></mfrac><mo fence="false" stretchy="false">⌋</mo></mrow></msup></math></mjx-assistive-mml></mjx-container></x-eq> 这个因子，并把原问题变为一个规模更小的问题 <x-eq class="tex-to-render"><mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" role="presentation" tabindex="0" ctxtmenu_counter="16" style="font-size: 127.3%; position: relative;"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D453 TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mfrac><mjx-frac><mjx-num><mjx-nstrut></mjx-nstrut><mjx-mi class="mjx-i" size="s"><mjx-c class="mjx-c1D45B TEX-I"></mjx-c></mjx-mi></mjx-num><mjx-dbox><mjx-dtable><mjx-line></mjx-line><mjx-row><mjx-den><mjx-dstrut></mjx-dstrut><mjx-mi class="mjx-i" size="s"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi></mjx-den></mjx-row></mjx-dtable></mjx-dbox></mjx-frac></mjx-mfrac><mjx-mo class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo></mjx-math><mjx-assistive-mml role="presentation" unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>f</mi><mo stretchy="false">(</mo><mfrac><mi>n</mi><mi>p</mi></mfrac><mo stretchy="false">)</mo></math></mjx-assistive-mml></mjx-container></x-eq> ，可以递归进行，并在过程中累加 <x-eq class="tex-to-render"><mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" role="presentation" tabindex="0" ctxtmenu_counter="17" style="font-size: 127.3%; position: relative;"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-mo class="mjx-n"><mjx-c class="mjx-c230A"></mjx-c></mjx-mo><mjx-mfrac><mjx-frac><mjx-num><mjx-nstrut></mjx-nstrut><mjx-mi class="mjx-i" size="s"><mjx-c class="mjx-c1D45B TEX-I"></mjx-c></mjx-mi></mjx-num><mjx-dbox><mjx-dtable><mjx-line></mjx-line><mjx-row><mjx-den><mjx-dstrut></mjx-dstrut><mjx-mi class="mjx-i" size="s"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi></mjx-den></mjx-row></mjx-dtable></mjx-dbox></mjx-frac></mjx-mfrac><mjx-mo class="mjx-n"><mjx-c class="mjx-c230B"></mjx-c></mjx-mo></mjx-math><mjx-assistive-mml role="presentation" unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo fence="false" stretchy="false">⌊</mo><mfrac><mi>n</mi><mi>p</mi></mfrac><mo fence="false" stretchy="false">⌋</mo></math></mjx-assistive-mml></mjx-container></x-eq> ，记为 <x-eq class="tex-to-render"><mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" role="presentation" tabindex="0" ctxtmenu_counter="18" style="font-size: 127.3%; position: relative;"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-mi class="mjx-i"><mjx-c class="mjx-c210E TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45B TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo></mjx-math><mjx-assistive-mml role="presentation" unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>h</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></math></mjx-assistive-mml></mjx-container></x-eq> ，最后的 <x-eq class="tex-to-render"><mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" role="presentation" tabindex="0" ctxtmenu_counter="19" style="font-size: 127.3%; position: relative;"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-mi class="mjx-i"><mjx-c class="mjx-c210E TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45B TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo></mjx-math><mjx-assistive-mml role="presentation" unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>h</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></math></mjx-assistive-mml></mjx-container></x-eq> 就是 <x-eq class="tex-to-render"><mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" role="presentation" tabindex="0" ctxtmenu_counter="20" style="font-size: 127.3%; position: relative;"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45B TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c21"></mjx-c></mjx-mo></mjx-math><mjx-assistive-mml role="presentation" unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi><mo>!</mo></math></mjx-assistive-mml></mjx-container></x-eq> 中 <x-eq class="tex-to-render"><mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" role="presentation" tabindex="0" ctxtmenu_counter="21" style="font-size: 127.3%; position: relative;"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi></mjx-math><mjx-assistive-mml role="presentation" unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>p</mi></math></mjx-assistive-mml></mjx-container></x-eq> 这个因子的数量。</p>
-<p>至此，我们成功把 <x-eq class="tex-to-render"><mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" role="presentation" tabindex="0" ctxtmenu_counter="22" style="font-size: 127.3%; position: relative;"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45B TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c21"></mjx-c></mjx-mo></mjx-math><mjx-assistive-mml role="presentation" unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi><mo>!</mo></math></mjx-assistive-mml></mjx-container></x-eq> 里的 <x-eq class="tex-to-render"><mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" role="presentation" tabindex="0" ctxtmenu_counter="23" style="font-size: 127.3%; position: relative;"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi></mjx-math><mjx-assistive-mml role="presentation" unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>p</mi></math></mjx-assistive-mml></mjx-container></x-eq> 的因子分离出来。回归原来的问题 <x-eq class="tex-to-render"><mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" role="presentation" tabindex="0" ctxtmenu_counter="24" style="font-size: 127.3%; position: relative;"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-msubsup><mjx-mi class="mjx-i" noic="true"><mjx-c class="mjx-c1D436 TEX-I"></mjx-c></mjx-mi><mjx-script style="vertical-align: -0.247em;"><mjx-mi class="mjx-i" size="s" style="margin-left: 0.138em;"><mjx-c class="mjx-c1D45A TEX-I"></mjx-c></mjx-mi><mjx-spacer style="margin-top: 0.29em;"></mjx-spacer><mjx-mi class="mjx-i" size="s"><mjx-c class="mjx-c1D45B TEX-I"></mjx-c></mjx-mi></mjx-script></mjx-msubsup><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c6D"></mjx-c><mjx-c class="mjx-c6F"></mjx-c><mjx-c class="mjx-c64"></mjx-c></mjx-mo><mjx-msup space="4"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi><mjx-script style="vertical-align: 0.363em;"><mjx-texatom size="s" texclass="ORD"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D458 TEX-I"></mjx-c></mjx-mi></mjx-texatom></mjx-script></mjx-msup></mjx-math><mjx-assistive-mml role="presentation" unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><msubsup><mi>C</mi><mi>n</mi><mi>m</mi></msubsup><mo>mod</mo><msup><mi>p</mi><mrow><mi>k</mi></mrow></msup></math></mjx-assistive-mml></mjx-container></x-eq> ：</p>
-<x-eqn class="tex-to-render"><mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" display="true" role="presentation" tabindex="0" ctxtmenu_counter="25" style="font-size: 127.3%; position: relative;"><mjx-math display="true" class="MJX-TEX" aria-hidden="true" style="margin-left: 0px; margin-right: 0px;"><mjx-mstyle size="lg"><mjx-mfrac><mjx-frac type="d"><mjx-num><mjx-nstrut type="d"></mjx-nstrut><mjx-mfrac><mjx-frac><mjx-num><mjx-nstrut></mjx-nstrut><mjx-mrow size="s"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45B TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c21"></mjx-c></mjx-mo></mjx-mrow></mjx-num><mjx-dbox><mjx-dtable><mjx-line></mjx-line><mjx-row><mjx-den><mjx-dstrut></mjx-dstrut><mjx-msup size="s"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi><mjx-script style="vertical-align: 0.289em;"><mjx-texatom size="s" texclass="ORD"><mjx-mi class="mjx-i"><mjx-c class="mjx-c210E TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45B TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo></mjx-texatom></mjx-script></mjx-msup></mjx-den></mjx-row></mjx-dtable></mjx-dbox></mjx-frac></mjx-mfrac></mjx-num><mjx-dbox><mjx-dtable><mjx-line type="d"></mjx-line><mjx-row><mjx-den><mjx-dstrut type="d"></mjx-dstrut><mjx-mrow><mjx-mfrac><mjx-frac><mjx-num><mjx-nstrut></mjx-nstrut><mjx-mrow size="s"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45A TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c21"></mjx-c></mjx-mo></mjx-mrow></mjx-num><mjx-dbox><mjx-dtable><mjx-line></mjx-line><mjx-row><mjx-den><mjx-dstrut></mjx-dstrut><mjx-msup size="s"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi><mjx-script style="vertical-align: 0.289em;"><mjx-texatom size="s" texclass="ORD"><mjx-mi class="mjx-i"><mjx-c class="mjx-c210E TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45A TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo></mjx-texatom></mjx-script></mjx-msup></mjx-den></mjx-row></mjx-dtable></mjx-dbox></mjx-frac></mjx-mfrac><mjx-mfrac><mjx-frac><mjx-num><mjx-nstrut></mjx-nstrut><mjx-mrow size="s"><mjx-mo class="mjx-n"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45B TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c2212"></mjx-c></mjx-mo><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45A TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo><mjx-mo class="mjx-n"><mjx-c class="mjx-c21"></mjx-c></mjx-mo></mjx-mrow></mjx-num><mjx-dbox><mjx-dtable><mjx-line></mjx-line><mjx-row><mjx-den><mjx-dstrut></mjx-dstrut><mjx-msup size="s"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi><mjx-script style="vertical-align: 0.289em;"><mjx-texatom size="s" texclass="ORD"><mjx-mi class="mjx-i"><mjx-c class="mjx-c210E TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45B TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c2212"></mjx-c></mjx-mo><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45A TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo></mjx-texatom></mjx-script></mjx-msup></mjx-den></mjx-row></mjx-dtable></mjx-dbox></mjx-frac></mjx-mfrac></mjx-mrow></mjx-den></mjx-row></mjx-dtable></mjx-dbox></mjx-frac></mjx-mfrac><mjx-msup><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi><mjx-script style="vertical-align: 0.413em;"><mjx-texatom size="s" texclass="ORD"><mjx-mi class="mjx-i"><mjx-c class="mjx-c210E TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45B TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo><mjx-mo class="mjx-n"><mjx-c class="mjx-c2212"></mjx-c></mjx-mo><mjx-mi class="mjx-i"><mjx-c class="mjx-c210E TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45A TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo><mjx-mo class="mjx-n"><mjx-c class="mjx-c2212"></mjx-c></mjx-mo><mjx-mi class="mjx-i"><mjx-c class="mjx-c210E TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45B TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c2212"></mjx-c></mjx-mo><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45A TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo></mjx-texatom></mjx-script></mjx-msup><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c6D"></mjx-c><mjx-c class="mjx-c6F"></mjx-c><mjx-c class="mjx-c64"></mjx-c></mjx-mo><mjx-msup space="4"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi><mjx-script style="vertical-align: 0.413em;"><mjx-mi class="mjx-i" size="s"><mjx-c class="mjx-c1D458 TEX-I"></mjx-c></mjx-mi></mjx-script></mjx-msup></mjx-mstyle></mjx-math><mjx-assistive-mml role="presentation" unselectable="on" display="block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mstyle mathsize="1.2em"><mfrac><mfrac><mrow><mi>n</mi><mo>!</mo></mrow><msup><mi>p</mi><mrow><mi>h</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></mrow></msup></mfrac><mrow><mfrac><mrow><mi>m</mi><mo>!</mo></mrow><msup><mi>p</mi><mrow><mi>h</mi><mo stretchy="false">(</mo><mi>m</mi><mo stretchy="false">)</mo></mrow></msup></mfrac><mfrac><mrow><mo stretchy="false">(</mo><mi>n</mi><mo>−</mo><mi>m</mi><mo stretchy="false">)</mo><mo>!</mo></mrow><msup><mi>p</mi><mrow><mi>h</mi><mo stretchy="false">(</mo><mi>n</mi><mo>−</mo><mi>m</mi><mo stretchy="false">)</mo></mrow></msup></mfrac></mrow></mfrac><msup><mi>p</mi><mrow><mi>h</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo><mo>−</mo><mi>h</mi><mo stretchy="false">(</mo><mi>m</mi><mo stretchy="false">)</mo><mo>−</mo><mi>h</mi><mo stretchy="false">(</mo><mi>n</mi><mo>−</mo><mi>m</mi><mo stretchy="false">)</mo></mrow></msup><mo>mod</mo><msup><mi>p</mi><mi>k</mi></msup></mstyle></math></mjx-assistive-mml></mjx-container></x-eqn><p>即</p>
-<x-eqn class="tex-to-render"><mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" display="true" role="presentation" tabindex="0" ctxtmenu_counter="26" style="font-size: 127.3%; position: relative;"><mjx-math display="true" class="MJX-TEX" aria-hidden="true" style="margin-left: 0px; margin-right: 0px;"><mjx-mfrac><mjx-frac type="d"><mjx-num><mjx-nstrut type="d"></mjx-nstrut><mjx-mrow><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D453 TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45B TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo></mjx-mrow></mjx-num><mjx-dbox><mjx-dtable><mjx-line type="d"></mjx-line><mjx-row><mjx-den><mjx-dstrut type="d"></mjx-dstrut><mjx-mrow><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D453 TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45A TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D453 TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45B TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n" space="3"><mjx-c class="mjx-c2212"></mjx-c></mjx-mo><mjx-mi class="mjx-i" space="3"><mjx-c class="mjx-c1D45A TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo></mjx-mrow></mjx-den></mjx-row></mjx-dtable></mjx-dbox></mjx-frac></mjx-mfrac><mjx-msup><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi><mjx-script style="vertical-align: 0.413em;"><mjx-texatom size="s" texclass="ORD"><mjx-mi class="mjx-i"><mjx-c class="mjx-c210E TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45B TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo><mjx-mo class="mjx-n"><mjx-c class="mjx-c2212"></mjx-c></mjx-mo><mjx-mi class="mjx-i"><mjx-c class="mjx-c210E TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45A TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo><mjx-mo class="mjx-n"><mjx-c class="mjx-c2212"></mjx-c></mjx-mo><mjx-mi class="mjx-i"><mjx-c class="mjx-c210E TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45B TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c2212"></mjx-c></mjx-mo><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45A TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo></mjx-texatom></mjx-script></mjx-msup><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c6D"></mjx-c><mjx-c class="mjx-c6F"></mjx-c><mjx-c class="mjx-c64"></mjx-c></mjx-mo><mjx-msup space="4"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi><mjx-script style="vertical-align: 0.413em;"><mjx-mi class="mjx-i" size="s"><mjx-c class="mjx-c1D458 TEX-I"></mjx-c></mjx-mi></mjx-script></mjx-msup></mjx-math><mjx-assistive-mml role="presentation" unselectable="on" display="block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mfrac><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>m</mi><mo stretchy="false">)</mo><mi>f</mi><mo stretchy="false">(</mo><mi>n</mi><mo>−</mo><mi>m</mi><mo stretchy="false">)</mo></mrow></mfrac><msup><mi>p</mi><mrow><mi>h</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo><mo>−</mo><mi>h</mi><mo stretchy="false">(</mo><mi>m</mi><mo stretchy="false">)</mo><mo>−</mo><mi>h</mi><mo stretchy="false">(</mo><mi>n</mi><mo>−</mo><mi>m</mi><mo stretchy="false">)</mo></mrow></msup><mo>mod</mo><msup><mi>p</mi><mi>k</mi></msup></math></mjx-assistive-mml></mjx-container></x-eqn><p>由于 <x-eq class="tex-to-render"><mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" role="presentation" tabindex="0" ctxtmenu_counter="27" style="font-size: 127.3%; position: relative;"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D453 TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45B TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo></mjx-math><mjx-assistive-mml role="presentation" unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>f</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></math></mjx-assistive-mml></mjx-container></x-eq> 已经是被约掉 <x-eq class="tex-to-render"><mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" role="presentation" tabindex="0" ctxtmenu_counter="28" style="font-size: 127.3%; position: relative;"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi></mjx-math><mjx-assistive-mml role="presentation" unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>p</mi></math></mjx-assistive-mml></mjx-container></x-eq> 因子的，一定有逆元，于是CRT的一个式子就解决了，最后合并就好了。</p>
+<p><span class="math display">\[
+\begin{cases}
+C_n^m \bmod p_1^{k_1} \\
+C_n^m \bmod p_2^{k_2} \\
+C_n^m \bmod p_3^{k_3} \\
+\dotsm
+\end{cases}
+\]</span></p>
+<p>的一个解，使用中国剩余定理合并即可。</p>
+<p>针对其中一个式子 <span class="math inline">\(C_n^m \bmod p^{k}\)</span> 即 <span class="math inline">\(\frac {n!} {m!(n-m)!} \bmod p^k\)</span> ，使用求逆元的方法是不行的，因为 <span class="math inline">\(p\)</span> 不保证为质数， <span class="math inline">\(m!(n-m)!\)</span> 可能不存在逆元。</p>
+<p>设 <span class="math inline">\(f(n)=n! \bmod p^k\)</span> ，进一步考虑，既然不互质，那就把他们的公因子都约掉，我们把阶乘展开看一看：</p>
+<p>$$ \begin{aligned} n! &amp;= 1 2 3 n \ &amp;= (p 2p 3p ) \</p>
+<p>&amp;= p^{ } (1 2 3 ) \ &amp;  \ &amp;= p^{ } ()! <em>{p i}^n i \ &amp;= p^{ } ()! (</em>{p i}<sup>{p</sup>k} i)^{}  \ \end{aligned} $$</p>
+<p>其中 <span class="math inline">\(\text{rest}\)</span> 是指最后不够一整段 <span class="math inline">\(p^k\)</span> 的剩下的项， <span class="math inline">\(\displaystyle \large (\prod_{p \nmid i}^{p^k} i)\)</span> 是在 <span class="math inline">\(\bmod p^k\)</span> 意义下的一个循环节，这样的循环节有 <span class="math inline">\(\frac n {p^k}\)</span> 个。</p>
+<p>每这样一次，我们都可以从阶乘提取出 <span class="math inline">\(p^{\lfloor \frac n p \rfloor}\)</span> 这个因子，并把原问题变为一个规模更小的问题 <span class="math inline">\(f(\frac n p)\)</span> ，可以递归进行，并在过程中累加 <span class="math inline">\(\lfloor \frac n p \rfloor\)</span> ，记为 <span class="math inline">\(h(n)\)</span> ，最后的 <span class="math inline">\(h(n)\)</span> 就是 <span class="math inline">\(n!\)</span> 中 <span class="math inline">\(p\)</span> 这个因子的数量。</p>
+<p>至此，我们成功把 <span class="math inline">\(n!\)</span> 里的 <span class="math inline">\(p\)</span> 的因子分离出来。回归原来的问题 <span class="math inline">\(C_n^m \bmod p^{k}\)</span> ：</p>
+<p><span class="math display">\[
+\large \frac {\frac {n!}{p^{h(n)}}} {\frac {m!}{p^{h(m)}}\frac {(n-m)!}{p^{h(n-m)}}} p^{h(n)-h(m)-h(n-m)} \bmod p^k
+\]</span></p>
+<p>即</p>
+<p><span class="math display">\[
+\frac{f(n)}{f(m)f(n-m)} p^{h(n)-h(m)-h(n-m)} \bmod p^k
+\]</span></p>
+<p>由于 <span class="math inline">\(f(n)\)</span> 已经是被约掉 <span class="math inline">\(p\)</span> 因子的，一定有逆元，于是CRT的一个式子就解决了，最后合并就好了。</p>
 <blockquote>
 <p>Talk is cheap, show me your code</p>
 </blockquote>
-<pre><code class="lang-cpp hljs"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstdio&gt;</span></span>
+<div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><a class="sourceLine" id="cb1-1" title="1"><span class="pp">#include </span><span class="im">&lt;cstdio&gt;</span></a>
+<a class="sourceLine" id="cb1-2" title="2"></a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="kw">typedef</span> <span class="dt">long</span> <span class="dt">long</span> ll;</a>
+<a class="sourceLine" id="cb1-4" title="4"><span class="at">const</span> <span class="dt">int</span> N = <span class="dv">100000</span>;</a>
+<a class="sourceLine" id="cb1-5" title="5"><span class="dt">int</span> p, cnt, pri[N], k[N], cpoy_p;</a>
+<a class="sourceLine" id="cb1-6" title="6">ll n, m;</a>
+<a class="sourceLine" id="cb1-7" title="7"></a>
+<a class="sourceLine" id="cb1-8" title="8"><span class="kw">inline</span> ll qpow(ll base, ll exp, <span class="at">const</span> <span class="dt">int</span> &amp;mod) {</a>
+<a class="sourceLine" id="cb1-9" title="9">  ll res = <span class="dv">1</span>;</a>
+<a class="sourceLine" id="cb1-10" title="10">  <span class="cf">while</span> (exp) {</a>
+<a class="sourceLine" id="cb1-11" title="11">    <span class="cf">if</span> (exp &amp; <span class="dv">1</span>) res = res * base % mod;</a>
+<a class="sourceLine" id="cb1-12" title="12">    base = base * base % mod;</a>
+<a class="sourceLine" id="cb1-13" title="13">    exp &gt;&gt;= <span class="dv">1</span>;</a>
+<a class="sourceLine" id="cb1-14" title="14">  }</a>
+<a class="sourceLine" id="cb1-15" title="15">  <span class="cf">return</span> res;</a>
+<a class="sourceLine" id="cb1-16" title="16">}</a>
+<a class="sourceLine" id="cb1-17" title="17"></a>
+<a class="sourceLine" id="cb1-18" title="18"><span class="dt">void</span> exgcd(ll a, ll b, ll &amp;x, ll &amp;y) {</a>
+<a class="sourceLine" id="cb1-19" title="19">  <span class="cf">if</span> (b == <span class="dv">0</span>) <span class="cf">return</span> x = <span class="dv">1</span>, y = <span class="dv">0</span>, <span class="dt">void</span>();</a>
+<a class="sourceLine" id="cb1-20" title="20">  exgcd(b, a % b, y, x);</a>
+<a class="sourceLine" id="cb1-21" title="21">  y -= a / b * x;</a>
+<a class="sourceLine" id="cb1-22" title="22">}</a>
+<a class="sourceLine" id="cb1-23" title="23"></a>
+<a class="sourceLine" id="cb1-24" title="24"><span class="kw">namespace</span> CRT {</a>
+<a class="sourceLine" id="cb1-25" title="25"></a>
+<a class="sourceLine" id="cb1-26" title="26"><span class="dt">int</span> a[N], ans = <span class="dv">0</span>, pk;</a>
+<a class="sourceLine" id="cb1-27" title="27">ll inv, y;</a>
+<a class="sourceLine" id="cb1-28" title="28"></a>
+<a class="sourceLine" id="cb1-29" title="29"><span class="kw">inline</span> <span class="dt">int</span> solve() {</a>
+<a class="sourceLine" id="cb1-30" title="30">  <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">1</span>; i &lt;= cnt; ++i) {</a>
+<a class="sourceLine" id="cb1-31" title="31">    pk = qpow(pri[i], k[i], p + <span class="dv">1</span>);</a>
+<a class="sourceLine" id="cb1-32" title="32">    exgcd(p / pk, pk, inv, y);</a>
+<a class="sourceLine" id="cb1-33" title="33">    ans += a[i] * inv % p * (p / pk) % p;</a>
+<a class="sourceLine" id="cb1-34" title="34">    <span class="cf">if</span> (ans &gt;= p) ans -= p;</a>
+<a class="sourceLine" id="cb1-35" title="35">    <span class="cf">if</span> (ans &lt; <span class="dv">0</span>) ans += p;</a>
+<a class="sourceLine" id="cb1-36" title="36">  }</a>
+<a class="sourceLine" id="cb1-37" title="37">  <span class="cf">return</span> ans;</a>
+<a class="sourceLine" id="cb1-38" title="38">}</a>
+<a class="sourceLine" id="cb1-39" title="39"></a>
+<a class="sourceLine" id="cb1-40" title="40">}  <span class="co">// namespace CRT</span></a>
+<a class="sourceLine" id="cb1-41" title="41"></a>
+<a class="sourceLine" id="cb1-42" title="42"><span class="kw">namespace</span> Exlucas {</a>
+<a class="sourceLine" id="cb1-43" title="43"></a>
+<a class="sourceLine" id="cb1-44" title="44"><span class="dt">int</span> prime, mod;  <span class="co">// mod = p^k</span></a>
+<a class="sourceLine" id="cb1-45" title="45">ll h;            <span class="co">//指数也要开long long</span></a>
+<a class="sourceLine" id="cb1-46" title="46"></a>
+<a class="sourceLine" id="cb1-47" title="47"><span class="kw">inline</span> <span class="dt">void</span> MOD(ll &amp;x, <span class="at">const</span> <span class="dt">int</span> &amp;mod) {</a>
+<a class="sourceLine" id="cb1-48" title="48">  <span class="cf">if</span> (x &gt;= mod) x %= mod;</a>
+<a class="sourceLine" id="cb1-49" title="49">}</a>
+<a class="sourceLine" id="cb1-50" title="50"></a>
+<a class="sourceLine" id="cb1-51" title="51">ll f(ll n) {</a>
+<a class="sourceLine" id="cb1-52" title="52">  <span class="cf">if</span> (n == <span class="dv">0</span>) <span class="cf">return</span> <span class="dv">1</span>;</a>
+<a class="sourceLine" id="cb1-53" title="53">  h += n / prime;</a>
+<a class="sourceLine" id="cb1-54" title="54">  ll res = <span class="dv">1</span>, tmp = <span class="dv">1</span>;</a>
+<a class="sourceLine" id="cb1-55" title="55">  res *= f(n / prime);</a>
+<a class="sourceLine" id="cb1-56" title="56">  MOD(res, mod);</a>
+<a class="sourceLine" id="cb1-57" title="57">  <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">1</span>; i &lt;= mod; ++i) {</a>
+<a class="sourceLine" id="cb1-58" title="58">    <span class="cf">if</span> (i % prime) (tmp *= i) %= mod;</a>
+<a class="sourceLine" id="cb1-59" title="59">  }</a>
+<a class="sourceLine" id="cb1-60" title="60">  res *= qpow(tmp, n / mod, mod);</a>
+<a class="sourceLine" id="cb1-61" title="61">  MOD(res, mod);</a>
+<a class="sourceLine" id="cb1-62" title="62">  <span class="cf">for</span> (ll i = n / mod * mod; i &lt;= n; ++i) {</a>
+<a class="sourceLine" id="cb1-63" title="63">    <span class="cf">if</span> (i % prime) {</a>
+<a class="sourceLine" id="cb1-64" title="64">      res *= i % mod;</a>
+<a class="sourceLine" id="cb1-65" title="65">      MOD(res, mod);</a>
+<a class="sourceLine" id="cb1-66" title="66">    }</a>
+<a class="sourceLine" id="cb1-67" title="67">  }</a>
+<a class="sourceLine" id="cb1-68" title="68">  <span class="cf">return</span> res;</a>
+<a class="sourceLine" id="cb1-69" title="69">}</a>
+<a class="sourceLine" id="cb1-70" title="70"></a>
+<a class="sourceLine" id="cb1-71" title="71"><span class="kw">inline</span> ll solve(<span class="dt">int</span> i) {</a>
+<a class="sourceLine" id="cb1-72" title="72">  prime = pri[i], mod = qpow(prime, k[i], p + <span class="dv">1</span>);</a>
+<a class="sourceLine" id="cb1-73" title="73">  <span class="dt">int</span> exp = <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb1-74" title="74">  ll res = <span class="dv">1</span>, inv, y;</a>
+<a class="sourceLine" id="cb1-75" title="75">  h = <span class="dv">0</span>, res *= f(n), exp += h;</a>
+<a class="sourceLine" id="cb1-76" title="76"></a>
+<a class="sourceLine" id="cb1-77" title="77">  h = <span class="dv">0</span>, exgcd(f(m), mod, inv, y);</a>
+<a class="sourceLine" id="cb1-78" title="78">  inv = (inv % mod + mod) % mod;</a>
+<a class="sourceLine" id="cb1-79" title="79">  res *= inv;</a>
+<a class="sourceLine" id="cb1-80" title="80">  MOD(res, mod);</a>
+<a class="sourceLine" id="cb1-81" title="81">  exp -= h;</a>
+<a class="sourceLine" id="cb1-82" title="82"></a>
+<a class="sourceLine" id="cb1-83" title="83">  h = <span class="dv">0</span>, exgcd(f(n - m), mod, inv, y);</a>
+<a class="sourceLine" id="cb1-84" title="84">  inv = (inv % mod + mod) % mod;</a>
+<a class="sourceLine" id="cb1-85" title="85">  res *= inv;</a>
+<a class="sourceLine" id="cb1-86" title="86">  MOD(res, mod);</a>
+<a class="sourceLine" id="cb1-87" title="87">  exp -= h;</a>
+<a class="sourceLine" id="cb1-88" title="88"></a>
+<a class="sourceLine" id="cb1-89" title="89">  <span class="cf">return</span> res * qpow(prime, exp, mod) % mod;</a>
+<a class="sourceLine" id="cb1-90" title="90">}</a>
+<a class="sourceLine" id="cb1-91" title="91"></a>
+<a class="sourceLine" id="cb1-92" title="92">}  <span class="co">// namespace Exlucas</span></a>
+<a class="sourceLine" id="cb1-93" title="93"></a>
+<a class="sourceLine" id="cb1-94" title="94"><span class="dt">signed</span> main() {</a>
+<a class="sourceLine" id="cb1-95" title="95"><span class="pp">#ifndef ONLINE_JUDGE</span></a>
+<a class="sourceLine" id="cb1-96" title="96"><span class="pp">#ifdef LOCAL</span></a>
+<a class="sourceLine" id="cb1-97" title="97">  freopen(<span class="st">&quot;testdata.in&quot;</span>, <span class="st">&quot;r&quot;</span>, stdin);</a>
+<a class="sourceLine" id="cb1-98" title="98">  freopen(<span class="st">&quot;testdata.out&quot;</span>, <span class="st">&quot;w&quot;</span>, stdout);</a>
+<a class="sourceLine" id="cb1-99" title="99"><span class="pp">#else</span></a>
+<a class="sourceLine" id="cb1-100" title="100">  freopen(<span class="st">&quot;ExLucas.in&quot;</span>, <span class="st">&quot;r&quot;</span>, stdin);</a>
+<a class="sourceLine" id="cb1-101" title="101">  freopen(<span class="st">&quot;ExLucas.out&quot;</span>, <span class="st">&quot;w&quot;</span>, stdout);</a>
+<a class="sourceLine" id="cb1-102" title="102"><span class="pp">#endif</span></a>
+<a class="sourceLine" id="cb1-103" title="103"><span class="pp">#endif</span></a>
+<a class="sourceLine" id="cb1-104" title="104"></a>
+<a class="sourceLine" id="cb1-105" title="105">  scanf(<span class="st">&quot;</span><span class="sc">%lld%lld%d</span><span class="st">&quot;</span>, &amp;n, &amp;m, &amp;p);</a>
+<a class="sourceLine" id="cb1-106" title="106">  cpoy_p = p;</a>
+<a class="sourceLine" id="cb1-107" title="107">  <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">2</span>; i * i &lt;= p; ++i) {</a>
+<a class="sourceLine" id="cb1-108" title="108">    <span class="cf">if</span> (cpoy_p % i == <span class="dv">0</span>) {</a>
+<a class="sourceLine" id="cb1-109" title="109">      pri[++cnt] = i;</a>
+<a class="sourceLine" id="cb1-110" title="110">      <span class="cf">while</span> (cpoy_p % i == <span class="dv">0</span>) { cpoy_p /= i, k[cnt]++; }</a>
+<a class="sourceLine" id="cb1-111" title="111">    }</a>
+<a class="sourceLine" id="cb1-112" title="112">  }</a>
+<a class="sourceLine" id="cb1-113" title="113">  <span class="cf">if</span> (cpoy_p != <span class="dv">1</span>) pri[++cnt] = cpoy_p, k[cnt] = <span class="dv">1</span>;</a>
+<a class="sourceLine" id="cb1-114" title="114">  <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">1</span>; i &lt;= cnt; ++i) { CRT::a[i] = Exlucas::solve(i); }</a>
+<a class="sourceLine" id="cb1-115" title="115">  printf(<span class="st">&quot;</span><span class="sc">%d</span><span class="st">&quot;</span>, CRT::solve());</a>
+<a class="sourceLine" id="cb1-116" title="116">  <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb1-117" title="117">}</a></code></pre></div>
+  </body>
 
-<span class="hljs-keyword">typedef</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> ll;
-<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> N = <span class="hljs-number">100000</span>;
-<span class="hljs-keyword">int</span> p, cnt, pri[N], k[N], cpoy_p;
-ll n, m;
-
-<span class="hljs-function"><span class="hljs-keyword">inline</span> ll <span class="hljs-title">qpow</span><span class="hljs-params">(ll base, ll <span class="hljs-built_in">exp</span>, <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> &amp;mod)</span> </span>{
-  ll res = <span class="hljs-number">1</span>;
-  <span class="hljs-keyword">while</span> (<span class="hljs-built_in">exp</span>) {
-    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">exp</span> &amp; <span class="hljs-number">1</span>) res = res * base % mod;
-    base = base * base % mod;
-    <span class="hljs-built_in">exp</span> &gt;&gt;= <span class="hljs-number">1</span>;
-  }
-  <span class="hljs-keyword">return</span> res;
-}
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">exgcd</span><span class="hljs-params">(ll a, ll b, ll &amp;x, ll &amp;y)</span> </span>{
-  <span class="hljs-keyword">if</span> (b == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> x = <span class="hljs-number">1</span>, y = <span class="hljs-number">0</span>, <span class="hljs-keyword">void</span>();
-  exgcd(b, a % b, y, x);
-  y -= a / b * x;
-}
-
-<span class="hljs-keyword">namespace</span> CRT {
-
-<span class="hljs-keyword">int</span> a[N], ans = <span class="hljs-number">0</span>, pk;
-ll inv, y;
-
-<span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-keyword">int</span> <span class="hljs-title">solve</span><span class="hljs-params">()</span> </span>{
-  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= cnt; ++i) {
-    pk = qpow(pri[i], k[i], p + <span class="hljs-number">1</span>);
-    exgcd(p / pk, pk, inv, y);
-    ans += a[i] * inv % p * (p / pk) % p;
-    <span class="hljs-keyword">if</span> (ans &gt;= p) ans -= p;
-    <span class="hljs-keyword">if</span> (ans &lt; <span class="hljs-number">0</span>) ans += p;
-  }
-  <span class="hljs-keyword">return</span> ans;
-}
-
-}  <span class="hljs-comment">// namespace CRT</span>
-
-<span class="hljs-keyword">namespace</span> Exlucas {
-
-<span class="hljs-keyword">int</span> prime, mod;  <span class="hljs-comment">// mod = p^k</span>
-ll h;            <span class="hljs-comment">//指数也要开long long</span>
-
-<span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-keyword">void</span> <span class="hljs-title">MOD</span><span class="hljs-params">(ll &amp;x, <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> &amp;mod)</span> </span>{
-  <span class="hljs-keyword">if</span> (x &gt;= mod) x %= mod;
-}
-
-<span class="hljs-function">ll <span class="hljs-title">f</span><span class="hljs-params">(ll n)</span> </span>{
-  <span class="hljs-keyword">if</span> (n == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
-  h += n / prime;
-  ll res = <span class="hljs-number">1</span>, tmp = <span class="hljs-number">1</span>;
-  res *= f(n / prime);
-  MOD(res, mod);
-  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= mod; ++i) {
-    <span class="hljs-keyword">if</span> (i % prime) (tmp *= i) %= mod;
-  }
-  res *= qpow(tmp, n / mod, mod);
-  MOD(res, mod);
-  <span class="hljs-keyword">for</span> (ll i = n / mod * mod; i &lt;= n; ++i) {
-    <span class="hljs-keyword">if</span> (i % prime) {
-      res *= i % mod;
-      MOD(res, mod);
-    }
-  }
-  <span class="hljs-keyword">return</span> res;
-}
-
-<span class="hljs-function"><span class="hljs-keyword">inline</span> ll <span class="hljs-title">solve</span><span class="hljs-params">(<span class="hljs-keyword">int</span> i)</span> </span>{
-  prime = pri[i], mod = qpow(prime, k[i], p + <span class="hljs-number">1</span>);
-  <span class="hljs-keyword">int</span> <span class="hljs-built_in">exp</span> = <span class="hljs-number">0</span>;
-  ll res = <span class="hljs-number">1</span>, inv, y;
-  h = <span class="hljs-number">0</span>, res *= f(n), <span class="hljs-built_in">exp</span> += h;
-
-  h = <span class="hljs-number">0</span>, exgcd(f(m), mod, inv, y);
-  inv = (inv % mod + mod) % mod;
-  res *= inv;
-  MOD(res, mod);
-  <span class="hljs-built_in">exp</span> -= h;
-
-  h = <span class="hljs-number">0</span>, exgcd(f(n - m), mod, inv, y);
-  inv = (inv % mod + mod) % mod;
-  res *= inv;
-  MOD(res, mod);
-  <span class="hljs-built_in">exp</span> -= h;
-
-  <span class="hljs-keyword">return</span> res * qpow(prime, <span class="hljs-built_in">exp</span>, mod) % mod;
-}
-
-}  <span class="hljs-comment">// namespace Exlucas</span>
-
-<span class="hljs-function"><span class="hljs-keyword">signed</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
-<span class="hljs-meta">#<span class="hljs-meta-keyword">ifndef</span> ONLINE_JUDGE</span>
-<span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> LOCAL</span>
-  freopen(<span class="hljs-string">"testdata.in"</span>, <span class="hljs-string">"r"</span>, <span class="hljs-built_in">stdin</span>);
-  freopen(<span class="hljs-string">"testdata.out"</span>, <span class="hljs-string">"w"</span>, <span class="hljs-built_in">stdout</span>);
-<span class="hljs-meta">#<span class="hljs-meta-keyword">else</span></span>
-  freopen(<span class="hljs-string">"ExLucas.in"</span>, <span class="hljs-string">"r"</span>, <span class="hljs-built_in">stdin</span>);
-  freopen(<span class="hljs-string">"ExLucas.out"</span>, <span class="hljs-string">"w"</span>, <span class="hljs-built_in">stdout</span>);
-<span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span>
-<span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span>
-
-  <span class="hljs-built_in">scanf</span>(<span class="hljs-string">"%lld%lld%d"</span>, &amp;n, &amp;m, &amp;p);
-  cpoy_p = p;
-  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">2</span>; i * i &lt;= p; ++i) {
-    <span class="hljs-keyword">if</span> (cpoy_p % i == <span class="hljs-number">0</span>) {
-      pri[++cnt] = i;
-      <span class="hljs-keyword">while</span> (cpoy_p % i == <span class="hljs-number">0</span>) { cpoy_p /= i, k[cnt]++; }
-    }
-  }
-  <span class="hljs-keyword">if</span> (cpoy_p != <span class="hljs-number">1</span>) pri[++cnt] = cpoy_p, k[cnt] = <span class="hljs-number">1</span>;
-  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= cnt; ++i) { CRT::a[i] = Exlucas::solve(i); }
-  <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d"</span>, CRT::solve());
-  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
-}
-</code></pre>
-
-    </div>
-</div>
-</div>
-
-<div id="container-floating" style="display:none;" class="d-none d-md-block d-xl-block">
-    <div id="floating-button" onclick="toggleMore()">
-        <p id="floating-more" class="more">&gt;</p>
-    </div>
-</div>
-
-<!--
-<div class="footer" id="vnote-footer">
-    <p>Generated by <em><a href="https://tamlok.github.io/vnote/">VNote</a></em>.</p>
-</div>
--->
-</body>
 </html>
