@@ -8,7 +8,9 @@
   <link rel="icon" type="image/png" sizes="512x512" href="../../Resources/blog.png" />
   <link rel="stylesheet" type="text/css" href="../../Resources/ArticleTheme.css" />
   <script src="../../Resources/ArticleJS.js"></script>
-  <script id="MathJax-script" async="" src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.1.2/es5/tex-chtml.js"></script>
+  <script id="MathJax-script" src="../../JavaScripts/MathJax-3.1.2/es5/tex-chtml.js"></script>
+  <link href="https://cdn.bootcdn.net/ajax/libs/gitalk/1.7.0/gitalk.min.css" rel="stylesheet">
+  <script src="https://cdn.bootcdn.net/ajax/libs/gitalk/1.7.0/gitalk.min.js"></script>
       <title>ExLucas</title>
   </head>
 
@@ -54,6 +56,10 @@ C_n^m \bmod p_3^{k_3} \\
 <blockquote>
 <p>Talk is cheap, show me your code</p>
 </blockquote>
+<button onclick="showCode('Exlucas')">
+显示代码
+</button>
+<div id="Exlucas" class="code">
 <div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><a class="sourceLine" id="cb1-1" title="1"><span class="pp">#include </span><span class="im">&lt;cstdio&gt;</span></a>
 <a class="sourceLine" id="cb1-2" title="2"></a>
 <a class="sourceLine" id="cb1-3" title="3"><span class="kw">typedef</span> <span class="dt">long</span> <span class="dt">long</span> ll;</a>
@@ -171,6 +177,10 @@ C_n^m \bmod p_3^{k_3} \\
 <a class="sourceLine" id="cb1-115" title="115">  printf(<span class="st">&quot;</span><span class="sc">%d</span><span class="st">&quot;</span>, CRT::solve());</a>
 <a class="sourceLine" id="cb1-116" title="116">  <span class="cf">return</span> <span class="dv">0</span>;</a>
 <a class="sourceLine" id="cb1-117" title="117">}</a></code></pre></div>
+</div>
+  <div id="gitalk-container"></div>
   </body>
+
+<script src="../../JavaScripts/ArticleJS.js"></script>
 
 </html>

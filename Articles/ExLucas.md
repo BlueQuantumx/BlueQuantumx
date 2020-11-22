@@ -71,6 +71,9 @@ $$
 
 > Talk is cheap, show me your code
 
+<button onclick="showCode('Exlucas')">显示代码</button>
+<div id="Exlucas" class="code">
+
 ```cpp
 #include <cstdio>
 
@@ -190,3 +193,5 @@ signed main() {
   return 0;
 }
 ```
+
+</div>
