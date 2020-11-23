@@ -4,7 +4,7 @@
 			"path": ".."
 		},
 		{
-			"path": "../Articles"
+			"path": "../articles"
 		}
 	],
 	"settings": {
@@ -13,7 +13,7 @@
 		},
 		"code-runner.clearPreviousOutput": true,
 		"code-runner.executorMapByFileExtension": {
-			".md": "pandoc --mathjax \"$fileName\" -o \"./Exports/$fileNameWithoutExt.html\" --template=../Resources/MyTemplate.html -M pagetitle=$fileNameWithoutExt"
+			".md": "pandoc --mathjax \"$fileName\" -o \"./exports/$fileNameWithoutExt.html\" --template=../static/myTemplate.html -M pagetitle=$fileNameWithoutExt"
 		},
 		"[markdown]": {
 			"editor.renderWhitespace": "all",
@@ -23,5 +23,5 @@
 			},
 			"editor.acceptSuggestionOnEnter": "on"
 		}
-	}
+	},
 }

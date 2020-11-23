@@ -18,8 +18,8 @@
 	"Code": {
 		"prefix": "code",
 		"body": [
-			"<button onclick=\"showCode('$1')\">显示代码</button>",
-			"<div id=\"$1\" class=\"code\">",
+			"<button id=\"$1btn\" onclick=\"showCode('$1')\">展开代码</button>",
+			"<div id=\"$1\" class=\"code\" style=\"height: 0px;\">",
 			"",
 			"```cpp",
 			"$2",

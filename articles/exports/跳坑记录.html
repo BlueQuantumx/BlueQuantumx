@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta name="generator" content="VNote">
 
-    <title>Deepin折腾笔记</title>
-    <link rel="icon" href="https://github.com/tamlok/vnote/raw/master/src/resources/icons/vnote.ico">
+    <title>跳坑记录</title>
+    <link rel="icon" href="https://github.com/tamlok/vnote/raw/master/src/static/icons/vnote.ico">
 
     <style type="text/css">
     /* STYLE_GLOBAL_PLACE_HOLDER */
@@ -415,6 +415,34 @@ mjx-merror { display: inline-block; color: red; background-color: yellow; }
 mjx-mphantom { visibility: hidden; }
 mjx-assistive-mml { top: 0px; left: 0px; clip: rect(1px 1px 1px 1px); user-select: none; position: absolute !important; padding: 1px 0px 0px !important; border: 0px !important; display: block !important; width: auto !important; overflow: hidden !important; }
 mjx-assistive-mml[display="block"] { width: 100% !important; }
+mjx-math { display: inline-block; text-align: left; line-height: 0; text-indent: 0px; font-style: normal; font-weight: normal; font-size: 100%; letter-spacing: normal; word-wrap: normal; word-spacing: normal; white-space: nowrap; direction: ltr; padding: 1px 0px; }
+mjx-container[jax="CHTML"][display="true"] { display: block; text-align: center; margin: 1em 0px; }
+mjx-container[jax="CHTML"][display="true"][width="full"] { display: flex; }
+mjx-container[jax="CHTML"][display="true"] mjx-math { padding: 0px; }
+mjx-container[jax="CHTML"][justify="left"] { text-align: left; }
+mjx-container[jax="CHTML"][justify="right"] { text-align: right; }
+mjx-mi { display: inline-block; text-align: left; }
+mjx-mo { display: inline-block; text-align: left; }
+mjx-stretchy-h { display: inline-table; width: 100%; }
+mjx-stretchy-h > * { display: table-cell; width: 0px; }
+mjx-stretchy-h > * > mjx-c { display: inline-block; transform: scaleX(1); }
+mjx-stretchy-h > * > mjx-c::before { display: inline-block; padding: 0.001em 0px; width: initial; }
+mjx-stretchy-h > mjx-ext { overflow: hidden; width: 100%; }
+mjx-stretchy-h > mjx-ext > mjx-c::before { transform: scaleX(500); }
+mjx-stretchy-h > mjx-ext > mjx-c { width: 0px; }
+mjx-stretchy-h > mjx-beg > mjx-c { margin-right: -0.1em; }
+mjx-stretchy-h > mjx-end > mjx-c { margin-left: -0.1em; }
+mjx-stretchy-v { display: inline-block; }
+mjx-stretchy-v > * { display: block; }
+mjx-stretchy-v > mjx-beg { height: 0px; }
+mjx-stretchy-v > mjx-end > mjx-c { display: block; }
+mjx-stretchy-v > * > mjx-c { transform: scaleY(1); transform-origin: left center 0px; overflow: hidden; }
+mjx-stretchy-v > mjx-ext { display: block; height: 100%; box-sizing: border-box; border: 0px solid transparent; overflow: hidden; }
+mjx-stretchy-v > mjx-ext > mjx-c::before { width: initial; }
+mjx-stretchy-v > mjx-ext > mjx-c { transform: scaleY(500) translateY(0.1em); overflow: visible; }
+mjx-mark { display: inline-block; height: 0px; }
+mjx-c { display: inline-block; }
+mjx-utext { display: inline-block; padding: 0.75em 0px 0.2em; }
 mjx-c::before { display: block; width: 0px; }
 .MJX-TEX { font-family: MJXZERO, MJXTEX; }
 .TEX-B { font-family: MJXZERO, MJXTEX-B; }
@@ -460,6 +488,9 @@ mjx-stretchy-v mjx-c, mjx-stretchy-h mjx-c { font-family: MJXZERO, MJXTEX-S1, MJ
 @font-face { font-family: MJXTEX-T; src: url("file:///home/bluequantum/.local/lib/MathJax-3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Typewriter-Regular.woff") format("woff"); }
 @font-face { font-family: MJXTEX-V; src: url("file:///home/bluequantum/.local/lib/MathJax-3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Vector-Regular.woff") format("woff"); }
 @font-face { font-family: MJXTEX-VB; src: url("file:///home/bluequantum/.local/lib/MathJax-3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Vector-Bold.woff") format("woff"); }
+mjx-c.mjx-c3D::before { padding: 0.583em 0.778em 0.082em 0px; content: "="; }
+mjx-c.mjx-c1D459.TEX-I::before { padding: 0.694em 0.298em 0.011em 0px; content: "l"; }
+mjx-c.mjx-c1D45F.TEX-I::before { padding: 0.442em 0.451em 0.011em 0px; content: "r"; }
 
     </style>
 
@@ -718,21 +749,10 @@ var highlightItemOnlyInOutline = function(id) {
         <div id="outline-content" class="section-nav"></div>
     </div>
     <div id="post-content" class="col-12 col-md-9 col-xl-10 py-md-3 pl-md-5 bd-content">
-    <h1 id="toc_0">Deepin 折腾笔记<a class="vnote-anchor" href="#toc_0" data-anchor-icon="#"></a></h1>
-<p>这个主要是记录一下折腾的详细条目，防止以后重装系统后忘掉。。。</p>
-<ul>
-<li>.vim 里的插件</li>
-<li>.vimrc 的配置</li>
-<li>dde-top-panel：dde-istate-menu，dde-smart-dir</li>
-<li>blender，krita，clion</li>
-<li>~/.config/.kwinrc，~/.config/.kwinrulesrc</li>
-<li>sources.list</li>
-<li>/usr/share/X11/xkb/keycodes里修改caps/super</li>
-<li>安装vim-gtk3(支持系统剪贴板)</li>
-<li>/etc/modules msr</li>
-<li>libfprint-dev.deb</li>
-<li>/usr/share/fcitx/data/修改字符映射（￥--&gt;$）</li>
-</ul>
+    <h3 id="toc_0">10-26<a class="vnote-anchor" href="#toc_0" data-anchor-icon="#"></a></h3>
+<p>「RPG游戏」：不单调的斜率优化</p>
+<h3 id="toc_1">10-25<a class="vnote-anchor" href="#toc_1" data-anchor-icon="#"></a></h3>
+<p>「文本编辑器」：貌似只有我写的Spaly。。。询问操作没判 <x-eq class="tex-to-render"><mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" role="presentation" tabindex="0" ctxtmenu_counter="0" style="font-size: 127.3%; position: relative;"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D459 TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c3D"></mjx-c></mjx-mo><mjx-mi class="mjx-i" space="4"><mjx-c class="mjx-c1D45F TEX-I"></mjx-c></mjx-mi></mjx-math><mjx-assistive-mml role="presentation" unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>l</mi><mo>=</mo><mi>r</mi></math></mjx-assistive-mml></mjx-container></x-eq> 的情况，挂成0了。。。/kk</p>
 
     </div>
 </div>
