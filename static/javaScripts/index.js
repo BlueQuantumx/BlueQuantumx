@@ -1,9 +1,6 @@
 var flag = false;
-var offsX = document.documentElement.clientWidth * 0.5;
-var offsY = document.documentElement.clientHeight * 0.5;
 var mainContainer = document.getElementsByTagName("main")[0];
 var topPanel = document.getElementById("top-panel");
-var height = document.documentElement.clientHeight;
 
 // 首页特效
 function mouseMoveThrottle() {
@@ -11,13 +8,15 @@ function mouseMoveThrottle() {
   return event => {
     let now = Date.now();
     if (now - previous > 16) {
+      let offsX = document.documentElement.clientWidth * 0.5;
+      let offsY = document.documentElement.clientHeight * 0.5;
       if (flag == false)
         sway.style.transform = "translate(" + (event.pageX - offsX) * 0.1 + "px" + "," + (event.pageY - offsY) * 0.1 + "px)";
       previous = now;
     }
   }
 }
-document.getElementById("index-show").onmousemove = mouseMoveThrottle();
+document.getElementById("index-show").addEventListener("mousemove", mouseMoveThrottle());
 
 // Scroll特效
 const duration = 700;
@@ -31,14 +30,14 @@ function c_bezier(t) {
 /* function c_bezier(p0, p1, p2, p3, t) {
   return p0 * (1 - t) * (1 - t) * (1 - t) + 3 * p1 * t * (1 - t) * (1 - t) + 3 * p2 * t * t * (1 - t) + p3 * t * t * t;
 } */
-document.getElementById("index-show").onwheel = e => {
+document.getElementById("index-show").addEventListener("wheel", e => {
   if (!inAnimation && e.deltaY > 0) {
     inAnimation = true;
     ori = document.documentElement.scrollTop;
-    target = (height - ori - 80);
+    target = (document.documentElement.clientHeight - ori - 80);
     requestAnimationFrame(scrollAnimation);
   }
-};
+});
 
 function scrollAnimation(stepTime) {
   if (start === undefined) start = stepTime;
@@ -48,7 +47,7 @@ function scrollAnimation(stepTime) {
   else start = undefined, inAnimation = false;
 }
 
-window.onscroll = scrollTrottle();
+window.addEventListener("scroll", scrollTrottle());
 function scrollTrottle() {
   let previous = 0;
   return function () {
@@ -59,13 +58,13 @@ function scrollTrottle() {
       } else {
         topPanel.style.boxShadow = "0 0 15px rgba(0, 0, 0, 0.4)";
       }
-      if (flag == false && document.documentElement.scrollTop > height * 0.75) {
+      if (flag == false && document.documentElement.scrollTop > document.documentElement.clientHeight * 0.75) {
         mainContainer.style.animation = "cutin 1s ease";
         mainContainer.style.opacity = "1";
         mainContainer.style.pointerEvents = "auto";
         flag = true;
       }
-      if (flag == true && document.documentElement.scrollTop < height * 0.6) {
+      if (flag == true && document.documentElement.scrollTop < document.documentElement.clientHeight * 0.6) {
         mainContainer.style.animation = "cutout 1s ease";
         mainContainer.style.opacity = "0";
         mainContainer.style.pointerEvents = "none";
