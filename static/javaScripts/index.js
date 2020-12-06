@@ -76,7 +76,9 @@ function scrollTrottle() {
 }
 
 // Gitalk
-fetch('/static/gitalk.json').then(response => { return response.json(); }).then(content => {
+fetch('/static/gitalk.json').then(response => {
+  return response.json();
+}).then(content => {
   let gitalk = new Gitalk({
     clientID: content.clientID, //Client ID
     clientSecret: content.clientSecret, //Client Secret
@@ -90,32 +92,36 @@ fetch('/static/gitalk.json').then(response => { return response.json(); }).then(
 });
 
 // 拉取 json 以获取文章列表和友链列表
-fetch('static/articles.json').then(response => { return response.json(); }).then
-  (Arts => {
-    let make_html = '';
-    for (let i in Arts) {
-      let a = Arts[i];
-      make_html += `<a class="card article" href="./articles/exports/${a.path}" target="_blank">${a.name}</a>`;
-    }
-    document.getElementById('articles').innerHTML = make_html;
-  });
-fetch('static/friendLinks.json').then(response => { return response.json(); }).then
-  (Friends => {
-    for (let i = 0; i < Friends.length; ++i) {
-      let f = Friends[i];
-      let str = `<a target=_"blank" href="${f.href}">${f.name}</a>`;
-      document.getElementById("links").innerHTML += str;
-    }
-  });
+fetch('static/articles.json').then(response => {
+  return response.json();
+}).then(Arts => {
+  let make_html = '';
+  for (let i in Arts) {
+    let a = Arts[i];
+    make_html += `<a class="card article" href="./articles/exports/${a.path}" target="_blank">${a.name}</a>`;
+  }
+  document.getElementById('articles').innerHTML = make_html;
+});
+
+fetch('static/friendLinks.json').then(response => {
+  return response.json();
+}).then(Friends => {
+  for (let i = 0; i < Friends.length; ++i) {
+    let f = Friends[i];
+    let str = `<a target="_blank" href="${f.href}">${f.name}</a>`;
+    document.getElementById("links").innerHTML += str;
+  }
+});
 
 // 一言
-fetch('https://v1.hitokoto.cn?c=i').then(response => { return response.json(); }).then
-  (myJson => {
-    document.getElementById("hitokoto").innerHTML += myJson.hitokoto;
-    if (myJson.from_who) {
-      let ref = document.createElement('div');
-      ref.textContent = myJson.from_who;
-      ref.id = "hitokotoRef";
-      document.getElementById('hitokoto').appendChild(ref);
-    }
-  });
+fetch('https://v1.hitokoto.cn?c=i').then(response => {
+  return response.json();
+}).then(myJson => {
+  document.getElementById("hitokoto").innerHTML += myJson.hitokoto;
+  if (myJson.from_who) {
+    let ref = document.createElement('div');
+    ref.textContent = myJson.from_who;
+    ref.id = "hitokotoRef";
+    document.getElementById('hitokoto').appendChild(ref);
+  }
+});

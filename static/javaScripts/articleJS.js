@@ -10,7 +10,9 @@ function showCode(id) {
 }
 
 // Gitalk
-function initGitalk(content) {
+fetch('/static/gitalk.json').then(response => {
+  return response.json();
+}).then(content => {
   var gitalk = new Gitalk({
     clientID: content.clientID, //Client ID
     clientSecret: content.clientSecret, //Client Secret
@@ -21,5 +23,4 @@ function initGitalk(content) {
     distractionFreeMode: false  // Facebook-like distraction free mode
   });
   gitalk.render('gitalk-container');
-}
-fetch('/static/gitalk.json').then(response => { return response.json(); }).then(initGitalk);
+});
