@@ -1,7 +1,7 @@
 @charset "UTF-8";
 :root {
-  --text-color: unset;
-  --background-color: unset;
+  --text-color: black;
+  --background-color: white;
   --hyper-text-color: #5e72e4;
 }
 
