@@ -30,8 +30,8 @@ function c_bezier(t) {
 /* function c_bezier(p0, p1, p2, p3, t) {
   return p0 * (1 - t) * (1 - t) * (1 - t) + 3 * p1 * t * (1 - t) * (1 - t) + 3 * p2 * t * t * (1 - t) + p3 * t * t * t;
 } */
-document.getElementById("index-show").addEventListener("wheel", e => {
-  if (!inAnimation && e.deltaY > 0) {
+document.getElementById("down-arrow").addEventListener("click", () => {
+  if (!inAnimation) {
     inAnimation = true;
     ori = document.documentElement.scrollTop;
     target = (document.documentElement.clientHeight - ori - 80);
@@ -53,7 +53,7 @@ function scrollTrottle() {
   return function () {
     let now = Date.now();
     if (now - previous > 16) {
-      if (document.documentElement.scrollTop < 0.1) {
+      if (document.documentElement.scrollTop < 0.2) {
         topPanel.style.boxShadow = "0 0 0 black";
       } else {
         topPanel.style.boxShadow = "0 0 15px rgba(0, 0, 0, 0.4)";
