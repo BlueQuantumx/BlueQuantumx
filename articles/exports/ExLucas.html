@@ -5,180 +5,188 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="author" content="BlueQuantum" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/ico" sizes="512x512" href="../../static/images/icon.ico" />
   <link rel="stylesheet" type="text/css" href="../../static/css/articleTheme.css" />
-  <script src="../../static/javaScripts/articleJS.js"></script>
   <script id="MathJax-script" src="../../static/javaScripts/mathJax-3.1.2/es5/tex-chtml.js"></script>
   <link href="https://cdn.bootcdn.net/ajax/libs/gitalk/1.7.0/gitalk.min.css" rel="stylesheet">
   <script src="https://cdn.bootcdn.net/ajax/libs/gitalk/1.7.0/gitalk.min.js"></script>
+  <script async="" src="../../static/javaScripts/articleJS.js"></script>
       <title>ExLucas</title>
   </head>
 
 <body id="write">
     <h1 id="扩展卢卡斯定理">扩展卢卡斯定理</h1>
-<p>求：</p>
-<p><span class="math display">\[
-\binom n m \bmod p
-\]</span></p>
-<p>其中 <span class="math inline">\(p\)</span> 不保证为质数。</p>
-<hr />
-<p><strong>前置知识</strong></p>
-<p>中国剩余定理（CRT）</p>
-<p>ExGCD求逆元</p>
-<p>（应该都会吧）</p>
-<hr />
-<p>考虑令 <span class="math inline">\(p=p_1^{k_1}p_2^{k_2}p_3^{k_3} \dots\)</span></p>
-<p>原问题转化为求：</p>
-<p><span class="math display">\[
-\begin{cases}
-C_n^m \bmod p_1^{k_1} \\
-C_n^m \bmod p_2^{k_2} \\
-C_n^m \bmod p_3^{k_3} \\
-\dotsm
-\end{cases}
-\]</span></p>
-<p>的一个解，使用中国剩余定理合并即可。</p>
-<p>针对其中一个式子 <span class="math inline">\(C_n^m \bmod p^{k}\)</span> 即 <span class="math inline">\(\frac {n!} {m!(n-m)!} \bmod p^k\)</span> ，使用求逆元的方法是不行的，因为 <span class="math inline">\(p\)</span> 不保证为质数， <span class="math inline">\(m!(n-m)!\)</span> 可能不存在逆元。</p>
-<p>设 <span class="math inline">\(f(n)=n! \bmod p^k\)</span> ，进一步考虑，既然不互质，那就把他们的公因子都约掉，我们把阶乘展开看一看：</p>
-<p>$$ \begin{aligned} n! &amp;= 1 2 3 n \ &amp;= (p 2p 3p ) \</p>
-<p>&amp;= p^{ } (1 2 3 ) \ &amp;  \ &amp;= p^{ } ()! <em>{p i}^n i \ &amp;= p^{ } ()! (</em>{p i}<sup>{p</sup>k} i)^{}  \ \end{aligned} $$</p>
-<p>其中 <span class="math inline">\(\text{rest}\)</span> 是指最后不够一整段 <span class="math inline">\(p^k\)</span> 的剩下的项， <span class="math inline">\(\displaystyle \large (\prod_{p \nmid i}^{p^k} i)\)</span> 是在 <span class="math inline">\(\bmod p^k\)</span> 意义下的一个循环节，这样的循环节有 <span class="math inline">\(\frac n {p^k}\)</span> 个。</p>
-<p>每这样一次，我们都可以从阶乘提取出 <span class="math inline">\(p^{\lfloor \frac n p \rfloor}\)</span> 这个因子，并把原问题变为一个规模更小的问题 <span class="math inline">\(f(\frac n p)\)</span> ，可以递归进行，并在过程中累加 <span class="math inline">\(\lfloor \frac n p \rfloor\)</span> ，记为 <span class="math inline">\(h(n)\)</span> ，最后的 <span class="math inline">\(h(n)\)</span> 就是 <span class="math inline">\(n!\)</span> 中 <span class="math inline">\(p\)</span> 这个因子的数量。</p>
-<p>至此，我们成功把 <span class="math inline">\(n!\)</span> 里的 <span class="math inline">\(p\)</span> 的因子分离出来。回归原来的问题 <span class="math inline">\(C_n^m \bmod p^{k}\)</span> ：</p>
-<p><span class="math display">\[
-\large \frac {\frac {n!}{p^{h(n)}}} {\frac {m!}{p^{h(m)}}\frac {(n-m)!}{p^{h(n-m)}}} p^{h(n)-h(m)-h(n-m)} \bmod p^k
-\]</span></p>
-<p>即</p>
-<p><span class="math display">\[
-\frac{f(n)}{f(m)f(n-m)} p^{h(n)-h(m)-h(n-m)} \bmod p^k
-\]</span></p>
-<p>由于 <span class="math inline">\(f(n)\)</span> 已经是被约掉 <span class="math inline">\(p\)</span> 因子的，一定有逆元，于是CRT的一个式子就解决了，最后合并就好了。</p>
-<blockquote>
-<p>Talk is cheap, show me your code</p>
-</blockquote>
-<button onclick="showCode('Exlucas')">
-显示代码
-</button>
-<div id="Exlucas" class="code" style="height: 0px;">
-<div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><a class="sourceLine" id="cb1-1" title="1"><span class="pp">#include </span><span class="im">&lt;cstdio&gt;</span></a>
-<a class="sourceLine" id="cb1-2" title="2"></a>
-<a class="sourceLine" id="cb1-3" title="3"><span class="kw">typedef</span> <span class="dt">long</span> <span class="dt">long</span> ll;</a>
-<a class="sourceLine" id="cb1-4" title="4"><span class="at">const</span> <span class="dt">int</span> N = <span class="dv">100000</span>;</a>
-<a class="sourceLine" id="cb1-5" title="5"><span class="dt">int</span> p, cnt, pri[N], k[N], cpoy_p;</a>
-<a class="sourceLine" id="cb1-6" title="6">ll n, m;</a>
-<a class="sourceLine" id="cb1-7" title="7"></a>
-<a class="sourceLine" id="cb1-8" title="8"><span class="kw">inline</span> ll qpow(ll base, ll exp, <span class="at">const</span> <span class="dt">int</span> &amp;mod) {</a>
-<a class="sourceLine" id="cb1-9" title="9">  ll res = <span class="dv">1</span>;</a>
-<a class="sourceLine" id="cb1-10" title="10">  <span class="cf">while</span> (exp) {</a>
-<a class="sourceLine" id="cb1-11" title="11">    <span class="cf">if</span> (exp &amp; <span class="dv">1</span>) res = res * base % mod;</a>
-<a class="sourceLine" id="cb1-12" title="12">    base = base * base % mod;</a>
-<a class="sourceLine" id="cb1-13" title="13">    exp &gt;&gt;= <span class="dv">1</span>;</a>
-<a class="sourceLine" id="cb1-14" title="14">  }</a>
-<a class="sourceLine" id="cb1-15" title="15">  <span class="cf">return</span> res;</a>
-<a class="sourceLine" id="cb1-16" title="16">}</a>
-<a class="sourceLine" id="cb1-17" title="17"></a>
-<a class="sourceLine" id="cb1-18" title="18"><span class="dt">void</span> exgcd(ll a, ll b, ll &amp;x, ll &amp;y) {</a>
-<a class="sourceLine" id="cb1-19" title="19">  <span class="cf">if</span> (b == <span class="dv">0</span>) <span class="cf">return</span> x = <span class="dv">1</span>, y = <span class="dv">0</span>, <span class="dt">void</span>();</a>
-<a class="sourceLine" id="cb1-20" title="20">  exgcd(b, a % b, y, x);</a>
-<a class="sourceLine" id="cb1-21" title="21">  y -= a / b * x;</a>
-<a class="sourceLine" id="cb1-22" title="22">}</a>
-<a class="sourceLine" id="cb1-23" title="23"></a>
-<a class="sourceLine" id="cb1-24" title="24"><span class="kw">namespace</span> CRT {</a>
-<a class="sourceLine" id="cb1-25" title="25"></a>
-<a class="sourceLine" id="cb1-26" title="26"><span class="dt">int</span> a[N], ans = <span class="dv">0</span>, pk;</a>
-<a class="sourceLine" id="cb1-27" title="27">ll inv, y;</a>
-<a class="sourceLine" id="cb1-28" title="28"></a>
-<a class="sourceLine" id="cb1-29" title="29"><span class="kw">inline</span> <span class="dt">int</span> solve() {</a>
-<a class="sourceLine" id="cb1-30" title="30">  <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">1</span>; i &lt;= cnt; ++i) {</a>
-<a class="sourceLine" id="cb1-31" title="31">    pk = qpow(pri[i], k[i], p + <span class="dv">1</span>);</a>
-<a class="sourceLine" id="cb1-32" title="32">    exgcd(p / pk, pk, inv, y);</a>
-<a class="sourceLine" id="cb1-33" title="33">    ans += a[i] * inv % p * (p / pk) % p;</a>
-<a class="sourceLine" id="cb1-34" title="34">    <span class="cf">if</span> (ans &gt;= p) ans -= p;</a>
-<a class="sourceLine" id="cb1-35" title="35">    <span class="cf">if</span> (ans &lt; <span class="dv">0</span>) ans += p;</a>
-<a class="sourceLine" id="cb1-36" title="36">  }</a>
-<a class="sourceLine" id="cb1-37" title="37">  <span class="cf">return</span> ans;</a>
-<a class="sourceLine" id="cb1-38" title="38">}</a>
-<a class="sourceLine" id="cb1-39" title="39"></a>
-<a class="sourceLine" id="cb1-40" title="40">}  <span class="co">// namespace CRT</span></a>
-<a class="sourceLine" id="cb1-41" title="41"></a>
-<a class="sourceLine" id="cb1-42" title="42"><span class="kw">namespace</span> Exlucas {</a>
-<a class="sourceLine" id="cb1-43" title="43"></a>
-<a class="sourceLine" id="cb1-44" title="44"><span class="dt">int</span> prime, mod;  <span class="co">// mod = p^k</span></a>
-<a class="sourceLine" id="cb1-45" title="45">ll h;            <span class="co">//指数也要开long long</span></a>
-<a class="sourceLine" id="cb1-46" title="46"></a>
-<a class="sourceLine" id="cb1-47" title="47"><span class="kw">inline</span> <span class="dt">void</span> MOD(ll &amp;x, <span class="at">const</span> <span class="dt">int</span> &amp;mod) {</a>
-<a class="sourceLine" id="cb1-48" title="48">  <span class="cf">if</span> (x &gt;= mod) x %= mod;</a>
-<a class="sourceLine" id="cb1-49" title="49">}</a>
-<a class="sourceLine" id="cb1-50" title="50"></a>
-<a class="sourceLine" id="cb1-51" title="51">ll f(ll n) {</a>
-<a class="sourceLine" id="cb1-52" title="52">  <span class="cf">if</span> (n == <span class="dv">0</span>) <span class="cf">return</span> <span class="dv">1</span>;</a>
-<a class="sourceLine" id="cb1-53" title="53">  h += n / prime;</a>
-<a class="sourceLine" id="cb1-54" title="54">  ll res = <span class="dv">1</span>, tmp = <span class="dv">1</span>;</a>
-<a class="sourceLine" id="cb1-55" title="55">  res *= f(n / prime);</a>
-<a class="sourceLine" id="cb1-56" title="56">  MOD(res, mod);</a>
-<a class="sourceLine" id="cb1-57" title="57">  <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">1</span>; i &lt;= mod; ++i) {</a>
-<a class="sourceLine" id="cb1-58" title="58">    <span class="cf">if</span> (i % prime) (tmp *= i) %= mod;</a>
-<a class="sourceLine" id="cb1-59" title="59">  }</a>
-<a class="sourceLine" id="cb1-60" title="60">  res *= qpow(tmp, n / mod, mod);</a>
-<a class="sourceLine" id="cb1-61" title="61">  MOD(res, mod);</a>
-<a class="sourceLine" id="cb1-62" title="62">  <span class="cf">for</span> (ll i = n / mod * mod; i &lt;= n; ++i) {</a>
-<a class="sourceLine" id="cb1-63" title="63">    <span class="cf">if</span> (i % prime) {</a>
-<a class="sourceLine" id="cb1-64" title="64">      res *= i % mod;</a>
-<a class="sourceLine" id="cb1-65" title="65">      MOD(res, mod);</a>
-<a class="sourceLine" id="cb1-66" title="66">    }</a>
-<a class="sourceLine" id="cb1-67" title="67">  }</a>
-<a class="sourceLine" id="cb1-68" title="68">  <span class="cf">return</span> res;</a>
-<a class="sourceLine" id="cb1-69" title="69">}</a>
-<a class="sourceLine" id="cb1-70" title="70"></a>
-<a class="sourceLine" id="cb1-71" title="71"><span class="kw">inline</span> ll solve(<span class="dt">int</span> i) {</a>
-<a class="sourceLine" id="cb1-72" title="72">  prime = pri[i], mod = qpow(prime, k[i], p + <span class="dv">1</span>);</a>
-<a class="sourceLine" id="cb1-73" title="73">  <span class="dt">int</span> exp = <span class="dv">0</span>;</a>
-<a class="sourceLine" id="cb1-74" title="74">  ll res = <span class="dv">1</span>, inv, y;</a>
-<a class="sourceLine" id="cb1-75" title="75">  h = <span class="dv">0</span>, res *= f(n), exp += h;</a>
-<a class="sourceLine" id="cb1-76" title="76"></a>
-<a class="sourceLine" id="cb1-77" title="77">  h = <span class="dv">0</span>, exgcd(f(m), mod, inv, y);</a>
-<a class="sourceLine" id="cb1-78" title="78">  inv = (inv % mod + mod) % mod;</a>
-<a class="sourceLine" id="cb1-79" title="79">  res *= inv;</a>
-<a class="sourceLine" id="cb1-80" title="80">  MOD(res, mod);</a>
-<a class="sourceLine" id="cb1-81" title="81">  exp -= h;</a>
-<a class="sourceLine" id="cb1-82" title="82"></a>
-<a class="sourceLine" id="cb1-83" title="83">  h = <span class="dv">0</span>, exgcd(f(n - m), mod, inv, y);</a>
-<a class="sourceLine" id="cb1-84" title="84">  inv = (inv % mod + mod) % mod;</a>
-<a class="sourceLine" id="cb1-85" title="85">  res *= inv;</a>
-<a class="sourceLine" id="cb1-86" title="86">  MOD(res, mod);</a>
-<a class="sourceLine" id="cb1-87" title="87">  exp -= h;</a>
-<a class="sourceLine" id="cb1-88" title="88"></a>
-<a class="sourceLine" id="cb1-89" title="89">  <span class="cf">return</span> res * qpow(prime, exp, mod) % mod;</a>
-<a class="sourceLine" id="cb1-90" title="90">}</a>
-<a class="sourceLine" id="cb1-91" title="91"></a>
-<a class="sourceLine" id="cb1-92" title="92">}  <span class="co">// namespace Exlucas</span></a>
-<a class="sourceLine" id="cb1-93" title="93"></a>
-<a class="sourceLine" id="cb1-94" title="94"><span class="dt">signed</span> main() {</a>
-<a class="sourceLine" id="cb1-95" title="95"><span class="pp">#ifndef ONLINE_JUDGE</span></a>
-<a class="sourceLine" id="cb1-96" title="96"><span class="pp">#ifdef LOCAL</span></a>
-<a class="sourceLine" id="cb1-97" title="97">  freopen(<span class="st">&quot;testdata.in&quot;</span>, <span class="st">&quot;r&quot;</span>, stdin);</a>
-<a class="sourceLine" id="cb1-98" title="98">  freopen(<span class="st">&quot;testdata.out&quot;</span>, <span class="st">&quot;w&quot;</span>, stdout);</a>
-<a class="sourceLine" id="cb1-99" title="99"><span class="pp">#else</span></a>
-<a class="sourceLine" id="cb1-100" title="100">  freopen(<span class="st">&quot;ExLucas.in&quot;</span>, <span class="st">&quot;r&quot;</span>, stdin);</a>
-<a class="sourceLine" id="cb1-101" title="101">  freopen(<span class="st">&quot;ExLucas.out&quot;</span>, <span class="st">&quot;w&quot;</span>, stdout);</a>
-<a class="sourceLine" id="cb1-102" title="102"><span class="pp">#endif</span></a>
-<a class="sourceLine" id="cb1-103" title="103"><span class="pp">#endif</span></a>
-<a class="sourceLine" id="cb1-104" title="104"></a>
-<a class="sourceLine" id="cb1-105" title="105">  scanf(<span class="st">&quot;</span><span class="sc">%lld%lld%d</span><span class="st">&quot;</span>, &amp;n, &amp;m, &amp;p);</a>
-<a class="sourceLine" id="cb1-106" title="106">  cpoy_p = p;</a>
-<a class="sourceLine" id="cb1-107" title="107">  <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">2</span>; i * i &lt;= p; ++i) {</a>
-<a class="sourceLine" id="cb1-108" title="108">    <span class="cf">if</span> (cpoy_p % i == <span class="dv">0</span>) {</a>
-<a class="sourceLine" id="cb1-109" title="109">      pri[++cnt] = i;</a>
-<a class="sourceLine" id="cb1-110" title="110">      <span class="cf">while</span> (cpoy_p % i == <span class="dv">0</span>) { cpoy_p /= i, k[cnt]++; }</a>
-<a class="sourceLine" id="cb1-111" title="111">    }</a>
-<a class="sourceLine" id="cb1-112" title="112">  }</a>
-<a class="sourceLine" id="cb1-113" title="113">  <span class="cf">if</span> (cpoy_p != <span class="dv">1</span>) pri[++cnt] = cpoy_p, k[cnt] = <span class="dv">1</span>;</a>
-<a class="sourceLine" id="cb1-114" title="114">  <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">1</span>; i &lt;= cnt; ++i) { CRT::a[i] = Exlucas::solve(i); }</a>
-<a class="sourceLine" id="cb1-115" title="115">  printf(<span class="st">&quot;</span><span class="sc">%d</span><span class="st">&quot;</span>, CRT::solve());</a>
-<a class="sourceLine" id="cb1-116" title="116">  <span class="cf">return</span> <span class="dv">0</span>;</a>
-<a class="sourceLine" id="cb1-117" title="117">}</a></code></pre></div>
-</div>
-  <div id="gitalk-container"></div>
+    <p>求：</p>
+    <p><span class="math display">\[
+    \binom n m \bmod p
+    \]</span></p>
+    <p>其中 <span class="math inline">\(p\)</span> 不保证为质数。</p>
+    <hr />
+    <p><strong>前置知识</strong></p>
+    <p>中国剩余定理（CRT）</p>
+    <p>ExGCD求逆元</p>
+    <p>（应该都会吧）</p>
+    <hr />
+    <p>考虑令 <span class="math inline">\(p=p_1^{k_1}p_2^{k_2}p_3^{k_3} \dots\)</span></p>
+    <p>原问题转化为求：</p>
+    <p><span class="math display">\[
+    \begin{cases}
+    C_n^m \bmod p_1^{k_1} \\
+    C_n^m \bmod p_2^{k_2} \\
+    C_n^m \bmod p_3^{k_3} \\
+    \dotsm
+    \end{cases}
+    \]</span></p>
+    <p>的一个解，使用中国剩余定理合并即可。</p>
+    <p>针对其中一个式子 <span class="math inline">\(C_n^m \bmod p^{k}\)</span> 即 <span class="math inline">\(\frac {n!} {m!(n-m)!} \bmod p^k\)</span> ，使用求逆元的方法是不行的，因为 <span class="math inline">\(p\)</span> 不保证为质数， <span class="math inline">\(m!(n-m)!\)</span> 可能不存在逆元。</p>
+    <p>设 <span class="math inline">\(f(n)=n! \bmod p^k\)</span> ，进一步考虑，既然不互质，那就把他们的公因子都约掉，我们把阶乘展开看一看：</p>
+    <p><span class="math display">\[
+    \begin{align}
+    n! &amp;= 1 \times 2 \times 3 \cdots n \\
+    &amp;= (p \cdot 2p \cdot 3p \cdots) \cdot [1 \times 2 \times 3 \cdots (p-1) \cdot (p + 1) \cdot (p + 2) \cdots] \\
+    &amp;= p^{\lfloor \frac{n}{p} \rfloor} (1 \times 2 \times 3 \cdots) \cdot [1 \times 2 \times 3 \cdots (p-1)] \cdot [(p + 1) \cdot (p + 2) \cdots)] \\
+    &amp;= \large p^{\lfloor \frac{n}{p} \rfloor} (\frac{n}{p})! \prod_{p \nmid i}^n i \\
+    &amp;= \large p^{\lfloor \frac{n}{p} \rfloor} (\frac{n}{p})! (\prod_{p \nmid i}^{p^k} i)^{\frac {n}{p^k}} \text{rest} \\
+    \end{align}
+    \]</span></p>
+    <p>其中 <span class="math inline">\(\text{rest}\)</span> 是指最后不够一整段 <span class="math inline">\(p^k\)</span> 的剩下的项， <span class="math inline">\(\displaystyle \large (\prod_{p \nmid i}^{p^k} i)\)</span> 是在 <span class="math inline">\(\bmod p^k\)</span> 意义下的一个循环节，这样的循环节有 <span class="math inline">\(\frac n {p^k}\)</span> 个。</p>
+    <p>每这样一次，我们都可以从阶乘提取出 <span class="math inline">\(p^{\lfloor \frac n p \rfloor}\)</span> 这个因子，并把原问题变为一个规模更小的问题 <span class="math inline">\(f(\frac n p)\)</span> ，可以递归进行，并在过程中累加 <span class="math inline">\(\lfloor \frac n p \rfloor\)</span> ，记为 <span class="math inline">\(h(n)\)</span> ，最后的 <span class="math inline">\(h(n)\)</span> 就是 <span class="math inline">\(n!\)</span> 中 <span class="math inline">\(p\)</span> 这个因子的数量。</p>
+    <p>至此，我们成功把 <span class="math inline">\(n!\)</span> 里的 <span class="math inline">\(p\)</span> 的因子分离出来。回归原来的问题 <span class="math inline">\(C_n^m \bmod p^{k}\)</span> ：</p>
+    <p><span class="math display">\[
+    \large \frac {\frac {n!}{p^{h(n)}}} {\frac {m!}{p^{h(m)}}\frac {(n-m)!}{p^{h(n-m)}}} p^{h(n)-h(m)-h(n-m)} \bmod p^k
+    \]</span></p>
+    <p>即</p>
+    <p><span class="math display">\[
+    \frac{f(n)}{f(m)f(n-m)} p^{h(n)-h(m)-h(n-m)} \bmod p^k
+    \]</span></p>
+    <p>由于 <span class="math inline">\(f(n)\)</span> 已经是被约掉 <span class="math inline">\(p\)</span> 因子的，一定有逆元，于是CRT的一个式子就解决了，最后合并就好了。</p>
+    <blockquote>
+    <p>Talk is cheap, show me your code</p>
+    </blockquote>
+    <button onclick="showCode(&#39;Exlucas&#39;)">
+    显示代码
+    </button>
+    <div id="Exlucas" class="code" style="height: 0px;">
+    <div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;cstdio&gt;</span></span>
+    <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+    <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> <span class="dt">long</span> <span class="dt">long</span> ll;</span>
+    <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> <span class="dt">int</span> N = <span class="dv">100000</span>;</span>
+    <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> p, cnt, pri[N], k[N], cpoy_p;</span>
+    <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>ll n, m;</span>
+    <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+    <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="kw">inline</span> ll qpow(ll base, ll exp, <span class="at">const</span> <span class="dt">int</span> &amp;mod) {</span>
+    <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  ll res = <span class="dv">1</span>;</span>
+    <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> (exp) {</span>
+    <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (exp &amp; <span class="dv">1</span>) res = res * base % mod;</span>
+    <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    base = base * base % mod;</span>
+    <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    exp &gt;&gt;= <span class="dv">1</span>;</span>
+    <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  }</span>
+    <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> res;</span>
+    <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>}</span>
+    <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+    <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> exgcd(ll a, ll b, ll &amp;x, ll &amp;y) {</span>
+    <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (b == <span class="dv">0</span>) <span class="cf">return</span> x = <span class="dv">1</span>, y = <span class="dv">0</span>, <span class="dt">void</span>();</span>
+    <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  exgcd(b, a % b, y, x);</span>
+    <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  y -= a / b * x;</span>
+    <span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>}</span>
+    <span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+    <span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="kw">namespace</span> CRT {</span>
+    <span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
+    <span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> a[N], ans = <span class="dv">0</span>, pk;</span>
+    <span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>ll inv, y;</span>
+    <span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
+    <span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="kw">inline</span> <span class="dt">int</span> solve() {</span>
+    <span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">1</span>; i &lt;= cnt; ++i) {</span>
+    <span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    pk = qpow(pri[i], k[i], p + <span class="dv">1</span>);</span>
+    <span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    exgcd(p / pk, pk, inv, y);</span>
+    <span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    ans += a[i] * inv % p * (p / pk) % p;</span>
+    <span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (ans &gt;= p) ans -= p;</span>
+    <span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (ans &lt; <span class="dv">0</span>) ans += p;</span>
+    <span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>  }</span>
+    <span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> ans;</span>
+    <span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>}</span>
+    <span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a></span>
+    <span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>}  <span class="co">// namespace CRT</span></span>
+    <span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a></span>
+    <span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="kw">namespace</span> Exlucas {</span>
+    <span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a></span>
+    <span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> prime, mod;  <span class="co">// mod = p^k</span></span>
+    <span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>ll h;            <span class="co">//指数也要开long long</span></span>
+    <span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a></span>
+    <span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a><span class="kw">inline</span> <span class="dt">void</span> MOD(ll &amp;x, <span class="at">const</span> <span class="dt">int</span> &amp;mod) {</span>
+    <span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (x &gt;= mod) x %= mod;</span>
+    <span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>}</span>
+    <span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a></span>
+    <span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>ll f(ll n) {</span>
+    <span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (n == <span class="dv">0</span>) <span class="cf">return</span> <span class="dv">1</span>;</span>
+    <span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>  h += n / prime;</span>
+    <span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>  ll res = <span class="dv">1</span>, tmp = <span class="dv">1</span>;</span>
+    <span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>  res *= f(n / prime);</span>
+    <span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>  MOD(res, mod);</span>
+    <span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">1</span>; i &lt;= mod; ++i) {</span>
+    <span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (i % prime) (tmp *= i) %= mod;</span>
+    <span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>  }</span>
+    <span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>  res *= qpow(tmp, n / mod, mod);</span>
+    <span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>  MOD(res, mod);</span>
+    <span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (ll i = n / mod * mod; i &lt;= n; ++i) {</span>
+    <span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (i % prime) {</span>
+    <span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>      res *= i % mod;</span>
+    <span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>      MOD(res, mod);</span>
+    <span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>    }</span>
+    <span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>  }</span>
+    <span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> res;</span>
+    <span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>}</span>
+    <span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a></span>
+    <span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a><span class="kw">inline</span> ll solve(<span class="dt">int</span> i) {</span>
+    <span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a>  prime = pri[i], mod = qpow(prime, k[i], p + <span class="dv">1</span>);</span>
+    <span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> exp = <span class="dv">0</span>;</span>
+    <span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a>  ll res = <span class="dv">1</span>, inv, y;</span>
+    <span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a>  h = <span class="dv">0</span>, res *= f(n), exp += h;</span>
+    <span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a></span>
+    <span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a>  h = <span class="dv">0</span>, exgcd(f(m), mod, inv, y);</span>
+    <span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a>  inv = (inv % mod + mod) % mod;</span>
+    <span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a>  res *= inv;</span>
+    <span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a>  MOD(res, mod);</span>
+    <span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a>  exp -= h;</span>
+    <span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a></span>
+    <span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a>  h = <span class="dv">0</span>, exgcd(f(n - m), mod, inv, y);</span>
+    <span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a>  inv = (inv % mod + mod) % mod;</span>
+    <span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a>  res *= inv;</span>
+    <span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a>  MOD(res, mod);</span>
+    <span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a>  exp -= h;</span>
+    <span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a></span>
+    <span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> res * qpow(prime, exp, mod) % mod;</span>
+    <span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a>}</span>
+    <span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a></span>
+    <span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a>}  <span class="co">// namespace Exlucas</span></span>
+    <span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a></span>
+    <span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a><span class="dt">signed</span> main() {</span>
+    <span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a><span class="pp">#ifndef ONLINE_JUDGE</span></span>
+    <span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a><span class="pp">#ifdef LOCAL</span></span>
+    <span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a>  freopen(<span class="st">&quot;testdata.in&quot;</span>, <span class="st">&quot;r&quot;</span>, stdin);</span>
+    <span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a>  freopen(<span class="st">&quot;testdata.out&quot;</span>, <span class="st">&quot;w&quot;</span>, stdout);</span>
+    <span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a><span class="pp">#else</span></span>
+    <span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a>  freopen(<span class="st">&quot;ExLucas.in&quot;</span>, <span class="st">&quot;r&quot;</span>, stdin);</span>
+    <span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a>  freopen(<span class="st">&quot;ExLucas.out&quot;</span>, <span class="st">&quot;w&quot;</span>, stdout);</span>
+    <span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a><span class="pp">#endif</span></span>
+    <span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a><span class="pp">#endif</span></span>
+    <span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a></span>
+    <span id="cb1-105"><a href="#cb1-105" aria-hidden="true" tabindex="-1"></a>  scanf(<span class="st">&quot;</span><span class="sc">%lld%lld%d</span><span class="st">&quot;</span>, &amp;n, &amp;m, &amp;p);</span>
+    <span id="cb1-106"><a href="#cb1-106" aria-hidden="true" tabindex="-1"></a>  cpoy_p = p;</span>
+    <span id="cb1-107"><a href="#cb1-107" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">2</span>; i * i &lt;= p; ++i) {</span>
+    <span id="cb1-108"><a href="#cb1-108" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (cpoy_p % i == <span class="dv">0</span>) {</span>
+    <span id="cb1-109"><a href="#cb1-109" aria-hidden="true" tabindex="-1"></a>      pri[++cnt] = i;</span>
+    <span id="cb1-110"><a href="#cb1-110" aria-hidden="true" tabindex="-1"></a>      <span class="cf">while</span> (cpoy_p % i == <span class="dv">0</span>) { cpoy_p /= i, k[cnt]++; }</span>
+    <span id="cb1-111"><a href="#cb1-111" aria-hidden="true" tabindex="-1"></a>    }</span>
+    <span id="cb1-112"><a href="#cb1-112" aria-hidden="true" tabindex="-1"></a>  }</span>
+    <span id="cb1-113"><a href="#cb1-113" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (cpoy_p != <span class="dv">1</span>) pri[++cnt] = cpoy_p, k[cnt] = <span class="dv">1</span>;</span>
+    <span id="cb1-114"><a href="#cb1-114" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">1</span>; i &lt;= cnt; ++i) { CRT::a[i] = Exlucas::solve(i); }</span>
+    <span id="cb1-115"><a href="#cb1-115" aria-hidden="true" tabindex="-1"></a>  printf(<span class="st">&quot;</span><span class="sc">%d</span><span class="st">&quot;</span>, CRT::solve());</span>
+    <span id="cb1-116"><a href="#cb1-116" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span>;</span>
+    <span id="cb1-117"><a href="#cb1-117" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+    </div>
+  <div id="gitalk-container" class="card"></div>
   </body>
 
 <script src="../../static/javaScripts/articleJS.js"></script>

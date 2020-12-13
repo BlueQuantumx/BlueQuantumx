@@ -2,7 +2,8 @@
 :root {
   --text-color: black;
   --background-color: white;
-  --hyper-text-color: #5e72e4;
+  --accent-color: #5e72e4;
+  --auxiliary-color: gray;
 }
 
 html {
@@ -11,6 +12,7 @@ html {
 
 body {
   margin: 0;
+  color: var(--text-color);
 }
 
 body::before {
@@ -63,7 +65,7 @@ a {
 }
 
 a:hover {
-  color: cornflowerblue;
+  color: var(--accent-color);
 }
 
 nav>* {
@@ -82,7 +84,6 @@ nav>* {
   left: 0;
   right: 0;
   height: 3em;
-  background-color: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(10px);
   transition: box-shadow 0.1s;
   z-index: 20;
@@ -109,7 +110,6 @@ nav>* {
   margin-right: auto;
   width: fit-content;
   height: fit-content;
-  backdrop-filter: blur(10px);
 }
 
 #sway>span {
@@ -227,6 +227,17 @@ nav>* {
   background-color: var(--background-color) !important;
 }
 
+#gitalk-container {
+  box-sizing: border-box;
+  width: 75%;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.gt-comment-body.markdown-body {
+  color: var(--text-color) !important;
+}
+
 #articles {
   display: inline-flex;
   width: 75%;
@@ -252,13 +263,6 @@ nav>* {
   margin-bottom: 3px;
 }
 
-#gitalk-container {
-  box-sizing: border-box;
-  width: 75%;
-  padding-left: 20px;
-  padding-right: 20px;
-}
-
 #right-part {
   box-sizing: border-box;
   position: sticky;
@@ -277,14 +281,15 @@ nav>* {
 }
 
 footer {
-  padding: 20px;
+  padding: 1rem;
   position: relative;
-  color: white;
+  color: var(--text-color);
   text-align: center;
+  backdrop-filter: blur(10px);
 }
 
-footer>a {
-  color: white;
+footer>p {
+  margin: 0;
 }
 
 @keyframes cutin {
@@ -333,14 +338,12 @@ footer>a {
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --text-color: white;
+    --text-color: #DDDDDD;
     --background-color: #121212;
-    --hyper-text-color: #5e72e4;
+    --accent-color: #5e72e4;
+    --auxiliary-color: gray;
   }
   body::before {
     background-image: url('../images/darkBackground.jpg');
-  }
-  #down-arrow {
-    filter: invert(1);
   }
 }

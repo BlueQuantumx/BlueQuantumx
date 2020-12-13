@@ -40,15 +40,13 @@ $$
 设 $f(n)=n! \bmod p^k$ ，进一步考虑，既然不互质，那就把他们的公因子都约掉，我们把阶乘展开看一看：
 
 $$
-\begin{aligned}
+\begin{align}
 n! &= 1 \times 2 \times 3 \cdots n \\
-   &= (p \cdot 2p \cdot 3p \cdots) \cdot [1 \times 2 \times 3 \cdots (p-1) \cdot (p + 1) \cdot (p + 2) \cdots] \\
-
-   &= p^{\lfloor \frac{n}{p} \rfloor} (1 \times 2 \times 3 \cdots) \cdot [1 \times 2 \times 3 \cdots (p-1)] \cdot [(p + 1) \cdot (p + 2) \cdots)] \\
-   & \text{注意，这里很重要！！！} \\
-   &= \large p^{\lfloor \frac{n}{p} \rfloor} (\frac{n}{p})! \prod_{p \nmid i}^n i \\
-   &= \large p^{\lfloor \frac{n}{p} \rfloor} (\frac{n}{p})! (\prod_{p \nmid i}^{p^k} i)^{\frac {n}{p^k}} \text{rest} \\
-\end{aligned}
+&= (p \cdot 2p \cdot 3p \cdots) \cdot [1 \times 2 \times 3 \cdots (p-1) \cdot (p + 1) \cdot (p + 2) \cdots] \\
+&= p^{\lfloor \frac{n}{p} \rfloor} (1 \times 2 \times 3 \cdots) \cdot [1 \times 2 \times 3 \cdots (p-1)] \cdot [(p + 1) \cdot (p + 2) \cdots)] \\
+&= \large p^{\lfloor \frac{n}{p} \rfloor} (\frac{n}{p})! \prod_{p \nmid i}^n i \\
+&= \large p^{\lfloor \frac{n}{p} \rfloor} (\frac{n}{p})! (\prod_{p \nmid i}^{p^k} i)^{\frac {n}{p^k}} \text{rest} \\
+\end{align}
 $$
 
 其中 $\text{rest}$ 是指最后不够一整段 $p^k$ 的剩下的项， $\displaystyle \large (\prod_{p \nmid i}^{p^k} i)$ 是在 $\bmod p^k$ 意义下的一个循环节，这样的循环节有 $\frac n {p^k}$ 个。
