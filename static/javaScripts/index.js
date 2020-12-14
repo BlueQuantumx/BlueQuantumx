@@ -1,9 +1,9 @@
-var flag = false;
-var mainContainer = document.getElementsByTagName("main")[0];
-var topPanel = document.getElementById("top-panel");
+let flag = false;
+let mainContainer = document.getElementsByTagName("main")[0];
+let topPanel = document.getElementById("top-panel");
 
 // 首页特效
-function mouseMoveThrottle() {
+document.getElementById("index-show").addEventListener("mousemove", (() => {
   let previous = 0;
   return event => {
     let now = Date.now();
@@ -15,21 +15,19 @@ function mouseMoveThrottle() {
       previous = now;
     }
   }
-}
-document.getElementById("index-show").addEventListener("mousemove", mouseMoveThrottle());
+})());
 
 // Scroll特效
 const duration = 700;
 let inAnimation = false;
 let start, ori, target;
 
-function c_bezier(t) {
-  return 2.1 * t * (1 - t) * (1 - t) + 3 * t * t * (1 - t) + t * t * t;
-}
-
 /* function c_bezier(p0, p1, p2, p3, t) {
   return p0 * (1 - t) * (1 - t) * (1 - t) + 3 * p1 * t * (1 - t) * (1 - t) + 3 * p2 * t * t * (1 - t) + p3 * t * t * t;
 } */
+function c_bezier(t) {
+  return 2.1 * t * (1 - t) * (1 - t) + 3 * t * t * (1 - t) + t * t * t;
+}
 document.getElementById("down-arrow").addEventListener("click", () => {
   if (!inAnimation) {
     inAnimation = true;
@@ -47,8 +45,7 @@ function scrollAnimation(stepTime) {
   else start = undefined, inAnimation = false;
 }
 
-window.addEventListener("scroll", scrollTrottle());
-function scrollTrottle() {
+window.addEventListener("scroll", (() => {
   let previous = 0;
   return function () {
     let now = Date.now();
@@ -73,7 +70,7 @@ function scrollTrottle() {
       previous = now;
     }
   }
-}
+})());
 
 // Gitalk
 fetch('/static/gitalk.json').then(response => {
