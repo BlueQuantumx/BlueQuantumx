@@ -122,3 +122,23 @@ fetch('https://v1.hitokoto.cn?c=i').then(response => {
     document.getElementById('hitokoto').appendChild(ref);
   }
 });
+
+//切换深色模式
+document.getElementById("colorScheme").addEventListener("click", () => {
+  if (document.documentElement.style.getPropertyValue("--text-color") == "black") {
+    document.documentElement.style.setProperty("--text-color", "#DDDDDD");
+    document.documentElement.style.setProperty("--background-color", "#121212");
+    document.documentElement.style.setProperty("--icon", 'url("../images/night.png")');
+    document.documentElement.style.setProperty("--background-image", 'url("../images/darkBackground.jpg")');
+
+    // document.documentElement.style.setProperty("--accent-color", "#5e72e4");
+    // document.documentElement.style.setProperty("--auxiliary-color", "gray");
+  } else {
+    document.documentElement.style.setProperty("--text-color", "black");
+    document.documentElement.style.setProperty("--background-color", "white");
+    document.documentElement.style.setProperty("--icon", 'url("../images/day.png")');
+    document.documentElement.style.setProperty("--background-image", 'url("../images/background.png")');
+    // document.documentElement.style.setProperty("--accent-color", "#5e72e4");
+    // document.documentElement.style.setProperty("--auxiliary-color", "gray");
+  }
+});
