@@ -21,6 +21,7 @@ body::before {
   background-position: center;
   background-image: var(--background-image);
   transition: background-image 0.3s;
+  z-index: -1;
 }
 
 h4 {
