@@ -111,17 +111,14 @@ fetch('static/friendLinks.json').then(response => {
 });
 
 // 一言
-fetch('https://v1.hitokoto.cn?c=i').then(response => {
-  return response.json();
-}).then(myJson => {
-  document.getElementById("hitokoto").innerHTML += myJson.hitokoto;
-  if (myJson.from_who) {
-    let ref = document.createElement('div');
-    ref.textContent = myJson.from_who;
-    ref.id = "hitokotoRef";
-    document.getElementById('hitokoto').appendChild(ref);
-  }
-});
+function getHitokoto() {
+  fetch('https://v1.hitokoto.cn?c=i').then(r => r.json()).then(myJson => {
+    document.getElementById("hitokotoText").innerText = myJson.hitokoto;
+    document.getElementById("hitokotoRef").innerText = myJson.from_who;
+   });
+}
+getHitokoto();
+document.querySelector("#hitokoto > h4 > img").addEventListener("click", getHitokoto);
 
 //切换深色模式
 document.getElementById("colorScheme").addEventListener("click", () => {

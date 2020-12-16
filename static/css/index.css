@@ -271,9 +271,18 @@ a:hover {
   float: right;
 }
 
+#hitokoto img {
+  height: 1.3em;
+  vertical-align: middle;
+}
+
 #hitokotoRef {
   text-align: right;
   font-weight: 400;
+}
+
+#hitokotoRef:empty {
+  visibility: hidden;
 }
 
 #hitokotoRef::before {
