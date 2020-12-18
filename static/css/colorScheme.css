@@ -1,23 +1,23 @@
 :root {
   --text-color: black;
   --background-color: white;
-  --accent-color: #5e72e4;
+  --accent-color: #6190e8;
   --auxiliary-color: gray;
-  --background-image: url("../images/background.png");
-  --icon: url("../images/day.png");
+  --background-image: url("/static/images/light/background.png");
+  --color-switch: url("/static/images/light/colorSwitch.png");
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --text-color: #DDDDDD;
     --background-color: #121212;
-    --accent-color: #5e72e4;
+    --accent-color: #6190e8;
     --auxiliary-color: gray;
-    --background-image: url("../images/darkBackground.jpg");
-    --icon: url("../images/night.png");
+    --background-image: url("/static/images/dark/background.jpg");
+    --color-switch: url("/static/images/dark/colorSwitch.png");
   }
 }
 
 * {
-  transition: color 0.3s;
+  transition: color, background 0.3s;
 }

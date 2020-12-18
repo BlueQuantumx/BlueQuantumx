@@ -56,7 +56,7 @@ main {
 }
 
 a {
-  transition: color 0.4s;
+  transition: color 0.3s;
   color: inherit;
   text-decoration: none;
 }
@@ -127,19 +127,10 @@ a:hover {
   bottom: 3rem;
   left: calc(50vw - 1rem);
   cursor: pointer;
-  background-image: url('../images/downarrow.png');
+  background-image: url('/static/images/downarrow.png');
   background-position: center;
   background-size: contain;
   -webkit-tap-highlight-color: transparent;
-}
-
-.bright-text {
-  transition: all 0.4s;
-}
-
-.bright-text:hover {
-  color: cyan;
-  text-shadow: 0 0.1rem 0.4rem black;
 }
 
 .goline-text, #links>a {
@@ -153,7 +144,7 @@ a:hover {
   width: 100%;
   left: 0px;
   top: 0px;
-  background-color: #5e72e4;
+  background-color: var(--accent-color);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.3s;
@@ -182,24 +173,6 @@ a:hover {
   transform-origin: left;
 }
 
-.card::before, .gt-comment-content::before {
-  content: '';
-  position: absolute;
-  z-index: -1;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  border-radius: 10px;
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-
-.card:hover::before, .gt-comment-content:hover::before {
-  opacity: 1;
-}
-
 .card, .gt-comment-content, .gt-header-textarea {
   color: var(--text-color);
   background-color: var(--background-color) !important;
@@ -211,31 +184,11 @@ a:hover {
   box-shadow: 0 5px 8px rgba(0, 0, 0, 0.2);
 }
 
-.gt-comment-content, .gt-header-textarea {
-  margin: unset;
-}
-
-.gt-comment-content:hover {
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2) !important;
-}
-
-.gt-comment-content {
-  margin-right: 0;
-}
-
-.gt-btn.gt-btn-preview {
-  background-color: var(--background-color) !important;
-}
-
 #gitalk-container {
   box-sizing: border-box;
   width: 75%;
   padding-left: 20px;
   padding-right: 20px;
-}
-
-.gt-comment-body.markdown-body {
-  color: var(--text-color) !important;
 }
 
 #articles {
@@ -271,9 +224,10 @@ a:hover {
   float: right;
 }
 
-#hitokoto img {
-  height: 1.3em;
-  vertical-align: middle;
+.refresh {
+  height: 1em;
+  background-size: contain;
+  background-position: center;
 }
 
 #hitokotoRef {
@@ -301,19 +255,12 @@ footer>p {
   margin: 0;
 }
 
-.icon {
+.color-switch {
   height: 1.25rem;
   width: 1.25rem;
   background-size: contain;
-  background-image: var(--icon);
+  background-image: var(--color-switch);
   transition: background-image 0.3s;
-}
-
-@media (prefers-color-scheme: dark) {
-  .icon {
-    background-image: var(--icon);
-    filter: none;
-  }
 }
 
 @keyframes cutin {

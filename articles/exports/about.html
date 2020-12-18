@@ -10,33 +10,18 @@
     <link rel="stylesheet" href="/static/css/colorScheme.css" />
     <style>
         /* stylesheet specified for the about page */
-        @keyframes topUp {
-            from {
-                margin-top: unset;
-            }
 
-            to {
-                margin-top: -65px;
-            }
-        }
-
-        @keyframes nameDown {
-            from {
-                transform: unset;
-            }
-
-            to {
-                transform: translateY(330px);
-            }
+        * {
+            box-sizing: border-box;
         }
 
         @keyframes showUp {
             from {
-                color: var(--bg);
+                transform: rotate(0deg);
             }
 
             to {
-                color: var(--text);
+                transform: rotate(360deg);
             }
         }
 
@@ -46,8 +31,8 @@
         }
 
         a {
-            transition: color 0.4s;
-            color: inherit;
+            transition: color 0.3s;
+            color: var(--text-color);
             text-decoration: none;
         }
 
@@ -55,24 +40,34 @@
             color: var(--accent-color);
         }
 
-        nav {
-            animation: topUp 2s;
-            animation-delay: 1s;
-            animation-fill-mode: forwards;
+        #top-panel {
+            display: flex;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3rem;
+            transition: box-shadow 0.1s;
+            list-style: none;
+            user-select: none;
+            z-index: 20;
+            justify-content: center;
+            align-items: center;
         }
 
-        header>h1 {
-            animation: nameDown 2s;
-            animation-delay: 1s;
-            animation-fill-mode: forwards;
+        #top-panel>* {
+            margin-left: 0.5rem;
+            margin-right: 0.5rem;
+        }
+
+
+        #myname {
+            font-size: 1.5rem;
+            font-weight: 600;
+            flex-basis: 70%;
         }
 
         main {
             text-align: center;
-        }
-
-        main>h2 {
-            margin-bottom: 0;
         }
 
         #avatar>img {
@@ -82,11 +77,34 @@
         }
 
         #introduction {
-            color: var(--bg);
-            margin-top: 2.5em;
-            animation: showUp 1s;
-            animation-delay: 3.0s;
-            animation-fill-mode: forwards;
+            color: var(--text-color);
+            padding: 2.5em;
+            margin-left: auto;
+            margin-right: auto;
+            width: 20em;
+            height: 20em;
+            position: relative;
+            background-color: var(--background-color);
+            overflow: hidden;
+            border-radius: 10em;
+        }
+
+        #introduction::after {
+            content: "";
+            position: absolute;
+            backdrop-filter: invert(1);
+            top: calc(50%);
+            left: 0;
+            height: 50%;
+            width: 100%;
+            transform-origin: center top;
+            animation: showUp 3s;
+            animation-delay: 1.0s;
+            animation-iteration-count: infinite;
+        }
+
+        #introduction>h1 {
+            margin-top: 2em;
         }
 
         footer {
@@ -96,6 +114,19 @@
             left: 0;
             right: 0;
             text-align: center;
+            padding: 1rem;
+        }
+
+        footer>p {
+            margin: 0;
+        }
+
+        .color-switch {
+            height: 1.25rem;
+            width: 1.25rem;
+            background-size: contain;
+            background-image: var(--color-switch);
+            transition: background-image 0.3s;
         }
     </style>
     <title>BlueQuantum</title>
@@ -104,8 +135,10 @@
 <body style="opacity: 0;" onload="document.body.style.opacity='1'">
     <nav id="top-panel">
         <a id="myname" href="/">BlueQuantum's Blog</a>
-        <span id="colorScheme" class="icon"></span>
+        <span id="colorSwitch" class="color-switch"></span>
         <a id="about" href="/articles/exports/about.html" target="_blank">关于</a>
+        <!-- <span id="scroll"></span> -->
+        <!-- <span id="posX"></span><span id="posY"></span> -->
     </nav>
 
     <main>
@@ -118,16 +151,38 @@
         </div>
 
         <div id="introduction">
-            <div>来自 HE 的退役菜鸡</div>
-            <div>坐标石家庄</div>
+            <h1>BlueQuantum</h1>
+            <div>sjzez 学生</div>
+            <div>蒟蒻一枚</div>
         </div>
     </main>
 
     <footer>
-        <p><a href="mailto:blue_quantum@outlook.com">BlueQuantum</a> Copyright &copy; 2020 ~
-            2020</p>
-        <p>由 BlueQuantum 没劲驱动</p>
+        <p>
+            由<a href="https://gitee.com/bluequantum"> BlueQuantum </a>没劲驱动 Copyright &copy; 2020 ~ 2020
+        </p>
     </footer>
 </body>
+
+<script>
+    //切换深色模式
+    document.getElementById("colorSwitch").addEventListener("click", () => {
+        if (document.documentElement.style.getPropertyValue("--text-color") == "black") {
+            document.documentElement.style.setProperty("--text-color", "#DDDDDD");
+            document.documentElement.style.setProperty("--background-color", "#121212");
+            document.documentElement.style.setProperty("--color-switch", 'url("/static/images/dark/colorSwitch.png")');
+            document.documentElement.style.setProperty("--background-image", 'url("/static/images/dark/background.jpg")');
+            // document.documentElement.style.setProperty("--accent-color", "#5e72e4");
+            // document.documentElement.style.setProperty("--auxiliary-color", "gray");
+        } else {
+            document.documentElement.style.setProperty("--text-color", "black");
+            document.documentElement.style.setProperty("--background-color", "white");
+            document.documentElement.style.setProperty("--color-switch", 'url("/static/images/light/colorSwitch.png")');
+            document.documentElement.style.setProperty("--background-image", 'url("/static/images/light/background.png")');
+            // document.documentElement.style.setProperty("--accent-color", "#5e72e4");
+            // document.documentElement.style.setProperty("--auxiliary-color", "gray");
+        }
+    });
+</script>
 
 </html>

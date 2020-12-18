@@ -100,7 +100,7 @@ fetch('static/articles.json').then(response => {
   document.getElementById('articles').innerHTML = make_html;
 });
 
-fetch('static/friendLinks.json').then(response => {
+fetch('/static/friendLinks.json').then(response => {
   return response.json();
 }).then(Friends => {
   for (let i = 0; i < Friends.length; ++i) {
@@ -115,26 +115,25 @@ function getHitokoto() {
   fetch('https://v1.hitokoto.cn?c=i').then(r => r.json()).then(myJson => {
     document.getElementById("hitokotoText").innerText = myJson.hitokoto;
     document.getElementById("hitokotoRef").innerText = myJson.from_who;
-   });
+  });
 }
 getHitokoto();
-document.querySelector("#hitokoto > h4 > img").addEventListener("click", getHitokoto);
+document.querySelector("#hitokoto > h4 > span").addEventListener("click", getHitokoto);
 
 //切换深色模式
-document.getElementById("colorScheme").addEventListener("click", () => {
+document.getElementById("colorSwitch").addEventListener("click", () => {
   if (document.documentElement.style.getPropertyValue("--text-color") == "black") {
     document.documentElement.style.setProperty("--text-color", "#DDDDDD");
     document.documentElement.style.setProperty("--background-color", "#121212");
-    document.documentElement.style.setProperty("--icon", 'url("../images/night.png")');
-    document.documentElement.style.setProperty("--background-image", 'url("../images/darkBackground.jpg")');
-
+    document.documentElement.style.setProperty("--color-switch", 'url("/static/images/dark/colorSwitch.png")');
+    document.documentElement.style.setProperty("--background-image", 'url("/static/images/dark/background.jpg")');
     // document.documentElement.style.setProperty("--accent-color", "#5e72e4");
     // document.documentElement.style.setProperty("--auxiliary-color", "gray");
   } else {
     document.documentElement.style.setProperty("--text-color", "black");
     document.documentElement.style.setProperty("--background-color", "white");
-    document.documentElement.style.setProperty("--icon", 'url("../images/day.png")');
-    document.documentElement.style.setProperty("--background-image", 'url("../images/background.png")');
+    document.documentElement.style.setProperty("--color-switch", 'url("/static/images/light/colorSwitch.png")');
+    document.documentElement.style.setProperty("--background-image", 'url("/static/images/light/background.png")');
     // document.documentElement.style.setProperty("--accent-color", "#5e72e4");
     // document.documentElement.style.setProperty("--auxiliary-color", "gray");
   }
