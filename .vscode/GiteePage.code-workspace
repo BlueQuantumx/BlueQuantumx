@@ -3,17 +3,12 @@
 		{
 			"path": ".."
 		},
-		{
-			"path": "../articles"
-		}
 	],
 	"settings": {
-		"files.exclude": {
-			"**/_v*": true
-		},
 		"code-runner.clearPreviousOutput": true,
+		"code-runner.customCommand": "python $workspaceRoot/articles/Update.py",
 		"code-runner.executorMapByFileExtension": {
-			".md": "pandoc --mathjax \"$fileName\" -o \"./exports/$fileNameWithoutExt.html\" --template=../static/myTemplate.html -M pagetitle=$fileNameWithoutExt"
+			".md": "python $workspaceRoot/articles/Update.py --publish $fullFileName"
 		},
 		"[markdown]": {
 			"editor.renderWhitespace": "all",
@@ -21,7 +16,8 @@
 				"other": true,
 				"comments": true,
 			},
-			"editor.acceptSuggestionOnEnter": "on"
+			"editor.acceptSuggestionOnEnter": "on",
+			"editor.fontFamily": "'Noto Sans Mono CJK SC'"
 		}
 	},
 }

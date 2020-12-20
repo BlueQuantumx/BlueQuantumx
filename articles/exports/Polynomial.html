@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="author" content="BlueQuantum" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/ico" sizes="512x512" href="../../static/images/icon.png" />
+  <link rel="stylesheet" type="text/css" href="../../static/css/articleTheme.css" />
+  <script id="MathJax-script" src="../../static/javaScripts/mathJax-3.1.2/es5/tex-chtml.js"></script>
+  <link href="https://cdn.bootcdn.net/ajax/libs/gitalk/1.7.0/gitalk.min.css" rel="stylesheet">
+  <script src="https://cdn.bootcdn.net/ajax/libs/gitalk/1.7.0/gitalk.min.js"></script>
+  <script async="" src="../../static/javaScripts/articleJS.js"></script>
+      <title>Polynomial</title>
+  </head>
+
+<body id="write">
+    <h1 id="polynomial">Polynomial</h1>
+    <h2 id="多项式乘法-ntt">多项式乘法 NTT</h2>
+    <h3 id="前置知识">前置知识</h3>
+    <h4 id="原根">原根</h4>
+    <p>若存在 <span class="math inline">\(g\)</span> 使得 <span class="math inline">\(g^{\varphi(p)} \equiv 1 \pmod p\)</span>，则 <span class="math inline">\(g\)</span> 为质数 <span class="math inline">\(p\)</span> 的原根</p>
+    <p><span class="math inline">\(n\)</span> 次单位根 <span class="math inline">\(w_n = g^{\frac {p-1} n}\)</span></p>
+    <p><span class="math inline">\(w_n^{2i} = w_{\frac{n}{2}}^i\)</span></p>
+    <h2 id="多项式乘法逆-inv">多项式乘法逆 Inv</h2>
+    <p>倍增处理，假设已经求出 <span class="math inline">\(\pmod {x^\frac{n}{2}}\)</span> 意义下的逆元记为 <span class="math inline">\(inv_0\)</span></p>
+    <p><span class="math display">\[
+    \begin{aligned}
+    f * inv_0 &amp;\equiv 1 \pmod {x^\frac{n}{2}} \\
+    f * inv &amp;\equiv 1 \pmod {x^n} \\
+    f * (inv - inv_0) &amp;\equiv 0 \pmod {x^\frac{n}{2}} \\
+    inv - inv_0 &amp;\equiv 0 \pmod {x^\frac{n}{2}}
+    \end{aligned}
+    \]</span></p>
+    <p>因为 <span class="math inline">\(inv - inv_0\)</span> 最低系数不为零的项次数为 <span class="math inline">\(x^\frac{n}{2}\)</span> 平方后 最低系数不为零的项次数为 <span class="math inline">\(x^n\)</span> 所以</p>
+    <p><span class="math display">\[
+    \begin{aligned}
+    (inv - inv_0)^2 &amp;\equiv 0 \pmod {x^n} \\
+    inv^2 + inv_0^2 - 2inv * inv_0 &amp;\equiv 0 \pmod {x^n}
+    \end{aligned}
+    \]</span></p>
+    <p>两边同时乘 <span class="math inline">\(f\)</span></p>
+    <p><span class="math display">\[
+    \begin{aligned}
+    inv + inv_0^2*f - 2inv_0 &amp;\equiv 0 \pmod {x^n} \\
+    inv &amp;\equiv 2inv_0 - inv_0^2*f \pmod {x^n}
+    \end{aligned}
+    \]</span></p>
+    <h2 id="多项式对数函数-ln">多项式对数函数 Ln</h2>
+    <h2 id="多项式指数函数-exp">多项式指数函数 Exp</h2>
+    <button id="Polynomialbtn" onclick="showCode(&#39;Polynomial&#39;)">
+    展开代码
+    </button>
+    <div id="Polynomial" class="code" style="height: 0px;">
+    <div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">/// </span><span class="an">@tags:</span><span class="co"> NTT Polynomial</span></span>
+    <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;algorithm&gt;</span></span>
+    <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;cctype&gt;</span></span>
+    <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;cstdio&gt;</span></span>
+    <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;cstring&gt;</span></span>
+    <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+    <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> <span class="dt">long</span> <span class="dt">long</span> ll;</span>
+    <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+    <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> <span class="dt">int</span> N = <span class="dv">1</span> &lt;&lt; <span class="dv">18</span>, mod = <span class="dv">998244353</span>, G = <span class="dv">3</span>, invG = <span class="dv">332748118</span>;</span>
+    <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+    <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span> &lt;<span class="kw">typename</span> T&gt;</span>
+    <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="kw">inline</span> T &amp;read(T &amp;x) {</span>
+    <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  x = <span class="dv">0</span>;</span>
+    <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="dt">bool</span> f = <span class="kw">false</span>;</span>
+    <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="dt">short</span> ch = getchar();</span>
+    <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> (!isdigit(ch)) {</span>
+    <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (ch == <span class="ch">&#39;-&#39;</span>) f = <span class="kw">true</span>;</span>
+    <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    ch = getchar();</span>
+    <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  }</span>
+    <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> (isdigit(ch)) x = x * <span class="dv">10</span> + (ch ^ <span class="ch">&#39;0&#39;</span>), ch = getchar();</span>
+    <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (f) x = -x;</span>
+    <span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> x;</span>
+    <span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>}</span>
+    <span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+    <span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Polynomial {</span>
+    <span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a> <span class="kw">private</span>:</span>
+    <span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> f[N];</span>
+    <span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  <span class="at">static</span> <span class="dt">int</span> Cvt[N &lt;&lt; <span class="dv">2</span>];</span>
+    <span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
+    <span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a> <span class="kw">public</span>:</span>
+    <span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  <span class="dt">void</span> NTT(<span class="at">const</span> <span class="dt">bool</span> typ, <span class="at">const</span> <span class="dt">int</span> n);</span>
+    <span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>  <span class="dt">void</span> inv(Polynomial &amp;res, <span class="at">const</span> <span class="dt">int</span> n) <span class="at">const</span>;</span>
+    <span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>  <span class="dt">void</span> ln(Polynomial &amp;res, <span class="at">const</span> <span class="dt">int</span> n) <span class="at">const</span>;</span>
+    <span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>  <span class="dt">void</span> exp(Polynomial &amp;res, <span class="at">const</span> <span class="dt">int</span> n) <span class="at">const</span>;</span>
+    <span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> &amp;<span class="kw">operator</span>[](<span class="dt">int</span> index) { <span class="cf">return</span> f[index]; };</span>
+    <span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>  <span class="at">const</span> <span class="dt">int</span> &amp;<span class="kw">operator</span>[](<span class="dt">int</span> index) <span class="at">const</span> { <span class="cf">return</span> f[index]; };</span>
+    <span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>  <span class="kw">inline</span> <span class="dt">void</span> pre(<span class="dt">int</span> n) {</span>
+    <span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">1</span>, len = <span class="dv">2</span>; len &lt;= n; ++i, len &lt;&lt;= <span class="dv">1</span>)</span>
+    <span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>      <span class="cf">for</span> (<span class="dt">int</span> j = <span class="dv">1</span>, *<span class="at">const</span> cvt = Cvt + len - <span class="dv">1</span>; j &lt; len; ++j)</span>
+    <span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>        cvt[j] = cvt[j &gt;&gt; <span class="dv">1</span>] &gt;&gt; <span class="dv">1</span> | ((j &amp; <span class="dv">1</span>) &lt;&lt; (i - <span class="dv">1</span>));</span>
+    <span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>  }</span>
+    <span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>  <span class="kw">inline</span> <span class="dt">void</span> clear(<span class="dt">int</span> n) {</span>
+    <span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> maxl = <span class="dv">1</span>;</span>
+    <span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> (maxl &lt; n) maxl &lt;&lt;= <span class="dv">1</span>;</span>
+    <span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>    memset(f, <span class="dv">0</span>, <span class="kw">sizeof</span>(<span class="dt">int</span>) * maxl);</span>
+    <span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>  }</span>
+    <span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>} f, g;</span>
+    <span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a></span>
+    <span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> n;</span>
+    <span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> Polynomial::Cvt[N &lt;&lt; <span class="dv">2</span>];</span>
+    <span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a></span>
+    <span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a><span class="kw">inline</span> ll qpow(ll base, <span class="dt">int</span> exp) {</span>
+    <span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>  ll res = <span class="dv">1</span>;</span>
+    <span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> (exp) {</span>
+    <span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (exp &amp; <span class="dv">1</span>) res = res * base % mod;</span>
+    <span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>    base = base * base % mod;</span>
+    <span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>    exp &gt;&gt;= <span class="dv">1</span>;</span>
+    <span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>  }</span>
+    <span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> res;</span>
+    <span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>}</span>
+    <span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a></span>
+    <span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a><span class="kw">inline</span> <span class="dt">void</span> Polynomial::NTT(<span class="at">const</span> <span class="dt">bool</span> typ, <span class="at">const</span> <span class="dt">int</span> n) {</span>
+    <span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">1</span>, *<span class="at">const</span> cvt = Cvt + n - <span class="dv">1</span>; i &lt; n; ++i)</span>
+    <span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (i &lt; cvt[i]) <span class="bu">std::</span>swap(f[i], f[cvt[i]]);</span>
+    <span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">2</span>; i &lt;= n; i &lt;&lt;= <span class="dv">1</span>) {</span>
+    <span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> mid = i &gt;&gt; <span class="dv">1</span>, wn = qpow(typ ? G : invG, (mod - <span class="dv">1</span>) / i);</span>
+    <span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (<span class="dt">int</span> j = <span class="dv">0</span>; j &lt; n; j += i) {</span>
+    <span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a>      ll wk = <span class="dv">1</span>;</span>
+    <span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>      <span class="cf">for</span> (<span class="dt">int</span> k = <span class="dv">0</span>; k &lt; mid; ++k, (wk *= wn) %= mod) {</span>
+    <span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a>        ll t = wk * f[j + k + mid] % mod;</span>
+    <span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> ((f[j + k + mid] = f[j + k] - t) &lt; <span class="dv">0</span>) f[j + k + mid] += mod;</span>
+    <span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> ((f[j + k] += t) &gt;= mod) f[j + k] -= mod;</span>
+    <span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a>      }</span>
+    <span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a>    }</span>
+    <span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a>  }</span>
+    <span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (!typ) {</span>
+    <span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a>    ll inv = qpow(n, mod - <span class="dv">2</span>);</span>
+    <span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; n; ++i) f[i] = inv * f[i] % mod;</span>
+    <span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a>  }</span>
+    <span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a>}</span>
+    <span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a></span>
+    <span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a><span class="kw">inline</span> <span class="dt">void</span> Polynomial::inv(Polynomial &amp;res, <span class="at">const</span> <span class="dt">int</span> n) <span class="at">const</span> {</span>
+    <span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a>  <span class="at">static</span> Polynomial tmp;</span>
+    <span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (n == <span class="dv">1</span>) <span class="cf">return</span> res[<span class="dv">0</span>] = qpow(f[<span class="dv">0</span>], mod - <span class="dv">2</span>), <span class="dt">void</span>();</span>
+    <span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a>  inv(res, (n + <span class="dv">1</span>) &gt;&gt; <span class="dv">1</span>);</span>
+    <span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> maxl = <span class="dv">1</span>;</span>
+    <span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> (maxl &lt; n &lt;&lt; <span class="dv">1</span>) maxl &lt;&lt;= <span class="dv">1</span>;</span>
+    <span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a>  tmp.clear(n &lt;&lt; <span class="dv">1</span>);</span>
+    <span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a>  memcpy(tmp.f, f, <span class="kw">sizeof</span>(<span class="dt">int</span>) * n);</span>
+    <span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a>  tmp.NTT(<span class="kw">true</span>, maxl), res.NTT(<span class="kw">true</span>, maxl);</span>
+    <span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; maxl; ++i)</span>
+    <span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a>    res[i] = <span class="kw">static_cast</span>&lt;ll&gt;(res[i]) *</span>
+    <span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a>             ((<span class="dv">2</span><span class="bu">ll</span> - <span class="kw">static_cast</span>&lt;ll&gt;(res[i]) * tmp[i] % mod + mod) % mod) % mod;</span>
+    <span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a>  res.NTT(<span class="kw">false</span>, maxl);</span>
+    <span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="dt">int</span> i = n; i &lt; maxl; ++i) res[i] = <span class="dv">0</span>;</span>
+    <span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a>}</span>
+    <span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a></span>
+    <span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a><span class="kw">inline</span> <span class="dt">void</span> Polynomial::ln(Polynomial &amp;res, <span class="at">const</span> <span class="dt">int</span> n) <span class="at">const</span> {</span>
+    <span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a>  <span class="at">static</span> Polynomial df, invf;</span>
+    <span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a>  df.clear(n &lt;&lt; <span class="dv">1</span>), invf.clear(n &lt;&lt; <span class="dv">1</span>);</span>
+    <span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> maxl = <span class="dv">1</span>;</span>
+    <span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> (maxl &lt; n &lt;&lt; <span class="dv">1</span>) maxl &lt;&lt;= <span class="dv">1</span>;</span>
+    <span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i + <span class="dv">1</span> &lt; n; ++i) df[i] = <span class="kw">static_cast</span>&lt;ll&gt;(f[i + <span class="dv">1</span>]) * (i + <span class="dv">1</span>) % mod;</span>
+    <span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a>  inv(invf, n);</span>
+    <span id="cb1-105"><a href="#cb1-105" aria-hidden="true" tabindex="-1"></a>  invf.NTT(<span class="kw">true</span>, maxl), df.NTT(<span class="kw">true</span>, maxl);</span>
+    <span id="cb1-106"><a href="#cb1-106" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; maxl; ++i) res[i] = <span class="kw">static_cast</span>&lt;ll&gt;(df[i]) * invf[i] % mod;</span>
+    <span id="cb1-107"><a href="#cb1-107" aria-hidden="true" tabindex="-1"></a>  res.NTT(<span class="kw">false</span>, maxl);</span>
+    <span id="cb1-108"><a href="#cb1-108" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="dt">int</span> i = n - <span class="dv">1</span>; i; --i)</span>
+    <span id="cb1-109"><a href="#cb1-109" aria-hidden="true" tabindex="-1"></a>    res[i] = <span class="kw">static_cast</span>&lt;ll&gt;(res[i - <span class="dv">1</span>]) * qpow(i, mod - <span class="dv">2</span>) % mod;</span>
+    <span id="cb1-110"><a href="#cb1-110" aria-hidden="true" tabindex="-1"></a>  res[<span class="dv">0</span>] = <span class="dv">0</span>;</span>
+    <span id="cb1-111"><a href="#cb1-111" aria-hidden="true" tabindex="-1"></a>}</span>
+    <span id="cb1-112"><a href="#cb1-112" aria-hidden="true" tabindex="-1"></a></span>
+    <span id="cb1-113"><a href="#cb1-113" aria-hidden="true" tabindex="-1"></a><span class="kw">inline</span> <span class="dt">void</span> Polynomial::exp(Polynomial &amp;res, <span class="at">const</span> <span class="dt">int</span> n) <span class="at">const</span> {</span>
+    <span id="cb1-114"><a href="#cb1-114" aria-hidden="true" tabindex="-1"></a>  <span class="at">static</span> Polynomial lnres;</span>
+    <span id="cb1-115"><a href="#cb1-115" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (n == <span class="dv">1</span>) { <span class="cf">return</span> res[<span class="dv">0</span>] = <span class="dv">1</span>, <span class="dt">void</span>(); }</span>
+    <span id="cb1-116"><a href="#cb1-116" aria-hidden="true" tabindex="-1"></a>  exp(res, (n + <span class="dv">1</span>) &gt;&gt; <span class="dv">1</span>);</span>
+    <span id="cb1-117"><a href="#cb1-117" aria-hidden="true" tabindex="-1"></a>  res.ln(lnres, n);</span>
+    <span id="cb1-118"><a href="#cb1-118" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> maxl = <span class="dv">1</span>;</span>
+    <span id="cb1-119"><a href="#cb1-119" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> (maxl &lt; n &lt;&lt; <span class="dv">1</span>) maxl &lt;&lt;= <span class="dv">1</span>;</span>
+    <span id="cb1-120"><a href="#cb1-120" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; n; ++i)</span>
+    <span id="cb1-121"><a href="#cb1-121" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> ((lnres[i] = f[i] - lnres[i]) &lt; <span class="dv">0</span>) lnres[i] += mod;</span>
+    <span id="cb1-122"><a href="#cb1-122" aria-hidden="true" tabindex="-1"></a>  ++lnres[<span class="dv">0</span>];</span>
+    <span id="cb1-123"><a href="#cb1-123" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (lnres[<span class="dv">0</span>] &gt;= mod) lnres[<span class="dv">0</span>] -= mod;</span>
+    <span id="cb1-124"><a href="#cb1-124" aria-hidden="true" tabindex="-1"></a>  lnres.NTT(<span class="kw">true</span>, maxl), res.NTT(<span class="kw">true</span>, maxl);</span>
+    <span id="cb1-125"><a href="#cb1-125" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; maxl; ++i) res[i] = <span class="kw">static_cast</span>&lt;ll&gt;(res[i]) * lnres[i] % mod;</span>
+    <span id="cb1-126"><a href="#cb1-126" aria-hidden="true" tabindex="-1"></a>  res.NTT(<span class="kw">false</span>, maxl);</span>
+    <span id="cb1-127"><a href="#cb1-127" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="dt">int</span> i = n; i &lt; maxl; ++i) res[i] = <span class="dv">0</span>;</span>
+    <span id="cb1-128"><a href="#cb1-128" aria-hidden="true" tabindex="-1"></a>}</span>
+    <span id="cb1-129"><a href="#cb1-129" aria-hidden="true" tabindex="-1"></a></span>
+    <span id="cb1-130"><a href="#cb1-130" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main() {</span>
+    <span id="cb1-131"><a href="#cb1-131" aria-hidden="true" tabindex="-1"></a><span class="pp">#ifndef ONLINE_JUDGE</span></span>
+    <span id="cb1-132"><a href="#cb1-132" aria-hidden="true" tabindex="-1"></a><span class="pp">#ifdef LOCAL</span></span>
+    <span id="cb1-133"><a href="#cb1-133" aria-hidden="true" tabindex="-1"></a>  freopen64(<span class="st">&quot;/tmp/CodeTmp/testdata.in&quot;</span>, <span class="st">&quot;r&quot;</span>, stdin);</span>
+    <span id="cb1-134"><a href="#cb1-134" aria-hidden="true" tabindex="-1"></a>  freopen64(<span class="st">&quot;/tmp/CodeTmp/testdata.out&quot;</span>, <span class="st">&quot;w&quot;</span>, stdout);</span>
+    <span id="cb1-135"><a href="#cb1-135" aria-hidden="true" tabindex="-1"></a><span class="pp">#else</span></span>
+    <span id="cb1-136"><a href="#cb1-136" aria-hidden="true" tabindex="-1"></a>  freopen(<span class="st">&quot;PolyExp.in&quot;</span>, <span class="st">&quot;r&quot;</span>, stdin);</span>
+    <span id="cb1-137"><a href="#cb1-137" aria-hidden="true" tabindex="-1"></a>  freopen(<span class="st">&quot;PolyExp.out&quot;</span>, <span class="st">&quot;w&quot;</span>, stdout);</span>
+    <span id="cb1-138"><a href="#cb1-138" aria-hidden="true" tabindex="-1"></a><span class="pp">#endif</span></span>
+    <span id="cb1-139"><a href="#cb1-139" aria-hidden="true" tabindex="-1"></a><span class="pp">#endif</span></span>
+    <span id="cb1-140"><a href="#cb1-140" aria-hidden="true" tabindex="-1"></a></span>
+    <span id="cb1-141"><a href="#cb1-141" aria-hidden="true" tabindex="-1"></a>  read(n);</span>
+    <span id="cb1-142"><a href="#cb1-142" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; n; ++i) read(f[i]);</span>
+    <span id="cb1-143"><a href="#cb1-143" aria-hidden="true" tabindex="-1"></a>  f.pre(n &lt;&lt; <span class="dv">2</span>);</span>
+    <span id="cb1-144"><a href="#cb1-144" aria-hidden="true" tabindex="-1"></a>  f.exp(g, n);</span>
+    <span id="cb1-145"><a href="#cb1-145" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; n; ++i) printf(<span class="st">&quot;</span><span class="sc">%d</span><span class="st"> &quot;</span>, g[i]);</span>
+    <span id="cb1-146"><a href="#cb1-146" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span>;</span>
+    <span id="cb1-147"><a href="#cb1-147" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+    </div>
+  <div id="gitalk-container" class="card"></div>
+  </body>
+
+<script src="../../static/javaScripts/articleJS.js"></script>
+
+</html>
