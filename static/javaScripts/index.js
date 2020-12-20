@@ -2,6 +2,8 @@ let flag = false;
 let mainContainer = document.getElementsByTagName("main")[0];
 let topPanel = document.getElementById("top-panel");
 
+console.log("%cWelcome to BlueQuantum's Blog!", "color:black;display:block;background:white;padding:1em; border: 1em #2b73af solid")
+
 // 首页特效
 document.getElementById("index-show").addEventListener("mousemove", (() => {
   let previous = 0;
