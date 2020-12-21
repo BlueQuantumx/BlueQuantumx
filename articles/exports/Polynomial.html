@@ -23,6 +23,16 @@
     <p>若存在 <span class="math inline">\(g\)</span> 使得 <span class="math inline">\(g^{\varphi(p)} \equiv 1 \pmod p\)</span>，则 <span class="math inline">\(g\)</span> 为质数 <span class="math inline">\(p\)</span> 的原根</p>
     <p><span class="math inline">\(n\)</span> 次单位根 <span class="math inline">\(w_n = g^{\frac {p-1} n}\)</span></p>
     <p><span class="math inline">\(w_n^{2i} = w_{\frac{n}{2}}^i\)</span></p>
+    <p><span class="math display">\[
+    \begin{aligned}
+    f &amp;= [A_0, A_1, A_2, \cdots, A_{n-1}] \\
+    f(w_n^i) &amp;= A_0 + A_1w_n^i + A_2w_n^{i2} + \cdots + A_{n-1}w_n^{i(n-1)} \\
+    f_1 &amp;= [A_0, A_2, A_4, \cdots, A_{n-2}] \\
+    f_2 &amp;= [A_1, A_3, A_5, \cdots, A_{n-1}] \\
+    f(w_n^i) &amp;= f_1(w_n^{i2}) + w_n^if_2(w_n^{i2}) \\
+    f(w_n^i) &amp;= f_1(w_{\frac{n}{2}}^{i}) + w_n^if_2(w_{\frac{n}{2}}^{i})
+    \end{aligned}
+    \]</span></p>
     <h2 id="多项式乘法逆-inv">多项式乘法逆 Inv</h2>
     <p>倍增处理，假设已经求出 <span class="math inline">\(\pmod {x^\frac{n}{2}}\)</span> 意义下的逆元记为 <span class="math inline">\(inv_0\)</span></p>
     <p><span class="math display">\[
@@ -48,7 +58,30 @@
     \end{aligned}
     \]</span></p>
     <h2 id="多项式对数函数-ln">多项式对数函数 Ln</h2>
+    <p>先微分再积分</p>
+    <p><span class="math display">\[
+    g&#39; = (\ln f)&#39; = \frac{f&#39;}{f}
+    \]</span></p>
     <h2 id="多项式指数函数-exp">多项式指数函数 Exp</h2>
+    <p><span class="math display">\[
+    g = e^f \\
+    \]</span></p>
+    <p>设 <span class="math inline">\(h(g) = \ln g - f\)</span> 其中 <span class="math inline">\(g\)</span> 为多项式</p>
+    <p>求 <span class="math inline">\(h(g) \equiv 0 \pmod {x^n}\)</span> 的根，考虑牛顿迭代法</p>
+    <p>假设已经求出 <span class="math inline">\(h(g_0) \equiv 0 \pmod {x^\frac{n}{2}}\)</span></p>
+    <p><span class="math display">\[
+    h(g) = h(g_0) + \frac{h&#39;(g_0)}{1!}(g-g_0) + \frac{h&#39;&#39;(g_0)}{2!}(g-g_0)^2 + \cdots
+    \]</span></p>
+    <p>因为 <span class="math inline">\(g - g_0\)</span> 最低系数不为零的项次数为 <span class="math inline">\(x^\frac{n}{2}\)</span> 平方后 最低系数不为零的项次数为 <span class="math inline">\(x^n\)</span> 所以</p>
+    <p><span class="math display">\[
+    \begin{aligned}
+    h(g) &amp;\equiv h(g_0) + h&#39;(g_0) * (g-g_0) \pmod {x^n} \\
+    0 &amp;\equiv h(g_0) + h&#39;(g_0) * (g-g_0) \pmod {x^n} \\
+    g &amp;\equiv g_0 - \frac{h(g_0)}{h&#39;(g_0)} \pmod {x^n} \\
+    g &amp;\equiv g_0 - g_0 * (\ln g_0 - f) \pmod {x^n} \\
+    g &amp;\equiv g_0 * (f - \ln g_0 + 1) \pmod {x^n}
+    \end{aligned}
+    \]</span></p>
     <button id="Polynomialbtn" onclick="showCode(&#39;Polynomial&#39;)">
     展开代码
     </button>
