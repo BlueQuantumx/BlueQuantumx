@@ -5,15 +5,26 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="author" content="BlueQuantum" />
-  <link rel="icon" type="image/ico" sizes="512x512" href="../../static/images/icon.png" />
-  <link rel="stylesheet" type="text/css" href="../../static/css/articleTheme.css" />
-  <script src="../../static/javaScripts/articleJS.js"></script>
-  <script id="MathJax-script" async="" src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.1.2/es5/tex-chtml.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/ico" sizes="512x512" href="/static/images/icon.png" />
+  <link rel="stylesheet" type="text/css" href="/static/css/articleTheme.css" />
+  <link href="/static/css/gitalk.css" rel="stylesheet">
+  <script src="/static/javaScripts/common.js"></script>
+  <script id="MathJax-script" src="/static/javaScripts/mathJax-3.1.2/es5/tex-chtml.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/gitalk/1.7.0/gitalk.min.js"></script>
       <title>P1850</title>
   </head>
 
 <body id="write">
-    <h1 id="p1850换教室">「P1850」换教室</h1>
+<nav id="top-panel">
+  <a id="myname" href="/">BlueQuantum's Blog</a>
+  <span id="colorSwitch" class="color-switch"></span>
+  <a id="about" href="/articles/exports/about.html" target="_blank">关于</a>
+  <!-- <span id="scroll"></span> -->
+  <!-- <span id="posX"></span><span id="posY"></span> -->
+</nav>
+<!-- body不能缩进，不然会影响代码 -->
+<h1 id="p1850换教室">「P1850」换教室</h1>
 <h2 id="题意">题意</h2>
 <p>要上<span class="math inline">\(n\)</span>节课，每节课有对应的一个替换课程，共<span class="math inline">\(2n\)</span>节课。预先所定的n节课要去的教室为 <span class="math inline">\(\large c_i\)</span> ,可以通过申请以 <span class="math inline">\(\large k_i\)</span> 的概率换到教室 <span class="math inline">\(\large d_i\)</span> , 最多申请<span class="math inline">\(m\)</span>次。</p>
 <p>每次从第<span class="math inline">\(i-1\)</span>节课的教室到第<span class="math inline">\(i\)</span>节课的教室需要耗费 这两个教室间最短路的长度大小 的体力值。教室与教室间的路径长度题中给出,并保证任意两教室间连通。</p>
@@ -39,6 +50,9 @@ f_{0,i - 1,j - 1}+dis_{c_{i - 1},d_{i}} \times k_{i} + dis_{c_{i - 1},c_{i}} \ti
 f_{1,i - 1,j - 1}+k_{i - 1} \times k_{i} \times dis_{d_{i - 1},d_{i}} + (1 - k_{i - 1}) \times (1 - k_{i}) \times dis_{c_{i-1},c_{i}} + k_{i - 1} \times(1 - k_{i}) \times dis_{d_{i - 1},c_{i}} + (1 - k_{i - 1}) \times k_{i} \times dis_{c_{i - 1},d_{i}}
 \end{cases}
 \]</span></p>
-  </body>
+<div id="gitalk-container" class="card"></div>
+</body>
+
+<script src="/static/javaScripts/articleJS.js"></script>
 
 </html>

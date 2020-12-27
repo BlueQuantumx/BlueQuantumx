@@ -5,15 +5,26 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="author" content="BlueQuantum" />
-  <link rel="icon" type="image/ico" sizes="512x512" href="../../static/images/icon.png" />
-  <link rel="stylesheet" type="text/css" href="../../static/css/articleTheme.css" />
-  <script src="../../static/javaScripts/articleJS.js"></script>
-  <script id="MathJax-script" async="" src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.1.2/es5/tex-chtml.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/ico" sizes="512x512" href="/static/images/icon.png" />
+  <link rel="stylesheet" type="text/css" href="/static/css/articleTheme.css" />
+  <link href="/static/css/gitalk.css" rel="stylesheet">
+  <script src="/static/javaScripts/common.js"></script>
+  <script id="MathJax-script" src="/static/javaScripts/mathJax-3.1.2/es5/tex-chtml.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/gitalk/1.7.0/gitalk.min.js"></script>
       <title>「P5007」DDOSvoid的疑惑</title>
   </head>
 
 <body id="write">
-    <h1 id="p5007ddosvoid的疑惑">「P5007」DDOSvoid的疑惑</h1>
+<nav id="top-panel">
+  <a id="myname" href="/">BlueQuantum's Blog</a>
+  <span id="colorSwitch" class="color-switch"></span>
+  <a id="about" href="/articles/exports/about.html" target="_blank">关于</a>
+  <!-- <span id="scroll"></span> -->
+  <!-- <span id="posX"></span><span id="posY"></span> -->
+</nav>
+<!-- body不能缩进，不然会影响代码 -->
+<h1 id="p5007ddosvoid的疑惑">「P5007」DDOSvoid的疑惑</h1>
 <h2 id="description">Description</h2>
 <p>找出树中所有 <strong>内部元素不存在祖先后代关系</strong> 的集合，定义一个集合的权值为集合中所有元素的权值和，再算出所有集合的权值和。</p>
 <h2 id="solution">Solution</h2>
@@ -30,52 +41,55 @@ g_u = g_u + g_v * (g_u + 1)
 <blockquote>
 <p>Talk is cheap, show me your code.</p>
 </blockquote>
-<div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><a class="sourceLine" id="cb1-1" title="1"><span class="pp">#include </span><span class="im">&lt;cstdio&gt;</span></a>
-<a class="sourceLine" id="cb1-2" title="2"></a>
-<a class="sourceLine" id="cb1-3" title="3"><span class="at">const</span> <span class="dt">int</span> N = <span class="dv">1000005</span>, mod = <span class="fl">1e8</span> + <span class="dv">7</span>;</a>
-<a class="sourceLine" id="cb1-4" title="4"><span class="dt">int</span> n, t;</a>
-<a class="sourceLine" id="cb1-5" title="5"><span class="dt">int</span> e_cnt, heads[N], f[N], g[N];</a>
-<a class="sourceLine" id="cb1-6" title="6"></a>
-<a class="sourceLine" id="cb1-7" title="7"><span class="kw">struct</span> Edge {</a>
-<a class="sourceLine" id="cb1-8" title="8">  <span class="dt">int</span> v, nxt;</a>
-<a class="sourceLine" id="cb1-9" title="9">} e[N &lt;&lt; <span class="dv">1</span>];</a>
-<a class="sourceLine" id="cb1-10" title="10"></a>
-<a class="sourceLine" id="cb1-11" title="11"><span class="kw">inline</span> <span class="dt">void</span> add(<span class="dt">int</span> u, <span class="dt">int</span> v) {</a>
-<a class="sourceLine" id="cb1-12" title="12">  e[++e_cnt].v = v, e[e_cnt].nxt = heads[u], heads[u] = e_cnt;</a>
-<a class="sourceLine" id="cb1-13" title="13">  e[++e_cnt].v = u, e[e_cnt].nxt = heads[v], heads[v] = e_cnt;</a>
-<a class="sourceLine" id="cb1-14" title="14">}</a>
-<a class="sourceLine" id="cb1-15" title="15"></a>
-<a class="sourceLine" id="cb1-16" title="16"><span class="dt">void</span> solve(<span class="dt">int</span> u, <span class="dt">int</span> fa) {</a>
-<a class="sourceLine" id="cb1-17" title="17">  <span class="cf">for</span> (<span class="dt">int</span> i = heads[u], v; i; i = e[i].nxt) {</a>
-<a class="sourceLine" id="cb1-18" title="18">    <span class="cf">if</span> ((v = e[i].v) != fa) {</a>
-<a class="sourceLine" id="cb1-19" title="19">      solve(v, u);</a>
-<a class="sourceLine" id="cb1-20" title="20">      f[u] = <span class="dv">1</span><span class="bu">ll</span> * f[v] * (g[u] + <span class="dv">1</span>) % mod + <span class="dv">1</span><span class="bu">ll</span> * f[u] * (g[v] + <span class="dv">1</span>) % mod, f[u] %= mod;</a>
-<a class="sourceLine" id="cb1-21" title="21">      g[u] = g[u] + <span class="dv">1</span><span class="bu">ll</span> * (g[u] + <span class="dv">1</span>) * g[v] % mod, g[u] %= mod;</a>
-<a class="sourceLine" id="cb1-22" title="22">    }</a>
-<a class="sourceLine" id="cb1-23" title="23">  }</a>
-<a class="sourceLine" id="cb1-24" title="24">  f[u] += t ? u : <span class="dv">1</span>, f[u] %= mod, ++g[u];</a>
-<a class="sourceLine" id="cb1-25" title="25">}</a>
-<a class="sourceLine" id="cb1-26" title="26"></a>
-<a class="sourceLine" id="cb1-27" title="27"><span class="dt">int</span> main() {</a>
-<a class="sourceLine" id="cb1-28" title="28"><span class="pp">#ifndef ONLINE_JUDGE</span></a>
-<a class="sourceLine" id="cb1-29" title="29"><span class="pp">#ifdef LOCAL</span></a>
-<a class="sourceLine" id="cb1-30" title="30">  freopen(<span class="st">&quot;testdata.in&quot;</span>, <span class="st">&quot;r&quot;</span>, stdin);</a>
-<a class="sourceLine" id="cb1-31" title="31">  freopen(<span class="st">&quot;testdata.out&quot;</span>, <span class="st">&quot;w&quot;</span>, stdout);</a>
-<a class="sourceLine" id="cb1-32" title="32"><span class="pp">#else</span></a>
-<a class="sourceLine" id="cb1-33" title="33">  freopen(<span class="st">&quot;P5007 DDOSvoid 的疑惑.in&quot;</span>, <span class="st">&quot;r&quot;</span>, stdin);</a>
-<a class="sourceLine" id="cb1-34" title="34">  freopen(<span class="st">&quot;P5007 DDOSvoid 的疑惑.out&quot;</span>, <span class="st">&quot;w&quot;</span>, stdout);</a>
-<a class="sourceLine" id="cb1-35" title="35"><span class="pp">#endif</span></a>
-<a class="sourceLine" id="cb1-36" title="36"><span class="pp">#endif</span></a>
-<a class="sourceLine" id="cb1-37" title="37"></a>
-<a class="sourceLine" id="cb1-38" title="38">  scanf(<span class="st">&quot;</span><span class="sc">%d%d</span><span class="st">&quot;</span>, &amp;n, &amp;t);</a>
-<a class="sourceLine" id="cb1-39" title="39">  <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">1</span>, u, v; i &lt; n; ++i) {</a>
-<a class="sourceLine" id="cb1-40" title="40">    scanf(<span class="st">&quot;</span><span class="sc">%d%d</span><span class="st">&quot;</span>, &amp;u, &amp;v);</a>
-<a class="sourceLine" id="cb1-41" title="41">    add(u, v);</a>
-<a class="sourceLine" id="cb1-42" title="42">  }</a>
-<a class="sourceLine" id="cb1-43" title="43">  solve(<span class="dv">1</span>, <span class="dv">1</span>);</a>
-<a class="sourceLine" id="cb1-44" title="44">  printf(<span class="st">&quot;</span><span class="sc">%d</span><span class="st">&quot;</span>, f[<span class="dv">1</span>]);</a>
-<a class="sourceLine" id="cb1-45" title="45">  <span class="cf">return</span> <span class="dv">0</span>;</a>
-<a class="sourceLine" id="cb1-46" title="46">}</a></code></pre></div>
-  </body>
+<div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;cstdio&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> <span class="dt">int</span> N = <span class="dv">1000005</span>, mod = <span class="fl">1e8</span> + <span class="dv">7</span>;</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> n, t;</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> e_cnt, heads[N], f[N], g[N];</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> Edge {</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> v, nxt;</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>} e[N &lt;&lt; <span class="dv">1</span>];</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="kw">inline</span> <span class="dt">void</span> add(<span class="dt">int</span> u, <span class="dt">int</span> v) {</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  e[++e_cnt].v = v, e[e_cnt].nxt = heads[u], heads[u] = e_cnt;</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  e[++e_cnt].v = u, e[e_cnt].nxt = heads[v], heads[v] = e_cnt;</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> solve(<span class="dt">int</span> u, <span class="dt">int</span> fa) {</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="dt">int</span> i = heads[u], v; i; i = e[i].nxt) {</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> ((v = e[i].v) != fa) {</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>      solve(v, u);</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>      f[u] = <span class="dv">1</span><span class="bu">ll</span> * f[v] * (g[u] + <span class="dv">1</span>) % mod + <span class="dv">1</span><span class="bu">ll</span> * f[u] * (g[v] + <span class="dv">1</span>) % mod, f[u] %= mod;</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>      g[u] = g[u] + <span class="dv">1</span><span class="bu">ll</span> * (g[u] + <span class="dv">1</span>) * g[v] % mod, g[u] %= mod;</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  f[u] += t ? u : <span class="dv">1</span>, f[u] %= mod, ++g[u];</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main() {</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="pp">#ifndef ONLINE_JUDGE</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="pp">#ifdef LOCAL</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>  freopen(<span class="st">&quot;testdata.in&quot;</span>, <span class="st">&quot;r&quot;</span>, stdin);</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  freopen(<span class="st">&quot;testdata.out&quot;</span>, <span class="st">&quot;w&quot;</span>, stdout);</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="pp">#else</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>  freopen(<span class="st">&quot;P5007 DDOSvoid 的疑惑.in&quot;</span>, <span class="st">&quot;r&quot;</span>, stdin);</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>  freopen(<span class="st">&quot;P5007 DDOSvoid 的疑惑.out&quot;</span>, <span class="st">&quot;w&quot;</span>, stdout);</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="pp">#endif</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="pp">#endif</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>  scanf(<span class="st">&quot;</span><span class="sc">%d%d</span><span class="st">&quot;</span>, &amp;n, &amp;t);</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">1</span>, u, v; i &lt; n; ++i) {</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    scanf(<span class="st">&quot;</span><span class="sc">%d%d</span><span class="st">&quot;</span>, &amp;u, &amp;v);</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>    add(u, v);</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>  solve(<span class="dv">1</span>, <span class="dv">1</span>);</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>  printf(<span class="st">&quot;</span><span class="sc">%d</span><span class="st">&quot;</span>, f[<span class="dv">1</span>]);</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span>;</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div id="gitalk-container" class="card"></div>
+</body>
+
+<script src="/static/javaScripts/articleJS.js"></script>
 
 </html>

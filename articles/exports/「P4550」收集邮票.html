@@ -5,15 +5,26 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="author" content="BlueQuantum" />
-  <link rel="icon" type="image/ico" sizes="512x512" href="../../static/images/icon.png" />
-  <link rel="stylesheet" type="text/css" href="../../static/css/articleTheme.css" />
-  <script src="../../static/javaScripts/articleJS.js"></script>
-  <script id="MathJax-script" async="" src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.1.2/es5/tex-chtml.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/ico" sizes="512x512" href="/static/images/icon.png" />
+  <link rel="stylesheet" type="text/css" href="/static/css/articleTheme.css" />
+  <link href="/static/css/gitalk.css" rel="stylesheet">
+  <script src="/static/javaScripts/common.js"></script>
+  <script id="MathJax-script" src="/static/javaScripts/mathJax-3.1.2/es5/tex-chtml.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/gitalk/1.7.0/gitalk.min.js"></script>
       <title>「P4550」收集邮票</title>
   </head>
 
 <body id="write">
-    <h1 id="p4550-收集邮票">「P4550」 收集邮票</h1>
+<nav id="top-panel">
+  <a id="myname" href="/">BlueQuantum's Blog</a>
+  <span id="colorSwitch" class="color-switch"></span>
+  <a id="about" href="/articles/exports/about.html" target="_blank">关于</a>
+  <!-- <span id="scroll"></span> -->
+  <!-- <span id="posX"></span><span id="posY"></span> -->
+</nav>
+<!-- body不能缩进，不然会影响代码 -->
+<h1 id="p4550-收集邮票">「P4550」 收集邮票</h1>
 <p>​一眼看上去就是期望 DP，然而蒟蒻不会，在同机房神仙讲解下豁然开朗，于是写篇题解。</p>
 <h2 id="solution">Solution</h2>
 <p>​直接设期望买完的钱数不很好搞，因为每次买邮票所需的钱数是随购买次数变化的，所以我们绕个路</p>
@@ -35,34 +46,37 @@ f_i = f_{i+1} + \frac n {n-i} \\
 g_i = \frac i {n-i} f_i + g_{i+1} + f_{i+1} + \frac n {n-i}
 \]</span></p>
 <p>Talk is cheap, show me your code:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><a class="sourceLine" id="cb1-1" title="1"><span class="pp">#include </span><span class="im">&lt;cstdio&gt;</span></a>
-<a class="sourceLine" id="cb1-2" title="2"></a>
-<a class="sourceLine" id="cb1-3" title="3"><span class="at">const</span> <span class="dt">int</span> N = <span class="dv">10005</span>;</a>
-<a class="sourceLine" id="cb1-4" title="4"><span class="dt">int</span> n;</a>
-<a class="sourceLine" id="cb1-5" title="5"><span class="dt">double</span> f[N], g[N];</a>
-<a class="sourceLine" id="cb1-6" title="6"></a>
-<a class="sourceLine" id="cb1-7" title="7"><span class="dt">int</span> main() {</a>
-<a class="sourceLine" id="cb1-8" title="8"><span class="pp">#ifndef ONLINE_JUDGE</span></a>
-<a class="sourceLine" id="cb1-9" title="9"><span class="pp">#ifdef LOCAL</span></a>
-<a class="sourceLine" id="cb1-10" title="10">  freopen(<span class="st">&quot;testdata.in&quot;</span>, <span class="st">&quot;r&quot;</span>, stdin);</a>
-<a class="sourceLine" id="cb1-11" title="11">  freopen(<span class="st">&quot;testdata.out&quot;</span>, <span class="st">&quot;w&quot;</span>, stdout);</a>
-<a class="sourceLine" id="cb1-12" title="12"><span class="pp">#endif</span></a>
-<a class="sourceLine" id="cb1-13" title="13"><span class="pp">#ifndef LOCAL</span></a>
-<a class="sourceLine" id="cb1-14" title="14">  freopen(<span class="st">&quot;CppTest.in&quot;</span>, <span class="st">&quot;r&quot;</span>, stdin);</a>
-<a class="sourceLine" id="cb1-15" title="15">  freopen(<span class="st">&quot;CppTest.out&quot;</span>, <span class="st">&quot;w&quot;</span>, stdout);</a>
-<a class="sourceLine" id="cb1-16" title="16"><span class="pp">#endif</span></a>
-<a class="sourceLine" id="cb1-17" title="17"><span class="pp">#endif</span></a>
-<a class="sourceLine" id="cb1-18" title="18"></a>
-<a class="sourceLine" id="cb1-19" title="19">  scanf(<span class="st">&quot;</span><span class="sc">%d</span><span class="st">&quot;</span>, &amp;n);</a>
-<a class="sourceLine" id="cb1-20" title="20">  <span class="cf">for</span> (<span class="dt">int</span> i = n - <span class="dv">1</span>; ~i; --i) {</a>
-<a class="sourceLine" id="cb1-21" title="21">    f[i] = f[i + <span class="dv">1</span>] + <span class="fl">1.0</span> * n / (n - i);</a>
-<a class="sourceLine" id="cb1-22" title="22">  }</a>
-<a class="sourceLine" id="cb1-23" title="23">  <span class="cf">for</span> (<span class="dt">int</span> i = n - <span class="dv">1</span>; ~i; --i) {</a>
-<a class="sourceLine" id="cb1-24" title="24">    g[i] = <span class="fl">1.0</span> * i / (n - i) * f[i] + g[i + <span class="dv">1</span>] + f[i + <span class="dv">1</span>] + <span class="fl">1.0</span> * n / (n - i);</a>
-<a class="sourceLine" id="cb1-25" title="25">  }</a>
-<a class="sourceLine" id="cb1-26" title="26">  printf(<span class="st">&quot;%.2lf&quot;</span>, g[<span class="dv">0</span>]);</a>
-<a class="sourceLine" id="cb1-27" title="27">  <span class="cf">return</span> <span class="dv">0</span>;</a>
-<a class="sourceLine" id="cb1-28" title="28">}</a></code></pre></div>
-  </body>
+<div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;cstdio&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> <span class="dt">int</span> N = <span class="dv">10005</span>;</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> n;</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="dt">double</span> f[N], g[N];</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main() {</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="pp">#ifndef ONLINE_JUDGE</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="pp">#ifdef LOCAL</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  freopen(<span class="st">&quot;testdata.in&quot;</span>, <span class="st">&quot;r&quot;</span>, stdin);</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  freopen(<span class="st">&quot;testdata.out&quot;</span>, <span class="st">&quot;w&quot;</span>, stdout);</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="pp">#endif</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="pp">#ifndef LOCAL</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  freopen(<span class="st">&quot;CppTest.in&quot;</span>, <span class="st">&quot;r&quot;</span>, stdin);</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  freopen(<span class="st">&quot;CppTest.out&quot;</span>, <span class="st">&quot;w&quot;</span>, stdout);</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="pp">#endif</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="pp">#endif</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  scanf(<span class="st">&quot;</span><span class="sc">%d</span><span class="st">&quot;</span>, &amp;n);</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="dt">int</span> i = n - <span class="dv">1</span>; ~i; --i) {</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    f[i] = f[i + <span class="dv">1</span>] + <span class="fl">1.0</span> * n / (n - i);</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="dt">int</span> i = n - <span class="dv">1</span>; ~i; --i) {</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    g[i] = <span class="fl">1.0</span> * i / (n - i) * f[i] + g[i + <span class="dv">1</span>] + f[i + <span class="dv">1</span>] + <span class="fl">1.0</span> * n / (n - i);</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  printf(<span class="st">&quot;</span><span class="sc">%.2lf</span><span class="st">&quot;</span>, g[<span class="dv">0</span>]);</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span>;</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div id="gitalk-container" class="card"></div>
+</body>
+
+<script src="/static/javaScripts/articleJS.js"></script>
 
 </html>

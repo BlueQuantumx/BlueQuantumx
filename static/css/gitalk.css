@@ -1,3 +1,4 @@
+@import "/static/css/common.css";
 .markdown-body {
   line-height: 1.5;
   color: var(--text-color);
@@ -1089,7 +1090,15 @@
   background-color: var(--background-color);
   overflow: auto;
   -webkit-transition: all ease .25s;
-  transition: all ease .25s
+  transition: all ease .25s;
+  color: var(--text-color);
+  background-color: var(--background-color) !important;
+  position: relative;
+  margin: 1rem;
+  z-index: 2;
+  padding: 1.25rem;
+  border-radius: 10px;
+  box-shadow: 0 5px 8px rgba(0, 0, 0, 0.2);
 }
 
 @media (max-width:479px) {

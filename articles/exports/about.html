@@ -7,15 +7,15 @@
     <meta name="description" content="BlueQuantum's Blog" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" href="/static/images/icon.png" />
-    <link rel="stylesheet" href="/static/css/colorScheme.css" />
     <style>
         /* stylesheet specified for the about page */
+        @import "/static/css/common.css";
 
         * {
             box-sizing: border-box;
         }
 
-        @keyframes showUp {
+        @keyframes RotateAvt {
             from {
                 transform: rotate(0deg);
             }
@@ -40,33 +40,8 @@
             color: var(--accent-color);
         }
 
-        #top-panel {
-            display: flex;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 3rem;
-            transition: box-shadow 0.1s;
-            list-style: none;
-            user-select: none;
-            z-index: 20;
-            justify-content: center;
-            align-items: center;
-        }
-
-        #top-panel>* {
-            margin-left: 0.5rem;
-            margin-right: 0.5rem;
-        }
-
-
-        #myname {
-            font-size: 1.5rem;
-            font-weight: 600;
-            flex-basis: 70%;
-        }
-
         main {
+            margin-top: 3rem;
             text-align: center;
         }
 
@@ -98,7 +73,7 @@
             height: 50%;
             width: 100%;
             transform-origin: center top;
-            animation: showUp 3s;
+            animation: RotateAvt 3s;
             animation-delay: 1.0s;
             animation-iteration-count: infinite;
         }

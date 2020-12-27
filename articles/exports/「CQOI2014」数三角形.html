@@ -5,17 +5,26 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="author" content="BlueQuantum" />
-  <link rel="icon" type="image/ico" sizes="512x512" href="../../static/images/icon.png" />
-  <link rel="stylesheet" type="text/css" href="../../static/css/articleTheme.css" />
-  <script src="../../static/javaScripts/articleJS.js"></script>
-  <script id="MathJax-script" src="../../static/javaScripts/mathJax-3.1.2/es5/tex-chtml.js"></script>
-  <link href="https://cdn.bootcdn.net/ajax/libs/gitalk/1.7.0/gitalk.min.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/ico" sizes="512x512" href="/static/images/icon.png" />
+  <link rel="stylesheet" type="text/css" href="/static/css/articleTheme.css" />
+  <link href="/static/css/gitalk.css" rel="stylesheet">
+  <script src="/static/javaScripts/common.js"></script>
+  <script id="MathJax-script" src="/static/javaScripts/mathJax-3.1.2/es5/tex-chtml.js"></script>
   <script src="https://cdn.bootcdn.net/ajax/libs/gitalk/1.7.0/gitalk.min.js"></script>
       <title>「CQOI2014」数三角形</title>
   </head>
 
 <body id="write">
-    <h1 id="cqoi-2014数三角形-题解">「CQOI 2014」数三角形 题解</h1>
+<nav id="top-panel">
+  <a id="myname" href="/">BlueQuantum's Blog</a>
+  <span id="colorSwitch" class="color-switch"></span>
+  <a id="about" href="/articles/exports/about.html" target="_blank">关于</a>
+  <!-- <span id="scroll"></span> -->
+  <!-- <span id="posX"></span><span id="posY"></span> -->
+</nav>
+<!-- body不能缩进，不然会影响代码 -->
+<h1 id="cqoi-2014数三角形-题解">「CQOI 2014」数三角形 题解</h1>
 <p>蒟蒻模拟赛题<del>啥都不会</del></p>
 <p>比赛时打了个 <span class="math inline">\(O(n^2m^2)\)</span> 的暴力<del>还WA了</del></p>
 <h2 id="正题">正题</h2>
@@ -36,42 +45,42 @@
 <blockquote>
 <p>Talk is cheap, show me your code:</p>
 </blockquote>
-<div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><a class="sourceLine" id="cb1-1" title="1"><span class="pp">#include </span><span class="im">&lt;cstdio&gt;</span></a>
-<a class="sourceLine" id="cb1-2" title="2"></a>
-<a class="sourceLine" id="cb1-3" title="3"><span class="kw">typedef</span> <span class="dt">long</span> <span class="dt">long</span> ll;</a>
-<a class="sourceLine" id="cb1-4" title="4"><span class="dt">int</span> n, m, tot;</a>
-<a class="sourceLine" id="cb1-5" title="5">ll ans;</a>
-<a class="sourceLine" id="cb1-6" title="6"></a>
-<a class="sourceLine" id="cb1-7" title="7"><span class="dt">int</span> gcd(<span class="dt">int</span> a, <span class="dt">int</span> b) { <span class="cf">return</span> b ? gcd(b, a % b) : a; }</a>
-<a class="sourceLine" id="cb1-8" title="8"></a>
-<a class="sourceLine" id="cb1-9" title="9"><span class="dt">int</span> main() {</a>
-<a class="sourceLine" id="cb1-10" title="10"><span class="pp">#ifndef ONLINE_JUDGE</span></a>
-<a class="sourceLine" id="cb1-11" title="11"><span class="pp">#ifdef LOCAL</span></a>
-<a class="sourceLine" id="cb1-12" title="12">  freopen(<span class="st">&quot;testdata.in&quot;</span>, <span class="st">&quot;r&quot;</span>, stdin);</a>
-<a class="sourceLine" id="cb1-13" title="13">  freopen(<span class="st">&quot;testdata.out&quot;</span>, <span class="st">&quot;w&quot;</span>, stdout);</a>
-<a class="sourceLine" id="cb1-14" title="14"><span class="pp">#endif</span></a>
-<a class="sourceLine" id="cb1-15" title="15"><span class="pp">#ifndef LOCAL</span></a>
-<a class="sourceLine" id="cb1-16" title="16">  freopen(<span class="st">&quot;tri.in&quot;</span>, <span class="st">&quot;r&quot;</span>, stdin);</a>
-<a class="sourceLine" id="cb1-17" title="17">  freopen(<span class="st">&quot;tri.out&quot;</span>, <span class="st">&quot;w&quot;</span>, stdout);</a>
-<a class="sourceLine" id="cb1-18" title="18"><span class="pp">#endif</span></a>
-<a class="sourceLine" id="cb1-19" title="19"><span class="pp">#endif</span></a>
-<a class="sourceLine" id="cb1-20" title="20"></a>
-<a class="sourceLine" id="cb1-21" title="21">  scanf(<span class="st">&quot;</span><span class="sc">%d%d</span><span class="st">&quot;</span>, &amp;n, &amp;m);</a>
-<a class="sourceLine" id="cb1-22" title="22">  ++n, ++m;</a>
-<a class="sourceLine" id="cb1-23" title="23">  tot = n * m;</a>
-<a class="sourceLine" id="cb1-24" title="24">  ans = <span class="dv">1</span><span class="bu">ll</span> * tot * (tot - <span class="dv">1</span>) * (tot - <span class="dv">2</span>) / <span class="dv">6</span> - <span class="dv">1</span><span class="bu">ll</span> * n * m * (m - <span class="dv">1</span>) * (m - <span class="dv">2</span>) / <span class="dv">6</span> -</a>
-<a class="sourceLine" id="cb1-25" title="25">        <span class="dv">1</span><span class="bu">ll</span> * m * n * (n - <span class="dv">1</span>) * (n - <span class="dv">2</span>) / <span class="dv">6</span>;</a>
-<a class="sourceLine" id="cb1-26" title="26">  <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">1</span>; i &lt; n; ++i) {</a>
-<a class="sourceLine" id="cb1-27" title="27">    <span class="cf">for</span> (<span class="dt">int</span> j = <span class="dv">1</span>; j &lt; m; ++j) {</a>
-<a class="sourceLine" id="cb1-28" title="28">      ans -= <span class="dv">2</span><span class="bu">ll</span> * (gcd(i, j) - <span class="dv">1</span>) * (n - i) * (m - j);</a>
-<a class="sourceLine" id="cb1-29" title="29">    }</a>
-<a class="sourceLine" id="cb1-30" title="30">  }</a>
-<a class="sourceLine" id="cb1-31" title="31">  printf(<span class="st">&quot;</span><span class="sc">%lld</span><span class="st">&quot;</span>, ans);</a>
-<a class="sourceLine" id="cb1-32" title="32">  <span class="cf">return</span> <span class="dv">0</span>;</a>
-<a class="sourceLine" id="cb1-33" title="33">}</a></code></pre></div>
-  <div id="gitalk-container"></div>
-  </body>
+<div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;cstdio&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> <span class="dt">long</span> <span class="dt">long</span> ll;</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> n, m, tot;</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>ll ans;</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> gcd(<span class="dt">int</span> a, <span class="dt">int</span> b) { <span class="cf">return</span> b ? gcd(b, a % b) : a; }</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main() {</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="pp">#ifndef ONLINE_JUDGE</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="pp">#ifdef LOCAL</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  freopen(<span class="st">&quot;testdata.in&quot;</span>, <span class="st">&quot;r&quot;</span>, stdin);</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  freopen(<span class="st">&quot;testdata.out&quot;</span>, <span class="st">&quot;w&quot;</span>, stdout);</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="pp">#endif</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="pp">#ifndef LOCAL</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  freopen(<span class="st">&quot;tri.in&quot;</span>, <span class="st">&quot;r&quot;</span>, stdin);</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  freopen(<span class="st">&quot;tri.out&quot;</span>, <span class="st">&quot;w&quot;</span>, stdout);</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="pp">#endif</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="pp">#endif</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  scanf(<span class="st">&quot;</span><span class="sc">%d%d</span><span class="st">&quot;</span>, &amp;n, &amp;m);</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  ++n, ++m;</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  tot = n * m;</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  ans = <span class="dv">1</span><span class="bu">ll</span> * tot * (tot - <span class="dv">1</span>) * (tot - <span class="dv">2</span>) / <span class="dv">6</span> - <span class="dv">1</span><span class="bu">ll</span> * n * m * (m - <span class="dv">1</span>) * (m - <span class="dv">2</span>) / <span class="dv">6</span> -</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1</span><span class="bu">ll</span> * m * n * (n - <span class="dv">1</span>) * (n - <span class="dv">2</span>) / <span class="dv">6</span>;</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">1</span>; i &lt; n; ++i) {</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (<span class="dt">int</span> j = <span class="dv">1</span>; j &lt; m; ++j) {</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>      ans -= <span class="dv">2</span><span class="bu">ll</span> * (gcd(i, j) - <span class="dv">1</span>) * (n - i) * (m - j);</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  printf(<span class="st">&quot;</span><span class="sc">%lld</span><span class="st">&quot;</span>, ans);</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span>;</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div id="gitalk-container" class="card"></div>
+</body>
 
-<script src="../../static/javaScripts/articleJS.js"></script>
+<script src="/static/javaScripts/articleJS.js"></script>
 
 </html>

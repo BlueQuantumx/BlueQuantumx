@@ -5,17 +5,26 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="author" content="BlueQuantum" />
-  <link rel="icon" type="image/ico" sizes="512x512" href="../../static/images/icon.png" />
-  <link rel="stylesheet" type="text/css" href="../../static/css/articleTheme.css" />
-  <script src="../../static/javaScripts/articleJS.js"></script>
-  <script id="MathJax-script" src="../../static/javaScripts/mathJax-3.1.2/es5/tex-chtml.js"></script>
-  <link href="https://cdn.bootcdn.net/ajax/libs/gitalk/1.7.0/gitalk.min.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/ico" sizes="512x512" href="/static/images/icon.png" />
+  <link rel="stylesheet" type="text/css" href="/static/css/articleTheme.css" />
+  <link href="/static/css/gitalk.css" rel="stylesheet">
+  <script src="/static/javaScripts/common.js"></script>
+  <script id="MathJax-script" src="/static/javaScripts/mathJax-3.1.2/es5/tex-chtml.js"></script>
   <script src="https://cdn.bootcdn.net/ajax/libs/gitalk/1.7.0/gitalk.min.js"></script>
       <title>10-28模拟赛</title>
   </head>
 
 <body id="write">
-    <h1 id="模拟赛">10-28 模拟赛</h1>
+<nav id="top-panel">
+  <a id="myname" href="/">BlueQuantum's Blog</a>
+  <span id="colorSwitch" class="color-switch"></span>
+  <a id="about" href="/articles/exports/about.html" target="_blank">关于</a>
+  <!-- <span id="scroll"></span> -->
+  <!-- <span id="posX"></span><span id="posY"></span> -->
+</nav>
+<!-- body不能缩进，不然会影响代码 -->
+<h1 id="模拟赛">10-28 模拟赛</h1>
 <h2 id="splay">「Splay」</h2>
 <h3 id="题目描述">题目描述</h3>
 <p>给一棵Splay，只要求rotate操作，定义每个节点的权值为子树内权值和，求任意节点子树内的权值<strong>积</strong>。</p>
@@ -45,9 +54,9 @@ E_x = \sum_{v \in son_x} E_v \cdot w
 <p><span class="math display">\[
 E_{{x+v}^2} = E_{x^2} + E_{v^2} + 2E_x E_v
 \]</span></p>
-  <div id="gitalk-container"></div>
-  </body>
+<div id="gitalk-container" class="card"></div>
+</body>
 
-<script src="../../static/javaScripts/articleJS.js"></script>
+<script src="/static/javaScripts/articleJS.js"></script>
 
 </html>

@@ -52,7 +52,7 @@ window.addEventListener("scroll", (() => {
   return function () {
     let now = Date.now();
     if (now - previous > 16) {
-      if (document.documentElement.scrollTop < 0.2) {
+      if (document.documentElement.scrollTop < 1) {
         topPanel.style.boxShadow = "0 0 0 black";
       } else {
         topPanel.style.boxShadow = "0 0 15px rgba(0, 0, 0, 0.4)";
@@ -74,22 +74,6 @@ window.addEventListener("scroll", (() => {
   }
 })());
 
-// Gitalk
-fetch('/static/gitalk.json').then(response => {
-  return response.json();
-}).then(content => {
-  let gitalk = new Gitalk({
-    clientID: content.clientID, //Client ID
-    clientSecret: content.clientSecret, //Client Secret
-    repo: 'MyBlogComments', //仓库名称
-    owner: 'Bluequarks', //仓库拥有者
-    admin: ['Bluequarks'],
-    id: 'commentsTest',
-    distractionFreeMode: false  // Facebook-like distraction free mode
-  });
-  gitalk.render('gitalk-container');
-});
-
 // 拉取 json 以获取文章列表和友链列表
 fetch('static/articles.json').then(response => {
   return response.json();
@@ -107,7 +91,7 @@ fetch('/static/friendLinks.json').then(response => {
 }).then(Friends => {
   for (let i = 0; i < Friends.length; ++i) {
     let f = Friends[i];
-    let str = `<a target="_blank" href="${f.href}">${f.name}</a>`;
+    let str = `<a class="goline-text" target="_blank" href="${f.href}">${f.name}</a>`;
     document.getElementById("links").innerHTML += str;
   }
 });
@@ -121,22 +105,3 @@ function getHitokoto() {
 }
 getHitokoto();
 document.querySelector("#hitokoto > h4 > span").addEventListener("click", getHitokoto);
-
-//切换深色模式
-document.getElementById("colorSwitch").addEventListener("click", () => {
-  if (document.documentElement.style.getPropertyValue("--text-color") == "black") {
-    document.documentElement.style.setProperty("--text-color", "#DDDDDD");
-    document.documentElement.style.setProperty("--background-color", "#121212");
-    document.documentElement.style.setProperty("--color-switch", 'url("/static/images/dark/colorSwitch.png")');
-    document.documentElement.style.setProperty("--background-image", 'url("/static/images/dark/background.jpg")');
-    // document.documentElement.style.setProperty("--accent-color", "#5e72e4");
-    // document.documentElement.style.setProperty("--auxiliary-color", "gray");
-  } else {
-    document.documentElement.style.setProperty("--text-color", "black");
-    document.documentElement.style.setProperty("--background-color", "white");
-    document.documentElement.style.setProperty("--color-switch", 'url("/static/images/light/colorSwitch.png")');
-    document.documentElement.style.setProperty("--background-image", 'url("/static/images/light/background.png")');
-    // document.documentElement.style.setProperty("--accent-color", "#5e72e4");
-    // document.documentElement.style.setProperty("--auxiliary-color", "gray");
-  }
-});

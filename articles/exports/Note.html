@@ -12,22 +12,10 @@
   <script src="/static/javaScripts/common.js"></script>
   <script id="MathJax-script" src="/static/javaScripts/mathJax-3.1.2/es5/tex-chtml.js"></script>
   <script src="https://cdn.bootcdn.net/ajax/libs/gitalk/1.7.0/gitalk.min.js"></script>
-  $if(date-meta)$
-  <meta name="dcterms.date" content="$date-meta$" />
-  $endif$
-  $if(keywords)$
-  <meta name="keywords" content="$for(keywords)$$keywords$$sep$, $endfor$" />
-  $endif$
-  <title>$pagetitle$</title>
-  $for(header-includes)$
-  $header-includes$
-  $endfor$
-</head>
+      <title>Note</title>
+  </head>
 
 <body id="write">
-$for(include-before)$
-$include-before$
-$endfor$
 <nav id="top-panel">
   <a id="myname" href="/">BlueQuantum's Blog</a>
   <span id="colorSwitch" class="color-switch"></span>
@@ -36,11 +24,28 @@ $endfor$
   <!-- <span id="posX"></span><span id="posY"></span> -->
 </nav>
 <!-- body不能缩进，不然会影响代码 -->
-$body$
+<p><span class="math display">\[
+f_if_j + f_{i+1}f_{j+1} = f_{i + j + 1}
+\]</span></p>
+<p><span class="math display">\[
+M = 
+\begin{bmatrix}
+1 \ 1 \\
+1 \ 0
+\end{bmatrix}
+\]</span></p>
+<p><span class="math display">\[
+M^a = 
+\begin{bmatrix}
+fib_{a+1} \ fib_a \\
+fib_a \ fib_{a-1}
+\end{bmatrix}
+\]</span></p>
+<p><span class="math display">\[
+f_{n+1}f_{n-1} - f_nf_n = (-1)^n \\
+f_{n-1}f_{n-1} - f_{n-2}f_n
+\]</span></p>
 <div id="gitalk-container" class="card"></div>
-$for(include-after)$
-$include-after$
-$endfor$
 </body>
 
 <script src="/static/javaScripts/articleJS.js"></script>

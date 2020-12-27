@@ -6,187 +6,185 @@
   <meta name="generator" content="pandoc" />
   <meta name="author" content="BlueQuantum" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/ico" sizes="512x512" href="../../static/images/icon.png" />
-  <link rel="stylesheet" type="text/css" href="../../static/css/articleTheme.css" />
-  <script id="MathJax-script" src="../../static/javaScripts/mathJax-3.1.2/es5/tex-chtml.js"></script>
-  <link href="https://cdn.bootcdn.net/ajax/libs/gitalk/1.7.0/gitalk.min.css" rel="stylesheet">
+  <link rel="icon" type="image/ico" sizes="512x512" href="/static/images/icon.png" />
+  <link rel="stylesheet" type="text/css" href="/static/css/articleTheme.css" />
+  <link href="/static/css/gitalk.css" rel="stylesheet">
+  <script src="/static/javaScripts/common.js"></script>
+  <script id="MathJax-script" src="/static/javaScripts/mathJax-3.1.2/es5/tex-chtml.js"></script>
   <script src="https://cdn.bootcdn.net/ajax/libs/gitalk/1.7.0/gitalk.min.js"></script>
-  <script async="" src="../../static/javaScripts/articleJS.js"></script>
       <title>11-17模拟赛</title>
   </head>
 
 <body id="write">
-    <h1 id="模拟赛">11-17模拟赛</h1>
-    <h2 id="队伍统计">队伍统计</h2>
-    <h3 id="题目描述">题目描述</h3>
-    <p>现在有 <span class="math inline">\(n\)</span> 个人要排成一列，编号为 <span class="math inline">\(1 \rightarrow n\)</span> 。但由于一些不明原因的关系，人与人之间可能存在一些矛盾关系，具体有 <span class="math inline">\(m\)</span> 条矛盾关系 <span class="math inline">\((u, v)\)</span> ，表示编号为 <span class="math inline">\(u\)</span> 的人想要排在编号为 <span class="math inline">\(v\)</span> 的人前面。要使得队伍和谐，最多不能违背 <span class="math inline">\(k\)</span> 条矛盾关系（即不能有超过 <span class="math inline">\(k\)</span> 条矛盾关系 <span class="math inline">\((u, v)\)</span> ，满足最后 <span class="math inline">\(v\)</span> 排在了 <span class="math inline">\(u\)</span> 前面）。问有多少合法的排列。答案对 <span class="math inline">\(10^9+7\)</span> 取模。</p>
-    <h3 id="题解">题解</h3>
-    <p>状压DP</p>
-    <button id="quebtn" onclick="showCode(&#39;que&#39;)">
-    展开代码
-    </button>
-    <div id="que" class="code" style="height: 0px;">
-    <div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Tags:</span></span>
-    <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;algorithm&gt;</span></span>
-    <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;cctype&gt;</span></span>
-    <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;cstdio&gt;</span></span>
-    <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-    <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> <span class="dt">long</span> <span class="dt">long</span> ll;</span>
-    <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-    <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span> &lt;<span class="kw">typename</span> T&gt;</span>
-    <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="kw">inline</span> T &amp;read(T &amp;x) {</span>
-    <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  x = <span class="dv">0</span>;</span>
-    <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="dt">bool</span> f = <span class="kw">false</span>;</span>
-    <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="dt">short</span> ch = getchar();</span>
-    <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> (!isdigit(ch)) {</span>
-    <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (ch == <span class="ch">&#39;-&#39;</span>) f = <span class="kw">true</span>;</span>
-    <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    ch = getchar();</span>
-    <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  }</span>
-    <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> (isdigit(ch)) x = x * <span class="dv">10</span> + (ch ^ <span class="ch">&#39;0&#39;</span>), ch = getchar();</span>
-    <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (f) x = -x;</span>
-    <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> x;</span>
-    <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>}</span>
-    <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
-    <span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> <span class="dt">int</span> N = <span class="dv">21</span>, mod = <span class="fl">1e9</span> + <span class="dv">7</span>;</span>
-    <span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> n, m, k, f[<span class="dv">1</span> &lt;&lt; N][N], bhd[N];</span>
-    <span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
-    <span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main() {</span>
-    <span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="pp">#ifndef ONLINE_JUDGE</span></span>
-    <span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="pp">#ifdef LOCAL</span></span>
-    <span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  freopen64(<span class="st">&quot;/tmp/CodeTmp/testdata.in&quot;</span>, <span class="st">&quot;r&quot;</span>, stdin);</span>
-    <span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  freopen64(<span class="st">&quot;/tmp/CodeTmp/testdata.out&quot;</span>, <span class="st">&quot;w&quot;</span>, stdout);</span>
-    <span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="pp">#else</span></span>
-    <span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  freopen(<span class="st">&quot;count.in&quot;</span>, <span class="st">&quot;r&quot;</span>, stdin);</span>
-    <span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>  freopen(<span class="st">&quot;count.out&quot;</span>, <span class="st">&quot;w&quot;</span>, stdout);</span>
-    <span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="pp">#endif</span></span>
-    <span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="pp">#endif</span></span>
-    <span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
-    <span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>  read(n), read(m), read(k);</span>
-    <span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>, u, v; i &lt; m; ++i) {</span>
-    <span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>    --read(u), --read(v);</span>
-    <span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>    bhd[u] |= <span class="dv">1</span> &lt;&lt; v;</span>
-    <span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>  }</span>
-    <span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>  f[<span class="dv">0</span>][<span class="dv">0</span>] = <span class="dv">1</span>;</span>
-    <span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>, lim = <span class="dv">1</span> &lt;&lt; n; i &lt; lim; ++i) {</span>
-    <span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (<span class="dt">int</span> j = <span class="dv">0</span>; j &lt; n; ++j) {</span>
-    <span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (!((i &gt;&gt; j) &amp; <span class="dv">1</span>)) {</span>
-    <span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> cnt = <span class="fu">__builtin_popcount</span>(i &amp; bhd[j]);</span>
-    <span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> (<span class="dt">int</span> h = <span class="dv">0</span>; h &lt;= k - cnt; ++h) {</span>
-    <span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>          f[i | (<span class="dv">1</span> &lt;&lt; j)][h + cnt] += f[i][h];</span>
-    <span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>          <span class="cf">if</span> (f[i | (<span class="dv">1</span> &lt;&lt; j)][h + cnt] &gt;= mod) f[i | (<span class="dv">1</span> &lt;&lt; j)][h + cnt] -= mod;</span>
-    <span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>        }</span>
-    <span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>      }</span>
-    <span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>    }</span>
-    <span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>  }</span>
-    <span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>  ll ans = <span class="dv">0</span>;</span>
-    <span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt;= k; ++i) {</span>
-    <span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>    ans += f[(<span class="dv">1</span> &lt;&lt; n) - <span class="dv">1</span>][i];</span>
-    <span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (ans &gt;= mod) ans -= mod;</span>
-    <span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>  }</span>
-    <span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>  printf(<span class="st">&quot;</span><span class="sc">%lld</span><span class="st">&quot;</span>, ans);</span>
-    <span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span>;</span>
-    <span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-    </div>
-    <h2 id="序列问题">序列问题</h2>
-    <h3 id="题目描述-1">题目描述</h3>
-    <p>给定一个长度为 <span class="math inline">\(n\)</span> 的序列 <span class="math inline">\(A\)</span>。定义 <span class="math inline">\(f(l, r)=max(a_l, a_{l+1}, a_{r-1}, q_r)\)</span>，<span class="math inline">\(g(l,r) =min(a_l, a_{l+1}, \cdots , a_r)\)</span>，希望你求出：</p>
-    <p><span class="math display">\[
-    \sum_{l=1}^n \sum_{r=l}^n f(l,r) \times g(l,r) \pmod {10^9+7}
-    \]</span></p>
-    <h3 id="题解-1">题解</h3>
-    <p>序列问题还可以用分治考虑</p>
-    <p>在每一层中，预处理一边的前/后缀最大/小值，再枚举一边维护两个指针 <span class="math inline">\(i, j\)</span> 向另一边扫，如果使区间的max/min改变就停下来统计，分三种情况讨论</p>
-    <button id="seqbtn" onclick="showCode(&#39;seq&#39;)">
-    展开代码
-    </button>
-    <div id="seq" class="code" style="height: 0px;">
-    <div class="sourceCode" id="cb2"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Tags:</span></span>
-    <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;algorithm&gt;</span></span>
-    <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;cctype&gt;</span></span>
-    <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;cstdio&gt;</span></span>
-    <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-    <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> <span class="dt">long</span> <span class="dt">long</span> ll;</span>
-    <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-    <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span> &lt;<span class="kw">typename</span> T&gt;</span>
-    <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="kw">inline</span> T &amp;read(T &amp;x) {</span>
-    <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  x = <span class="dv">0</span>;</span>
-    <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="dt">bool</span> f = <span class="kw">false</span>;</span>
-    <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="dt">short</span> ch = getchar();</span>
-    <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> (!isdigit(ch)) {</span>
-    <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (ch == <span class="ch">&#39;-&#39;</span>) f = <span class="kw">true</span>;</span>
-    <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    ch = getchar();</span>
-    <span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  }</span>
-    <span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> (isdigit(ch)) x = x * <span class="dv">10</span> + (ch ^ <span class="ch">&#39;0&#39;</span>), ch = getchar();</span>
-    <span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (f) x = -x;</span>
-    <span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> x;</span>
-    <span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>}</span>
-    <span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
-    <span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> <span class="dt">int</span> N = <span class="fl">5e5</span> + <span class="dv">5</span>, mod = <span class="fl">1e9</span> + <span class="dv">7</span>, inf = <span class="bn">0x3f3f3f3f</span>;</span>
-    <span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> n, ans, a[N];</span>
-    <span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a></span>
-    <span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="kw">inline</span> <span class="dt">void</span> add(<span class="dt">int</span> &amp;x, <span class="dt">int</span> y) {</span>
-    <span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> ((x += y) &gt;= mod) x -= mod;</span>
-    <span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>}</span>
-    <span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a></span>
-    <span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> solve(<span class="dt">int</span> l, <span class="dt">int</span> r) {</span>
-    <span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (l == r) <span class="cf">return</span> add(ans, (ll)a[l] * a[l] % mod);</span>
-    <span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>  <span class="at">static</span> <span class="dt">int</span> minl[N], maxl[N];</span>
-    <span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>  <span class="at">static</span> ll summin[N], summax[N], sumans[N];</span>
-    <span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> mid = (l + r) &gt;&gt; <span class="dv">1</span>;</span>
-    <span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>  minl[mid + <span class="dv">1</span>] = inf, maxl[mid + <span class="dv">1</span>] = -inf,</span>
-    <span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>  sumans[mid + <span class="dv">1</span>] = summax[mid + <span class="dv">1</span>] = summin[mid + <span class="dv">1</span>] = <span class="dv">0</span>;</span>
-    <span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="dt">int</span> i = mid; i &gt;= l; --i) {</span>
-    <span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>    minl[i] = <span class="bu">std::</span>min(minl[i + <span class="dv">1</span>], a[i]);</span>
-    <span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>    maxl[i] = <span class="bu">std::</span>max(maxl[i + <span class="dv">1</span>], a[i]);</span>
-    <span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>    summin[i] = (summin[i + <span class="dv">1</span>] + minl[i]) % mod;</span>
-    <span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>    summax[i] = (summax[i + <span class="dv">1</span>] + maxl[i]) % mod;</span>
-    <span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>    sumans[i] = (sumans[i + <span class="dv">1</span>] + maxl[i] * minl[i] % mod) % mod;</span>
-    <span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>  }</span>
-    <span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a></span>
-    <span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="dt">int</span> i = mid + <span class="dv">1</span>, rmin = inf, rmax = -inf, j = mid, k = mid; i &lt;= r; ++i) {</span>
-    <span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>    rmax = <span class="bu">std::</span>max(a[i], rmax);</span>
-    <span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>    rmin = <span class="bu">std::</span>min(a[i], rmin);</span>
-    <span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> (j &gt;= l &amp;&amp; maxl[j] &lt; rmax) --j;</span>
-    <span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> (k &gt;= l &amp;&amp; minl[k] &gt; rmin) --k;</span>
-    <span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (j &gt; k)</span>
-    <span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>      add(ans, ((ll)(mid - j) * rmax % mod * rmin % mod +</span>
-    <span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>                rmin * (summax[k + <span class="dv">1</span>] - summax[j + <span class="dv">1</span>]) % mod + sumans[l] -</span>
-    <span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>                sumans[k + <span class="dv">1</span>]) %</span>
-    <span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>                   mod);</span>
-    <span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span></span>
-    <span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>      add(ans, ((ll)(mid - k) * rmax % mod * rmin % mod +</span>
-    <span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>                rmax * (summin[j + <span class="dv">1</span>] - summin[k + <span class="dv">1</span>]) % mod + sumans[l] -</span>
-    <span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>                sumans[j + <span class="dv">1</span>]) %</span>
-    <span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>                   mod);</span>
-    <span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>  }</span>
-    <span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a></span>
-    <span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>  solve(l, mid);</span>
-    <span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>  solve(mid + <span class="dv">1</span>, r);</span>
-    <span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>}</span>
-    <span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a></span>
-    <span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main() {</span>
-    <span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a><span class="pp">#ifndef ONLINE_JUDGE</span></span>
-    <span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a><span class="pp">#ifdef LOCAL</span></span>
-    <span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>  freopen64(<span class="st">&quot;/tmp/CodeTmp/testdata.in&quot;</span>, <span class="st">&quot;r&quot;</span>, stdin);</span>
-    <span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>  freopen64(<span class="st">&quot;/tmp/CodeTmp/testdata.out&quot;</span>, <span class="st">&quot;w&quot;</span>, stdout);</span>
-    <span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a><span class="pp">#else</span></span>
-    <span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>  freopen(<span class="st">&quot;seq.in&quot;</span>, <span class="st">&quot;r&quot;</span>, stdin);</span>
-    <span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>  freopen(<span class="st">&quot;seq.out&quot;</span>, <span class="st">&quot;w&quot;</span>, stdout);</span>
-    <span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a><span class="pp">#endif</span></span>
-    <span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a><span class="pp">#endif</span></span>
-    <span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a></span>
-    <span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a>  read(n);</span>
-    <span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">1</span>; i &lt;= n; ++i) read(a[i]);</span>
-    <span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a>  solve(<span class="dv">1</span>, n);</span>
-    <span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a>  printf(<span class="st">&quot;</span><span class="sc">%d</span><span class="st">&quot;</span>, ans);</span>
-    <span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span>;</span>
-    <span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-    </div>
-    <h2 id="带权排序">带权排序</h2>
-    <p>/kk 先去改S2OJ上的题了，咕咕咕</p>
-  <div id="gitalk-container" class="card"></div>
-  </body>
+<nav id="top-panel">
+  <a id="myname" href="/">BlueQuantum's Blog</a>
+  <span id="colorSwitch" class="color-switch"></span>
+  <a id="about" href="/articles/exports/about.html" target="_blank">关于</a>
+  <!-- <span id="scroll"></span> -->
+  <!-- <span id="posX"></span><span id="posY"></span> -->
+</nav>
+<!-- body不能缩进，不然会影响代码 -->
+<h1 id="模拟赛">11-17模拟赛</h1>
+<h2 id="队伍统计">队伍统计</h2>
+<h3 id="题目描述">题目描述</h3>
+<p>现在有 <span class="math inline">\(n\)</span> 个人要排成一列，编号为 <span class="math inline">\(1 \rightarrow n\)</span> 。但由于一些不明原因的关系，人与人之间可能存在一些矛盾关系，具体有 <span class="math inline">\(m\)</span> 条矛盾关系 <span class="math inline">\((u, v)\)</span> ，表示编号为 <span class="math inline">\(u\)</span> 的人想要排在编号为 <span class="math inline">\(v\)</span> 的人前面。要使得队伍和谐，最多不能违背 <span class="math inline">\(k\)</span> 条矛盾关系（即不能有超过 <span class="math inline">\(k\)</span> 条矛盾关系 <span class="math inline">\((u, v)\)</span> ，满足最后 <span class="math inline">\(v\)</span> 排在了 <span class="math inline">\(u\)</span> 前面）。问有多少合法的排列。答案对 <span class="math inline">\(10^9+7\)</span> 取模。</p>
+<h3 id="题解">题解</h3>
+<p>状压DP</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Tags:</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;algorithm&gt;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;cctype&gt;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;cstdio&gt;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> <span class="dt">long</span> <span class="dt">long</span> ll;</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span> &lt;<span class="kw">typename</span> T&gt;</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="kw">inline</span> T &amp;read(T &amp;x) {</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  x = <span class="dv">0</span>;</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="dt">bool</span> f = <span class="kw">false</span>;</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="dt">short</span> ch = getchar();</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> (!isdigit(ch)) {</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (ch == <span class="ch">&#39;-&#39;</span>) f = <span class="kw">true</span>;</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    ch = getchar();</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> (isdigit(ch)) x = x * <span class="dv">10</span> + (ch ^ <span class="ch">&#39;0&#39;</span>), ch = getchar();</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (f) x = -x;</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> x;</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> <span class="dt">int</span> N = <span class="dv">21</span>, mod = <span class="fl">1e9</span> + <span class="dv">7</span>;</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> n, m, k, f[<span class="dv">1</span> &lt;&lt; N][N], bhd[N];</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main() {</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="pp">#ifndef ONLINE_JUDGE</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="pp">#ifdef LOCAL</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  freopen64(<span class="st">&quot;/tmp/CodeTmp/testdata.in&quot;</span>, <span class="st">&quot;r&quot;</span>, stdin);</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  freopen64(<span class="st">&quot;/tmp/CodeTmp/testdata.out&quot;</span>, <span class="st">&quot;w&quot;</span>, stdout);</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="pp">#else</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  freopen(<span class="st">&quot;count.in&quot;</span>, <span class="st">&quot;r&quot;</span>, stdin);</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>  freopen(<span class="st">&quot;count.out&quot;</span>, <span class="st">&quot;w&quot;</span>, stdout);</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="pp">#endif</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="pp">#endif</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>  read(n), read(m), read(k);</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>, u, v; i &lt; m; ++i) {</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>    --read(u), --read(v);</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>    bhd[u] |= <span class="dv">1</span> &lt;&lt; v;</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>  f[<span class="dv">0</span>][<span class="dv">0</span>] = <span class="dv">1</span>;</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>, lim = <span class="dv">1</span> &lt;&lt; n; i &lt; lim; ++i) {</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (<span class="dt">int</span> j = <span class="dv">0</span>; j &lt; n; ++j) {</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (!((i &gt;&gt; j) &amp; <span class="dv">1</span>)) {</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> cnt = <span class="fu">__builtin_popcount</span>(i &amp; bhd[j]);</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> (<span class="dt">int</span> h = <span class="dv">0</span>; h &lt;= k - cnt; ++h) {</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>          f[i | (<span class="dv">1</span> &lt;&lt; j)][h + cnt] += f[i][h];</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>          <span class="cf">if</span> (f[i | (<span class="dv">1</span> &lt;&lt; j)][h + cnt] &gt;= mod) f[i | (<span class="dv">1</span> &lt;&lt; j)][h + cnt] -= mod;</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>  ll ans = <span class="dv">0</span>;</span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt;= k; ++i) {</span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>    ans += f[(<span class="dv">1</span> &lt;&lt; n) - <span class="dv">1</span>][i];</span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (ans &gt;= mod) ans -= mod;</span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>  printf(<span class="st">&quot;</span><span class="sc">%lld</span><span class="st">&quot;</span>, ans);</span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span>;</span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h2 id="序列问题">序列问题</h2>
+<h3 id="题目描述-1">题目描述</h3>
+<p>给定一个长度为 <span class="math inline">\(n\)</span> 的序列 <span class="math inline">\(A\)</span>。定义 <span class="math inline">\(f(l, r)=max(a_l, a_{l+1}, a_{r-1}, q_r)\)</span>，<span class="math inline">\(g(l,r) =min(a_l, a_{l+1}, \cdots , a_r)\)</span>，希望你求出：</p>
+<p><span class="math display">\[
+\sum_{l=1}^n \sum_{r=l}^n f(l,r) \times g(l,r) \pmod {10^9+7}
+\]</span></p>
+<h3 id="题解-1">题解</h3>
+<p>序列问题还可以用分治考虑</p>
+<p>在每一层中，预处理一边的前/后缀最大/小值，再枚举一边维护两个指针 <span class="math inline">\(i, j\)</span> 向另一边扫，如果使区间的max/min改变就停下来统计，分三种情况讨论</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Tags:</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;algorithm&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;cctype&gt;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;cstdio&gt;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> <span class="dt">long</span> <span class="dt">long</span> ll;</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span> &lt;<span class="kw">typename</span> T&gt;</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="kw">inline</span> T &amp;read(T &amp;x) {</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  x = <span class="dv">0</span>;</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="dt">bool</span> f = <span class="kw">false</span>;</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="dt">short</span> ch = getchar();</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> (!isdigit(ch)) {</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (ch == <span class="ch">&#39;-&#39;</span>) f = <span class="kw">true</span>;</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    ch = getchar();</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> (isdigit(ch)) x = x * <span class="dv">10</span> + (ch ^ <span class="ch">&#39;0&#39;</span>), ch = getchar();</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (f) x = -x;</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> x;</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> <span class="dt">int</span> N = <span class="fl">5e5</span> + <span class="dv">5</span>, mod = <span class="fl">1e9</span> + <span class="dv">7</span>, inf = <span class="bn">0x3f3f3f3f</span>;</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> n, ans, a[N];</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="kw">inline</span> <span class="dt">void</span> add(<span class="dt">int</span> &amp;x, <span class="dt">int</span> y) {</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> ((x += y) &gt;= mod) x -= mod;</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> solve(<span class="dt">int</span> l, <span class="dt">int</span> r) {</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (l == r) <span class="cf">return</span> add(ans, (ll)a[l] * a[l] % mod);</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>  <span class="at">static</span> <span class="dt">int</span> minl[N], maxl[N];</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>  <span class="at">static</span> ll summin[N], summax[N], sumans[N];</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> mid = (l + r) &gt;&gt; <span class="dv">1</span>;</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>  minl[mid + <span class="dv">1</span>] = inf, maxl[mid + <span class="dv">1</span>] = -inf,</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>  sumans[mid + <span class="dv">1</span>] = summax[mid + <span class="dv">1</span>] = summin[mid + <span class="dv">1</span>] = <span class="dv">0</span>;</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="dt">int</span> i = mid; i &gt;= l; --i) {</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>    minl[i] = <span class="bu">std::</span>min(minl[i + <span class="dv">1</span>], a[i]);</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>    maxl[i] = <span class="bu">std::</span>max(maxl[i + <span class="dv">1</span>], a[i]);</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>    summin[i] = (summin[i + <span class="dv">1</span>] + minl[i]) % mod;</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>    summax[i] = (summax[i + <span class="dv">1</span>] + maxl[i]) % mod;</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>    sumans[i] = (sumans[i + <span class="dv">1</span>] + maxl[i] * minl[i] % mod) % mod;</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="dt">int</span> i = mid + <span class="dv">1</span>, rmin = inf, rmax = -inf, j = mid, k = mid; i &lt;= r; ++i) {</span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>    rmax = <span class="bu">std::</span>max(a[i], rmax);</span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>    rmin = <span class="bu">std::</span>min(a[i], rmin);</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> (j &gt;= l &amp;&amp; maxl[j] &lt; rmax) --j;</span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> (k &gt;= l &amp;&amp; minl[k] &gt; rmin) --k;</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (j &gt; k)</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>      add(ans, ((ll)(mid - j) * rmax % mod * rmin % mod +</span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>                rmin * (summax[k + <span class="dv">1</span>] - summax[j + <span class="dv">1</span>]) % mod + sumans[l] -</span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>                sumans[k + <span class="dv">1</span>]) %</span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>                   mod);</span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span></span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>      add(ans, ((ll)(mid - k) * rmax % mod * rmin % mod +</span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>                rmax * (summin[j + <span class="dv">1</span>] - summin[k + <span class="dv">1</span>]) % mod + sumans[l] -</span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>                sumans[j + <span class="dv">1</span>]) %</span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>                   mod);</span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>  solve(l, mid);</span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>  solve(mid + <span class="dv">1</span>, r);</span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main() {</span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a><span class="pp">#ifndef ONLINE_JUDGE</span></span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a><span class="pp">#ifdef LOCAL</span></span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>  freopen64(<span class="st">&quot;/tmp/CodeTmp/testdata.in&quot;</span>, <span class="st">&quot;r&quot;</span>, stdin);</span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>  freopen64(<span class="st">&quot;/tmp/CodeTmp/testdata.out&quot;</span>, <span class="st">&quot;w&quot;</span>, stdout);</span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a><span class="pp">#else</span></span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>  freopen(<span class="st">&quot;seq.in&quot;</span>, <span class="st">&quot;r&quot;</span>, stdin);</span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>  freopen(<span class="st">&quot;seq.out&quot;</span>, <span class="st">&quot;w&quot;</span>, stdout);</span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a><span class="pp">#endif</span></span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a><span class="pp">#endif</span></span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a>  read(n);</span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">1</span>; i &lt;= n; ++i) read(a[i]);</span>
+<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a>  solve(<span class="dv">1</span>, n);</span>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a>  printf(<span class="st">&quot;</span><span class="sc">%d</span><span class="st">&quot;</span>, ans);</span>
+<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span>;</span>
+<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h2 id="带权排序">带权排序</h2>
+<p>/kk 先去改S2OJ上的题了，咕咕咕</p>
+<div id="gitalk-container" class="card"></div>
+</body>
 
-<script src="../../static/javaScripts/articleJS.js"></script>
+<script src="/static/javaScripts/articleJS.js"></script>
 
 </html>
