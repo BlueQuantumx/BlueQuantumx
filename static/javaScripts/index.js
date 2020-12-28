@@ -104,4 +104,4 @@ function getHitokoto() {
   });
 }
 getHitokoto();
-document.querySelector("#hitokoto > h4 > span").addEventListener("click", getHitokoto);
+document.querySelector("#hitokoto span.refresh").addEventListener("click", getHitokoto);

@@ -5,6 +5,7 @@
   --auxiliary-color: gray;
   --auxbg-color: rgb(236, 236, 236);
   --transbg: #FFFFFF80;
+  --refresh-image: url("/static/images/light/refresh.png");
   --background-image: url("/static/images/light/background.png");
   --color-switch: url("/static/images/light/colorSwitch.png");
 }
@@ -16,6 +17,7 @@
   --auxiliary-color: rgb(66, 66, 66);
   --auxbg-color: rgb(31, 31, 31);
   --transbg: #00000080;
+  --refresh-image: url("/static/images/dark/refresh.png");
   --background-image: url("/static/images/dark/background.jpg");
   --color-switch: url("/static/images/dark/colorSwitch.png");
 }
@@ -95,6 +97,15 @@
 .goline-text:hover::after {
   transform: scaleX(1);
   transform-origin: left;
+}
+
+.refresh {
+  display: inline-block;
+  height: 1.5em;
+  width: 1.5em;
+  background-size: contain;
+  vertical-align: bottom;
+  background-image: var(--refresh-image);
 }
 
 @media (max-device-width: 450px) {
