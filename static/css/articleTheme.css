@@ -1,9 +1,6 @@
-@import "/static/css/common.css";
 html {
   font-family: "Noto Sans CJK SC", "Noto Sans", "Arial Narrow", Arial, sans-serif;
   font-size: 20px;
-  color: var(--text-color);
-  background-color: var(--background-color);
 }
 
 body {
@@ -15,6 +12,10 @@ body {
   padding-bottom: 50px;
   hyphens: auto;
   word-wrap: break-word;
+}
+
+mjx-container * {
+  transition: none;
 }
 
 @media (max-width: 600px) {

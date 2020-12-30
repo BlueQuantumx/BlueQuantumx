@@ -52,7 +52,7 @@ window.addEventListener("scroll", (() => {
   return function () {
     let now = Date.now();
     if (now - previous > 16) {
-      if (document.documentElement.scrollTop < 1) {
+      if (document.documentElement.scrollTop < 5) {
         topPanel.style.boxShadow = "0 0 0 black";
       } else {
         topPanel.style.boxShadow = "0 0 15px rgba(0, 0, 0, 0.4)";
@@ -105,3 +105,19 @@ function getHitokoto() {
 }
 getHitokoto();
 document.querySelector("#hitokoto span.refresh").addEventListener("click", getHitokoto);
+
+// Gitalk
+fetch('/static/gitalk.json').then(response => {
+  return response.json();
+}).then(content => {
+  var gitalk = new Gitalk({
+    clientID: content.clientID, //Client ID
+    clientSecret: content.clientSecret, //Client Secret
+    repo: 'MyBlogComments', //仓库名称
+    owner: 'Bluequarks', //仓库拥有者
+    admin: ['Bluequarks'],
+    id: document.title,
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  });
+  gitalk.render('gitalk-container');
+});

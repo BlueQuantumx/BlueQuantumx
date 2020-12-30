@@ -14,7 +14,7 @@
 
 $n$ 次单位根 $w_n = g^{\frac {p-1} n}$
 
-一些性质
+**一些性质**
 
 - $w_n^{2i} = w_{\frac{n}{2}}^i$
 - $w_n^i = -w_n^{i+\frac{n}{2}}$
@@ -102,7 +102,7 @@ g &\equiv g_0 * (f - \ln g_0 + 1) \pmod {x^n}
 \end{aligned}
 $$
 
-## 多项式快速幂 pow
+## 多项式快速幂 Pow
 
 $$
 \begin{aligned}
@@ -122,49 +122,53 @@ $$
 
 typedef long long ll;
 
-int const N = 1 << 18, P = 998244353, G = 3, invG = 332748118;
+int const N = 1 << 18, P = 998244353, g = 3, ig = 332748118, inv2 = 499122177;
 
 template <typename T>
 inline T &read(T &x) {
   x = 0;
-  bool f = false;
+  bool F = false;
   short ch = getchar();
   while (!isdigit(ch)) {
-    if (ch == '-') f = true;
+    if (ch == '-') F = true;
     ch = getchar();
   }
   while (isdigit(ch)) x = x * 10ll % P + (ch ^ '0'), ch = getchar();
-  if (f) x = -x;
+  if (F) x = -x;
   return x;
 }
 
 template <typename T>
 inline T &readmod(T &x) {
   x = 0;
-  bool f = false;
+  bool F = false;
   short ch = getchar();
   while (!isdigit(ch)) {
-    if (ch == '-') f = true;
+    if (ch == '-') F = true;
     ch = getchar();
   }
   while (isdigit(ch)) x = 1ll * x * 10 % P + (ch ^ '0'), ch = getchar();
-  if (f) x = -x;
+  if (F) x = -x;
   return x;
 }
 
 class Polynomial {
  private:
-  int f[N];
+  int F[N];
   static int Cvt[N << 2];
 
  public:
   void NTT(bool const typ, int const n);
-  void inv(Polynomial &res, int const n) const;
-  void ln(Polynomial &res, int const n) const;
-  void exp(Polynomial &res, int const n) const;
-  void pow(Polynomial &res, int const n, int const k) const;
-  int &operator[](int index) { return f[index]; };
-  int const &operator[](int index) const { return f[index]; };
+  void inv(Polynomial &Res, int const n) const;
+  void ln(Polynomial &Res, int const n) const;
+  void exp(Polynomial &Res, int const n) const;
+  void pow(Polynomial &Res, int const n, int const k) const;
+  void sqrt(Polynomial &res, int const n) const;
+  void div(Polynomial &Q, Polynomial &R, Polynomial const &D, int const n,
+           int const m) const;
+  int *operator&() { return F; }
+  int &operator[](int index) { return F[index]; };
+  int const &operator[](int index) const { return F[index]; };
   inline void pre(int n) {
     for (int i = 1, len = 2; len <= n; ++i, len <<= 1)
       for (int j = 1, *const cvt = Cvt + len - 1; j < len; ++j)
@@ -173,113 +177,157 @@ class Polynomial {
   inline void clear(int n) {
     int maxl = 1;
     while (maxl < n) maxl <<= 1;
-    memset(f, 0, sizeof(int) * maxl);
+    memset(F, 0, sizeof(int) * maxl);
   }
-} f, g;
+} F, G;
 
-int n, k;
+int n, m;
 int Polynomial::Cvt[N << 2];
 
 inline ll qpow(ll base, int exp) {
-  ll res = 1;
+  ll Res = 1;
   while (exp) {
-    if (exp & 1) res = res * base % P;
+    if (exp & 1) Res = Res * base % P;
     base = base * base % P;
     exp >>= 1;
   }
-  return res;
+  return Res;
 }
 
+/// @param typ 正/逆向 @param n 项数 必须是2的整数次幂
 inline void Polynomial::NTT(bool const typ, int const n) {
   for (int i = 1, *const cvt = Cvt + n - 1; i < n; ++i)
-    if (i < cvt[i]) std::swap(f[i], f[cvt[i]]);
+    if (i < cvt[i]) std::swap(F[i], F[cvt[i]]);
   for (int i = 2; i <= n; i <<= 1) {
-    int mid = i >> 1, wn = qpow(typ ? G : invG, (P - 1) / i);
+    int mid = i >> 1, wn = qpow(typ ? g : ig, (P - 1) / i);
     for (int j = 0; j < n; j += i) {
       ll wk = 1;
       for (int k = 0; k < mid; ++k, (wk *= wn) %= P) {
-        ll t = wk * f[j + k + mid] % P;
-        if ((f[j + k + mid] = f[j + k] - t) < 0) f[j + k + mid] += P;
-        if ((f[j + k] += t) >= P) f[j + k] -= P;
+        ll t = wk * F[j + k + mid] % P;
+        if ((F[j + k + mid] = F[j + k] - t) < 0) F[j + k + mid] += P;
+        if ((F[j + k] += t) >= P) F[j + k] -= P;
       }
     }
   }
   if (!typ) {
     ll inv = qpow(n, P - 2);
-    for (int i = 0; i < n; ++i) f[i] = inv * f[i] % P;
+    for (int i = 0; i < n; ++i) F[i] = inv * F[i] % P;
   }
 }
 
-inline void Polynomial::inv(Polynomial &res, int const n) const {
+/// @param Res 应清空 @param n 模的次数（项数）
+inline void Polynomial::inv(Polynomial &Res, int const n) const {
   static Polynomial tmp;
-  if (n == 1) return res[0] = qpow(f[0], P - 2), void();
-  inv(res, (n + 1) >> 1);
+  if (n == 1) return Res[0] = qpow(F[0], P - 2), void();
+  inv(Res, (n + 1) >> 1);
   int maxl = 1;
-  while (maxl < n << 1) maxl <<= 1;
+  while (maxl < n << 1) maxl <<= 1;  // n - 1 次多项式卷 ⌈n / 2⌉ - 1 次多项式
   tmp.clear(n << 1);
-  memcpy(tmp.f, f, sizeof(int) * n);
-  tmp.NTT(true, maxl), res.NTT(true, maxl);
+  memcpy(&tmp, F, sizeof(int) * n);
+  tmp.NTT(true, maxl), Res.NTT(true, maxl);
   for (int i = 0; i < maxl; ++i)
-    res[i] = static_cast<ll>(res[i]) *
-             ((2ll - static_cast<ll>(res[i]) * tmp[i] % P + P) % P) % P;
-  res.NTT(false, maxl);
-  for (int i = n; i < maxl; ++i) res[i] = 0;
+    Res[i] = static_cast<ll>(Res[i]) *
+             ((2ll - static_cast<ll>(Res[i]) * tmp[i] % P + P) % P) % P;
+  Res.NTT(false, maxl);
+  for (int i = n; i < maxl; ++i) Res[i] = 0;  // mod x^n
 }
 
-inline void Polynomial::ln(Polynomial &res, int const n) const {
+inline void Polynomial::ln(Polynomial &Res, int const n) const {
   static Polynomial df, invf;
   df.clear(n << 1), invf.clear(n << 1);
   int maxl = 1;
   while (maxl < n << 1) maxl <<= 1;
-  for (int i = 0; i + 1 < n; ++i) df[i] = static_cast<ll>(f[i + 1]) * (i + 1) % P;
+  for (int i = 0; i + 1 < n; ++i) df[i] = static_cast<ll>(F[i + 1]) * (i + 1) % P;
   inv(invf, n);
   invf.NTT(true, maxl), df.NTT(true, maxl);
-  for (int i = 0; i < maxl; ++i) res[i] = static_cast<ll>(df[i]) * invf[i] % P;
-  res.NTT(false, maxl);
-  for (int i = n - 1; i; --i) res[i] = static_cast<ll>(res[i - 1]) * qpow(i, P - 2) % P;
-  res[0] = 0;
+  for (int i = 0; i < maxl; ++i) Res[i] = static_cast<ll>(df[i]) * invf[i] % P;
+  Res.NTT(false, maxl);
+  for (int i = n - 1; i; --i) Res[i] = static_cast<ll>(Res[i - 1]) * qpow(i, P - 2) % P;
+  Res[0] = 0;
 }
 
-inline void Polynomial::exp(Polynomial &res, int const n) const {
+inline void Polynomial::exp(Polynomial &Res, int const n) const {
   static Polynomial lnres;
-  if (n == 1) { return res[0] = 1, void(); }
-  exp(res, (n + 1) >> 1);
-  res.ln(lnres, n);
+  if (n == 1) { return Res[0] = 1, void(); }
+  exp(Res, (n + 1) >> 1);
+  Res.ln(lnres, n);
   int maxl = 1;
   while (maxl < n << 1) maxl <<= 1;
   for (int i = 0; i < n; ++i)
-    if ((lnres[i] = f[i] - lnres[i]) < 0) lnres[i] += P;
+    if ((lnres[i] = F[i] - lnres[i]) < 0) lnres[i] += P;
   ++lnres[0];
   if (lnres[0] >= P) lnres[0] -= P;
-  lnres.NTT(true, maxl), res.NTT(true, maxl);
-  for (int i = 0; i < maxl; ++i) res[i] = static_cast<ll>(res[i]) * lnres[i] % P;
-  res.NTT(false, maxl);
-  for (int i = n; i < maxl; ++i) res[i] = 0;
+  lnres.NTT(true, maxl), Res.NTT(true, maxl);
+  for (int i = 0; i < maxl; ++i) Res[i] = static_cast<ll>(Res[i]) * lnres[i] % P;
+  Res.NTT(false, maxl);
+  for (int i = n; i < maxl; ++i) Res[i] = 0;
 }
 
-inline void Polynomial::pow(Polynomial &res, int const n, int const k) const {
+inline void Polynomial::pow(Polynomial &Res, int const n, int const k) const {
   static Polynomial tmp;
   ln(tmp, n);
   for (int i = 0; i < n; ++i) tmp[i] = 1ll * tmp[i] * k % P;
-  tmp.exp(res, n);
+  tmp.exp(Res, n);
+}
+
+/// @param Q Quotient @param R Remainder @param D divider
+inline void Polynomial::div(Polynomial &Q, Polynomial &R, Polynomial const &D,
+                            int const n, int const m) const {
+  static Polynomial Dr, iDr, Fr;
+  for (int i = 0; i <= m; ++i) Dr[i] = D[m - i];
+  for (int i = 0; i <= n; ++i) Fr[i] = F[n - i];
+  Dr.inv(iDr, n - m + 1);
+  int maxl = 1;
+  while (maxl <= n + m) maxl <<= 1;
+  iDr.NTT(true, maxl << 1), Fr.NTT(true, maxl << 1);
+  for (int i = 0; i < maxl << 1; ++i) Q[i] = 1ll * iDr[i] * Fr[i] % P;
+  Q.NTT(false, maxl << 1);
+  for (int i = n - m + 1; i < maxl << 1; ++i) Q[i] = 0;
+  std::reverse(&Q, &Q + n - m + 1);
+  std::reverse(&Dr, &Dr + m + 1);
+  Q.NTT(true, maxl << 1), Dr.NTT(true, maxl << 1);
+  for (int i = 0; i < maxl << 1; ++i) R[i] = 1ll * Q[i] * Dr[i] % P;
+  R.NTT(false, maxl << 1), Q.NTT(false, maxl << 1);
+  for (int i = 0; i < m; ++i)
+    if ((R[i] = F[i] - R[i]) < 0) R[i] += P;
+}
+
+/// @param Res 应清空 @param n 模的次数（项数）
+inline void Polynomial::sqrt(Polynomial &Res, int const n) const {
+  static Polynomial Resinv, copyF;
+  if (n == 1) { return Res[0] = 1, void(); }
+  sqrt(Res, (n + 1) >> 1);
+  for (int i = 0; i <= n << 1; ++i) Resinv[i] = 0;
+  Res.inv(Resinv, n);
+  int maxl = 1;
+  while (maxl < n << 1) maxl <<= 1;
+  memcpy(&copyF, F, sizeof(int) * n);
+  for (int i = n; i < maxl; ++i) copyF[i] = 0;
+  copyF.NTT(true, maxl), Resinv.NTT(true, maxl), Res.NTT(true, maxl);
+  for (int i = 0; i < maxl; ++i)
+    /// @warning        P 过大时可能会炸 ↓
+    if ((Res[i] = 1ll * inv2 * (Res[i] + 1ll * copyF[i] * Resinv[i] % P) % P) >= P)
+      Res[i] -= P;
+  Res.NTT(false, maxl);
+  for (int i = n; i < maxl; ++i) Res[i] = 0;
 }
 
 int main() {
 #ifndef ONLINE_JUDGE
 #ifdef LOCAL
-  freopen64("/tmp/CodeTmp/testdata.in", "r", stdin);
-  freopen64("/tmp/CodeTmp/testdata.out", "w", stdout);
+  freopen("/tmp/CodeTmp/testdata.in", "r", stdin);
+  freopen("/tmp/CodeTmp/testdata.out", "w", stdout);
 #else
-  freopen("PolyExp.in", "r", stdin);
-  freopen("PolyExp.out", "w", stdout);
+  freopen("Polynomial.in", "r", stdin);
+  freopen("Polynomial.out", "w", stdout);
 #endif
 #endif
 
-  read(n), read(k);
-  for (int i = 0; i < n; ++i) read(f[i]);
-  f.pre(n << 2);
-  f.pow(g, n, k);
-  for (int i = 0; i < n; ++i) printf("%d ", g[i]);
+  read(n);
+  for (int i = 0; i < n; ++i) read(F[i]);
+  F.pre(n << 2);
+  F.sqrt(G, n);
+  for (int i = 0; i < n; ++i) printf("%d ", G[i]);
   return 0;
 }
 ```

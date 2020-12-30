@@ -3,6 +3,9 @@
 		{
 			"path": ".."
 		},
+		{
+			"path": "../articles"
+		}
 	],
 	"settings": {
 		"code-runner.clearPreviousOutput": true,
