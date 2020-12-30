@@ -75,7 +75,7 @@ main {
   -webkit-tap-highlight-color: transparent;
 }
 
-.card, .gt-comment-content, .gt-header-textarea {
+.card {
   color: var(--text-color);
   background-color: var(--background-color) !important;
   position: relative;

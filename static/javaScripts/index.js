@@ -81,7 +81,7 @@ fetch('static/articles.json').then(response => {
   let make_html = '';
   for (let i in Arts) {
     let a = Arts[i];
-    make_html += `<a class="card article" href="./articles/exports/${a}.html" target="_blank">${a}</a>`;
+    make_html += `<a class="card article" href="./articles/exports/${a}.html">${a}</a>`;
   }
   document.getElementById('articles').innerHTML = make_html;
 });

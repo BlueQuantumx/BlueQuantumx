@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="/static/css/common.css" />
     <script src="/static/javaScripts/common.js"></script>
     <style>
-        @keyframes Rotate {
+        @keyframes myRotate {
             from {
                 transform: rotate(0deg);
             }
@@ -52,9 +52,7 @@
             height: 50%;
             width: 100%;
             transform-origin: center top;
-            animation: Rotate 3s;
-            animation-delay: 1.0s;
-            animation-iteration-count: infinite;
+            animation: myRotate 3s ease 1s infinite;
         }
 
         #introduction>h1 {

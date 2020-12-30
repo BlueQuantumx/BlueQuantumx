@@ -11,6 +11,8 @@ else {
 
 // onLoad
 addEventListener("load", () => {
+  // 开屏动画
+  document.body.style.opacity = 1;
   //切换深色模式
   document.getElementById("colorSwitch").addEventListener("click", () => {
     if (document.documentElement.className == "light") {
@@ -22,4 +24,8 @@ addEventListener("load", () => {
       localStorage.setItem("color-scheme", "light");
     }
   });
+});
+
+addEventListener("beforeunload", () => {
+  document.body.style.opacity = 0;
 });
