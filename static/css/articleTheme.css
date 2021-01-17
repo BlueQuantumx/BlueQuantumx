@@ -1,6 +1,5 @@
 html {
   font-family: "Noto Sans CJK SC", "Noto Sans", "Arial Narrow", Arial, sans-serif;
-  font-size: 20px;
 }
 
 body {
@@ -37,6 +36,9 @@ mjx-container * {
   }
   h2, h3, h4 {
     page-break-after: avoid;
+  }
+  #top-panel {
+    position: absolute;
   }
 }
 
@@ -183,10 +185,6 @@ pre>code.sourceCode>span {
   line-height: 1.25;
 }
 
-pre.sourceCode {
-  margin: 0;
-}
-
 @media screen {
   div.sourceCode {
     overflow: visible;
@@ -232,6 +230,7 @@ pre.sourceCode code>span>a:first-child::before {
 
 pre.sourceCode {
   position: relative;
+  margin: 0;
   height: inherit;
 }
 
