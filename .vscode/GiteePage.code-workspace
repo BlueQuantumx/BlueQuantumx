@@ -9,9 +9,9 @@
 	],
 	"settings": {
 		"code-runner.clearPreviousOutput": true,
-		"code-runner.customCommand": "python $workspaceRoot/articles/Update.py",
+		"code-runner.customCommand": "python $workspaceRoot/Update.py",
 		"code-runner.executorMapByFileExtension": {
-			".md": "python $workspaceRoot/articles/Update.py --publish $fullFileName"
+			".md": "python $workspaceRoot/Update.py --publish $fullFileName"
 		},
 		"[markdown]": {
 			"editor.renderWhitespace": "all",

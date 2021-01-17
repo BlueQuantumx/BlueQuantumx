@@ -9,17 +9,19 @@ staticFolder = workspaceRoot + "/static"
 
 
 def generate(filename: str):
-  if os.system("pandoc --mathjax \"" + filename +
-               "\" -o \"./articles/exports/" +
-               os.path.splitext(os.path.basename(filename))[0] +
-               ".html\" --template=./static/myTemplate.html -M pagetitle=\"" +
-               os.path.splitext(os.path.basename(filename))[0] + "\"") != 0:
-    raise Exception("Pandoc Error!")
-  # print("pandoc --mathjax \"" + fullFilePath + "\" -o \"./articles/exports/" +
-  #       os.path.splitext(os.path.basename(filename))[0] +
-  #       ".html\" --template=../static/myTemplate.html -M pagetitle=\"" +
-  #       os.path.splitext(os.path.basename(filename))[0] + "\"")
   print("Updating", os.path.basename(filename))
+  if os.system("pandoc --mathjax \"" + filename + "\" -o \"./exports/" +
+               os.path.splitext(os.path.basename(filename))[0] +
+               ".html\" --template=../static/myTemplate.html -M pagetitle=\"" +
+               os.path.splitext(os.path.basename(filename))[0] + "\"") != 0:
+    """ 
+    print("pandoc --mathjax \"" + filename + "\" -o \"./exports/" +
+          os.path.splitext(os.path.basename(filename))[0] +
+          ".html\" --template=../static/myTemplate.html -M pagetitle=\"" +
+          os.path.splitext(os.path.basename(filename))[0] + "\"")
+    """
+    raise Exception("Pandoc Error!")
+  print("Updated", os.path.basename(filename))
 
 
 def update():

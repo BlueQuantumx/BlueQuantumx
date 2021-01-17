@@ -2,6 +2,7 @@
   "files.exclude": {
     ".vscode/": true,
     "exports/": true,
-    "md5s.json": true
+    "md5s.json": true,
+    "*.py": true
   }
 }
