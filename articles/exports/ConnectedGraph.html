@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="author" content="BlueQuantum" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/ico" sizes="512x512" href="/static/images/icon.png" />
+  <link rel="stylesheet" href="/static/css/articleTheme.css" />
+  <link rel="stylesheet" href="/static/css/gitalk.css" />
+  <link rel="stylesheet" href="/static/css/common.css" />
+  <script src="/static/javaScripts/articleJS.js"></script>
+  <script src="/static/javaScripts/common.js"></script>
+  <script id="MathJax-script" src="/static/javaScripts/mathJax-3.1.2/es5/tex-chtml.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/gitalk/1.7.0/gitalk.min.js"></script>
+      <title>ConnectedGraph</title>
+  </head>
+
+<body>
+<nav id="top-panel">
+  <a id="myname" href="/">BlueQuantum's Blog</a>
+  <span id="colorSwitch" class="color-switch"></span>
+  <a id="about" href="/about.html">关于</a>
+  <!-- <span id="scroll"></span> -->
+  <!-- <span id="posX"></span><span id="posY"></span> -->
+</nav>
+<!-- body不能缩进，不然会影响代码 -->
+<h1 id="无向连通图的计数">无向连通图的计数</h1>
+<p><em>吕欣</em></p>
+<p><em>2016.12.20</em></p>
+<h2 id="n-个点的连通图计数"><span class="math inline">\(n\)</span> 个点的连通图计数</h2>
+<p>设 <span class="math inline">\(h[n]\)</span> 表示 <span class="math inline">\(n\)</span> 的点的图的数量，<span class="math inline">\(f[n]\)</span> 表示 <span class="math inline">\(n\)</span> 个点的连通图数量，那么有：</p>
+<p><span class="math display">\[
+h[n] = 2^{\binom{n}{2}}
+\]</span></p>
+<p><span class="math display">\[
+f[n]=h[n]-\sum_{i=1}^{n-1}\binom{n-1}{i-1}f[i]\cdot h[n-i]
+\]</span></p>
+<p>这个还可以用分治FFT、多项式求逆等科技进一步优化。</p>
+<h2 id="n-个点m-条边的连通图计数"><span class="math inline">\(n\)</span> 个点、<span class="math inline">\(m\)</span> 条边的连通图计数</h2>
+<p>设 <span class="math inline">\(f[n][m]\)</span> 表示 <span class="math inline">\(n\)</span> 个点、<span class="math inline">\(m\)</span> 条边的连通图数量。</p>
+<p>下面记 <span class="math inline">\(v(G)\)</span>、<span class="math inline">\(e(G)\)</span>、<span class="math inline">\(c(G)\)</span> 分别表示图 <span class="math inline">\(G\)</span> 的点、边、连通块数。</p>
+<p>记 <span class="math inline">\(CGS(n,m)\)</span> 表示 <span class="math inline">\(n\)</span> 个点、<span class="math inline">\(m\)</span> 条边的连通图数量，<span class="math inline">\(GS(n,m)\)</span> 表示 <span class="math inline">\(n\)</span> 个点、<span class="math inline">\(m\)</span> 条边的图的数量，记 <span class="math inline">\([x]\)</span> 表示对布尔表达式 <span class="math inline">\(x\)</span> 求和，那么有：</p>
+<p><span class="math display">\[
+f[n][m]=\sum_{G\in CGS(n,m)}1=\sum_{G\in GS(n,m)}[c(G)=1]
+\]</span></p>
+<p>现在我们要优化这个式子，考虑第二类 stirling 数反演公式： <span class="math display">\[
+\sum_{i=1}^{n}(-1)^{i-1}(i-1)!\cdot S(n,i)=[n=1]
+\]</span></p>
+<p>我们把 <span class="math inline">\([c(G)=1]\)</span> 按反演公式展开：</p>
+<p><span class="math display">\[
+f[n][m]=\sum_{G\in GS(n,m)}\left(\sum_{i=1}^{c(G)}(-1)^{i-1}(i-1)!\cdot S(c(G),i)\right)
+\]</span></p>
+<p>现在，对每个 <span class="math inline">\(G\in GS(n,m)\)</span>，考虑所有的图 <span class="math inline">\(G&#39;\)</span>，它保留 <span class="math inline">\(G\)</span> 中所有的边，且每个连通块均是一个团（换句话说，每个 <span class="math inline">\(G&#39;\)</span> 代表一个对 <span class="math inline">\(n\)</span> 个点的划分，且在 <span class="math inline">\(G\)</span> 中同一个连通块的点必须被划分到一起），那么不难得到，满足 <span class="math inline">\(c(G&#39;)=i\)</span> 的 <span class="math inline">\(G&#39;\)</span> 恰有 <span class="math inline">\(S(c(G),i)\)</span> 个。</p>
+<ul>
+<li>解释：有 <span class="math inline">\(c(G)\)</span> 这么多个连通块，想把它们连成 <span class="math inline">\(i\)</span> 个等价类。</li>
+</ul>
+<p>因此，我们可以对每个 <span class="math inline">\(G&#39;\)</span>，计算有多少个对应的 <span class="math inline">\(G\)</span>（记为 <span class="math inline">\(cnt\)</span>），然后用 <span class="math inline">\((-1)^{c(G&#39;)-1}(c(G&#39;)-1)!\cdot cnt\)</span> 更新答案。</p>
+<p>而一个 <span class="math inline">\(G&#39;\)</span>，显然对应了 <span class="math inline">\(\binom{e(G&#39;)}{m}\)</span> 个 <span class="math inline">\(G\)</span>。</p>
+<p>为了加速计算，我们设一个辅助数组 <span class="math inline">\(g\)</span>：</p>
+<p><span class="math display">\[
+g[n][m]=\sum_{e(G&#39;)=m}(-1)^{c(G&#39;)-1}\cdot (c(G&#39;)-1)!
+\]</span></p>
+<p>这个可以通过一个简单DP求得，注意，为了让一个 <span class="math inline">\(G&#39;\)</span> 对答案贡献 <span class="math inline">\((c(G&#39;)-1)!\)</span> 次，我们<strong>乱序枚举</strong>除 <span class="math inline">\(1\)</span> 所在连通块以外的其他连通块。</p>
+<p>接下来，有：</p>
+<p><span class="math display">\[
+f[n][m]=\sum_{i\geq m}\binom{i}{m}g[n][i]
+\]</span></p>
+<p>总时间复杂度可以做到 <span class="math inline">\(O(n^4)\)</span>。</p>
+<h2 id="例">例</h2>
+<p>对于一个 <span class="math inline">\(n\)</span> 个点的图（允许重边、自环），我们每次随机两个 <span class="math inline">\([1,n]\)</span> 中的整数 <span class="math inline">\(u,v\)</span>，然后在图中加入一条边 <span class="math inline">\((u,v)\)</span>；直到整个图连通，问这个过程期望多少次后结束。</p>
+<h3 id="sol">Sol</h3>
+<p>考虑不要让这个随机过程连通的时候停下来；那么，转移到任意一种有 <span class="math inline">\(i\)</span> 条不同的边的状态的概率都是相同的。直观理解可以考虑问题高度的对称性，严谨证明可以考虑数学归纳法。</p>
+<p>由此，我们考虑如何计算走到任意一个有 <span class="math inline">\(i\)</span> 条不同的边还尚未连通的状态的概率，这个值应该为 <span class="math inline">\(1-P(图连通)\)</span>，即 <span class="math inline">\(1-\frac{f[i]}{\binom{\binom{n}{2}}{i}}\)</span>，其中 <span class="math inline">\(f[i]\)</span> 表示 <span class="math inline">\(n\)</span> 个点、<span class="math inline">\(i\)</span> 条边的连通图个数；一个有 <span class="math inline">\(i\)</span> 条不同边的状态转移到自己的概率为 <span class="math inline">\(\frac{n+2i}{n^2}\)</span>，容易知道这个状态对答案的贡献即为 <span class="math inline">\(\frac{n^2}{n^2-n-2i}\)</span>。</p>
+<p>算法的时间复杂度为 <span class="math inline">\(O(n^4)\)</span>。</p>
+<div id="gitalk-container" class="card"></div>
+</body>
+
+</html>

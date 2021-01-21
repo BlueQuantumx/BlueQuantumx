@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="author" content="BlueQuantum" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/ico" sizes="512x512" href="/static/images/icon.png" />
+  <link rel="stylesheet" href="/static/css/articleTheme.css" />
+  <link rel="stylesheet" href="/static/css/gitalk.css" />
+  <link rel="stylesheet" href="/static/css/common.css" />
+  <script src="/static/javaScripts/articleJS.js"></script>
+  <script src="/static/javaScripts/common.js"></script>
+  <script id="MathJax-script" src="/static/javaScripts/mathJax-3.1.2/es5/tex-chtml.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/gitalk/1.7.0/gitalk.min.js"></script>
+      <title>StirlingProblem</title>
+  </head>
+
+<body>
+<nav id="top-panel">
+  <a id="myname" href="/">BlueQuantum's Blog</a>
+  <span id="colorSwitch" class="color-switch"></span>
+  <a id="about" href="/about.html">关于</a>
+  <!-- <span id="scroll"></span> -->
+  <!-- <span id="posX"></span><span id="posY"></span> -->
+</nav>
+<!-- body不能缩进，不然会影响代码 -->
+<h1 id="stirling-数题目选讲">Stirling 数题目选讲</h1>
+<p><em>吕欣 at 2017.3.31</em></p>
+<h2 id="前言">前言</h2>
+<p>题目分为两组，共 <span class="math inline">\(7\)</span> 道题，每一组的题目<strong>基本</strong>按照难度升序排列，嗯。。。</p>
+<h2 id="组合意义的考察">组合意义的考察</h2>
+<h3 id="hdu-4372">HDU 4372</h3>
+<p>现在有 <span class="math inline">\(n\)</span> 个建筑，第 <span class="math inline">\(i\)</span> 个建筑高度为 <span class="math inline">\(i\)</span>，它们排成一列在一条东西走向的街边。从西边看，能看到 <span class="math inline">\(f\)</span> 栋楼；从东边看，能看到 <span class="math inline">\(b\)</span> 栋楼。问有多少种可能的建筑排列；<span class="math inline">\(T\)</span> 组询问。</p>
+<p>约定：<span class="math inline">\(T\leq 10^5,n\leq 10^3\)</span></p>
+<h3 id="sol">Sol</h3>
+<p>设有 <span class="math inline">\(1\)</span> ~ <span class="math inline">\(n\)</span> 的排列，从前向后看，最大值变化了 <span class="math inline">\(m\)</span> 次，有 <span class="math inline">\(s(n,m)\)</span> 种可能的排列。</p>
+<p>推广一下，有经验的选手可以直接看出这道题的答案为 <span class="math inline">\({f+b-2\choose f-1}\cdot s(n-1,f+b-2)\)</span></p>
+<h3 id="tjoi-2016-求和">TJOI 2016 求和</h3>
+<p>给定 <span class="math inline">\(n\)</span>，计算：</p>
+<p><span class="math display">\[
+\sum_{i=0}^{n}\sum_{j=0}^{i}j!\cdot S(i,j)\cdot 2^j\mod 998244353
+\]</span></p>
+<p>约定：<span class="math inline">\(n\leq 10^5\)</span>。</p>
+<h3 id="sol-1">Sol</h3>
+<p>尝试用组合意义来解释 <span class="math inline">\(\sum_{j=0}^{i}j!\cdot S(i,j)\cdot 2^j\)</span>：把 <span class="math inline">\(i\)</span> 个元素划分成 <span class="math inline">\(j\)</span> 个集合，任意排成一列，再给它们任意黑白染色的方案数。不妨将这个式子记为 <span class="math inline">\(f_i\)</span>，可以轻松得到递推关系： <span class="math display">\[
+f_i=2\cdot \sum_{j=1}^{i}{i\choose j}\cdot f_{i-j}
+\]</span> 分治 FFT 就能过了，进一步推导还可以多项式求逆。</p>
+<p>本题还有另外一种有趣的解法，大家可以自己探索。</p>
+<h3 id="tco2014-wildcard-counttables">TCO2014 WildCard: CountTables</h3>
+<p>求：满足任意两行、任意两列均不相同的 <span class="math inline">\(n\times m\)</span> 的数字矩阵有多少个。其中，每个格子内的数必须是 <span class="math inline">\([1,C]\)</span> 内的整数。</p>
+<p>约定：<span class="math inline">\(n,m,C\leq 4000\)</span>。</p>
+<h3 id="sol-2">Sol</h3>
+<p>这个问题相当于，有 <span class="math inline">\(n\)</span> 个 <span class="math inline">\(m\)</span> 维的向量，向量中的数是 <span class="math inline">\([1,C]\)</span> 中的整数；并且不存在某两个向量完全相同／两个维度完全相同。</p>
+<p>共有 <span class="math inline">\(C^m\)</span> 种可能的向量，令任意两个向量不同，方案数为 <span class="math inline">\(n!\cdot {C^m\choose n}\)</span>。列上的限制直接计算比较困难，考虑容斥。</p>
+<p>令 <span class="math inline">\(f_i\)</span>, <span class="math inline">\(g_i\)</span> 分别表示至多／恰好有 <span class="math inline">\(i\)</span> 个等价类的方案数，有递推式： <span class="math display">\[
+f_i=n!\cdot {C^i\choose n}\\
+g_i=f_i-\sum_{j=0}^{i-1}g_j\cdot S(i,j)\\
+\]</span></p>
+<p>根据递推公式进行递推，复杂度 <span class="math inline">\(O(m^2)\)</span>。</p>
+<h3 id="进一步推导">进一步推导</h3>
+<p>关注上式，我们发现 <span class="math inline">\(f_i=\sum_{j=0}^{i}g(j)\cdot S(i,j)\)</span>，根据反演公式，可以得到 <span class="math inline">\(g_i=\sum_{j=0}^{i}f_j\cdot s(i,j)\cdot(-1)^{i+j}\)</span>。因为我们只关注 <span class="math inline">\(g_m\)</span> 的取值，那就可以通过反演式直接计算。除去计算 <span class="math inline">\({C^i\choose n}\)</span> 的困难，计算 Stirling 数时使用 FFT 科技，复杂度可以做到 <span class="math inline">\(O(m\log m)\)</span>。</p>
+<p>计算 <span class="math inline">\({C^i\choose n}\)</span> 也不是没有办法，考虑借助 Stirling 数把 <span class="math inline">\({x\choose n}\)</span> 展开为一个关于 <span class="math inline">\(x\)</span> 的 <span class="math inline">\(n\)</span> 次多项式，然后使用多点求值即可；<del>当然你用这个出题会不会挨打就不好说了</del>。</p>
+<h3 id="cf715e-complete-the-permutations">CF715E Complete The Permutations</h3>
+<p>现在有两个 <span class="math inline">\(1\)</span>~<span class="math inline">\(n\)</span> 的排列 <span class="math inline">\(P\)</span>、<span class="math inline">\(Q\)</span>，排列中有些位置的数被擦去了。对每个 <span class="math inline">\(k\in[0,n)\)</span>，问有多少种将两排列补全的方式，使得可以通过恰好 <span class="math inline">\(k\)</span> 次“交换两位置的数”操作，由 <span class="math inline">\(P\)</span> 得到 <span class="math inline">\(Q\)</span>？</p>
+<p>约定： <span class="math inline">\(n\leq 250\)</span>，但是存在 <span class="math inline">\(O(n^2)\)</span> 的做法。</p>
+<h3 id="sol-3">Sol</h3>
+<p>我们抽象出一个二分图，两边各 <span class="math inline">\(n\)</span> 个点。若 <span class="math inline">\(P_i\)</span> 有值，则由 <span class="math inline">\((0, i)\)</span> 连向 <span class="math inline">\((1, P_i)\)</span>；若 <span class="math inline">\(Q_i\)</span> 有值，则由 <span class="math inline">\((1,Q_i)\)</span> 连向 <span class="math inline">\((0,i)\)</span>。</p>
+<p>在这张图上，你需要再连若干条边，使得每个点的入度和出度均恰为 <span class="math inline">\(1\)</span>。此时，若图中存在 <span class="math inline">\(x\)</span> 个简单环，则需要 <span class="math inline">\(n-x+1\)</span> 次交换，使得两排列相同。</p>
+<p>于是问题转化为，对每个 <span class="math inline">\(x\in[1,n]\)</span>，统计有多少将图补全的方式，使得图中恰好存在 <span class="math inline">\(x\)</span> 个简单环。</p>
+<p>不难想象，此时图中有若干条从二分图左部/右部出发，到左部/右部停下的链，我们分别用 <span class="math inline">\(00\)</span>、<span class="math inline">\(01\)</span>、<span class="math inline">\(10\)</span>、<span class="math inline">\(11\)</span> 来表示它们。</p>
+<p>为了方便计算，我们把答案分成两部分计算：</p>
+<ul>
+<li><span class="math inline">\(m\)</span> 个 <span class="math inline">\(01\)</span> 链构成 <span class="math inline">\(k\)</span> 个环的答案为 <span class="math inline">\(S(m, k)\)</span>；特别的，这一部分答案中把形如 <span class="math inline">\(00\rightarrow (10)^{*}\rightarrow 11\)</span> 的链考虑进来。</li>
+<li>只由 <span class="math inline">\(10\)</span> 链连成环的方案。</li>
+</ul>
+<p>用 <span class="math inline">\(s\)</span> 个 <span class="math inline">\(00\)</span>、<span class="math inline">\(11\)</span> 链和 <span class="math inline">\(t\)</span> 个 <span class="math inline">\(10\)</span> 链连成若干个 <span class="math inline">\(10\)</span> 链的方案数为 <span class="math inline">\(s!\cdot t!\cdot C(t+s-1,s-1)\)</span>。以下简记为 <span class="math inline">\(g_t\)</span>。</p>
+<p>我们枚举这个 <span class="math inline">\(t\)</span>，再枚举 <span class="math inline">\(01\)</span> 链和 <span class="math inline">\(10\)</span> 链对答案的贡献，得到公式：</p>
+<p><span class="math display">\[
+ans_n = \sum_{t=0}^{cnt[10]}\sum_{k=0}^{n}g_t\cdot S(cnt[00]+cnt[01], n-k)\cdot S(cnt[10]-t,k)\cdot {cnt[10]\choose t}
+\]</span></p>
+<p>到现在为止，已经可以得到一个 <span class="math inline">\(O(n^3)\)</span> 的做法了。优化也很简单：注意 <span class="math inline">\(S(cnt[00]+cnt[01], n - k)\)</span> 这一项只和 <span class="math inline">\(k\)</span>、<span class="math inline">\(n\)</span> 有关，而式子其它部分只和 <span class="math inline">\(k\)</span>、<span class="math inline">\(t\)</span> 有关，这提示我们可以从 <span class="math inline">\(k\)</span> 入手，而 <span class="math inline">\(t\)</span> 和 <span class="math inline">\(n\)</span> 的枚举则不必同时进行。因此，我们定义：</p>
+<p><span class="math display">\[
+G_k=\sum_{t=0}^{cnt[10]-k}S(cnt[10]-t, k)\cdot {cnt[10]\choose t}\cdot g_t
+\]</span></p>
+<p>那么：</p>
+<p><span class="math display">\[
+ans_n=\sum_{k=0}^{n}G_k\cdot S(cnt[00]+cnt[01], n-k)
+\]</span></p>
+<p>总时间复杂度 <span class="math inline">\(O(n^2)\)</span>。</p>
+<h2 id="自然数幂的转化">自然数幂的转化</h2>
+<h3 id="hdu4625-jzptree">HDU4625 JZPTREE</h3>
+<p>输入一个 <span class="math inline">\(n\)</span> 个点的无根树，边权均为 <span class="math inline">\(1\)</span>，给定 <span class="math inline">\(m\)</span>，对每个 <span class="math inline">\(i\)</span>，求出：</p>
+<p><span class="math display">\[
+\sum_{j=1}^{n}dis(i,j)^m
+\]</span></p>
+<p>约定：<span class="math inline">\(n\leq 5\times10^4,m\leq 500\)</span></p>
+<h4 id="sol-4">Sol</h4>
+<p>考虑使用 Stirling 数来化简式子， 我们记 <span class="math inline">\(sum(x,p)=\sum_{i=1}^{n}dis(x,i)^{p\downarrow}\)</span></p>
+<p>根据 <span class="math inline">\((m+1)^{k\downarrow}=m^{k\downarrow}+k\cdot m^{(k-1)\downarrow}\)</span>，可以设计出一个关于 <span class="math inline">\(sum(x,p)\)</span> 的递推式。</p>
+<p>然后，使用 <span class="math inline">\(sum(x,p)\)</span> 借助 Stirling 数算出答案即可 。</p>
+<p>时间复杂度 <span class="math inline">\(O(nm)\)</span>。</p>
+<h4 id="小总结">小总结</h4>
+<p>这道题实质上是通过排列数／下降幂来维护答案，最后借助 Stirling 数来还原得到通常幂。</p>
+<p>对下降幂来说，有一个非常好用公式：<span class="math inline">\((m+1)^{k\downarrow}=m^{k\downarrow}+k\cdot m^{k-1\downarrow}\)</span>。</p>
+<p>想象一下，现在有若干个数，你知道它们的 <span class="math inline">\(x^{k\downarrow}\)</span> 和 <span class="math inline">\(x^{k-1\downarrow}\)</span> 之和；然后，通过上述公式，就能 <span class="math inline">\(O(1)\)</span> 算出所有数的 <span class="math inline">\((x+1)^{k\downarrow}\)</span> 之和而不必去枚举每一个数。</p>
+<p>而从 <span class="math inline">\(x^k\)</span> 到 <span class="math inline">\((x+1)^k\)</span> 的转移，则没有这么优秀的办法；一种经典的思路是维护 <span class="math inline">\(i\leq k\)</span> 的所有 <span class="math inline">\(x^i\)</span> 之和，借助二项式系数可以 <span class="math inline">\(O(m)\)</span> 获得 <span class="math inline">\((x+1)^k\)</span> 之和，<span class="math inline">\(O(m^2)\)</span> 获得 <span class="math inline">\(i\leq m\)</span> 的 <span class="math inline">\((x+1)^i\)</span> 之和。</p>
+<h3 id="newnode-dark">Newnode: Dark</h3>
+<p>定义一张无向简单图的权值为连通块个数的 <span class="math inline">\(m\)</span> 次方，问所有 <span class="math inline">\(n\)</span> 个点的带标号无向图的权值之和，<span class="math inline">\(T\)</span> 组询问。</p>
+<p>约定：<span class="math inline">\(T\leq 1000,n\leq 30000,m\leq 15\)</span>。</p>
+<h4 id="sol-5">Sol</h4>
+<p>首先，令 <span class="math inline">\(f(x)\)</span> 表示 <span class="math inline">\(n\)</span> 个点的连通图的个数的指数生成函数，可以用多项式求逆的技巧算出 <span class="math inline">\(f(x)\)</span>。</p>
+<p>接下来介绍一个特技：</p>
+<blockquote>
+<p>考虑多项式 <span class="math inline">\((\sum_{i=1}^{n}x_i)^m\)</span>，其中 <span class="math inline">\(x_i\)</span> 是 <span class="math inline">\(n\)</span> 个互相独立的变量。</p>
+<p>展开多项式，考虑 <span class="math inline">\(\prod{x_i^{p_i}}\)</span> 一项的系数为 <span class="math inline">\(\frac{m!}{\prod{p_i!}}\)</span>。</p>
+<p>对一个大小为 <span class="math inline">\(k\)</span> 的指标集 <span class="math inline">\(\{a_i\}\)</span>，考虑由 <span class="math inline">\(x_{a_1}\)</span> 到 <span class="math inline">\(x_{a_k}\)</span> 这些变量组成的所有项的系数和，这相当于把 <span class="math inline">\(m\)</span> 个球放进 <span class="math inline">\(k\)</span> 个不同的盒子的方案数，为 <span class="math inline">\(S(m,k)\cdot k!\)</span>。</p>
+</blockquote>
+<p>考虑一张有 <span class="math inline">\(c\)</span> 个连通块的图，我们用 <span class="math inline">\(x_i\)</span> 表示第 <span class="math inline">\(i\)</span> 个连通块，我们想计算的式子可以写为 <span class="math inline">\((\sum_{i=1}^{c}x_i)^m\)</span>。</p>
+<p>那么，对于其中的 <span class="math inline">\(l\)</span> 个连通块，这些连通块一起对答案产生的贡献可以记为 <span class="math inline">\(S(m,l)\cdot l!\)</span>。</p>
+<p>要统计所有可能的图的贡献之和，我们可以枚举某 <span class="math inline">\(j\)</span> 个连通块，它们在图中同时出现时，对答案的贡献为 <span class="math inline">\(S(m,j)\cdot j!\)</span>。</p>
+<p>我们记 <span class="math inline">\(g_j(x)\)</span> 表示 <span class="math inline">\(n\)</span> 个点、<span class="math inline">\(j\)</span> 个连通块的无向图个数对应的指数生成函数，那么有：</p>
+<p><span class="math display">\[
+g_1(x)=f(x)\\
+g_j&#39;(x)=f&#39;(x)\cdot g_{j-1}(x)\\
+\]</span></p>
+<p>答案可以写为 <span class="math inline">\(\sum_{i=1}^{n}\sum_{j=1}^{m}{n\choose i}\cdot g[j][i]\cdot 2^{n-i\choose 2}\cdot j!\cdot S(m,j)\)</span>。</p>
+<p>使用 FFT 预处理即可，每个询问可以 <span class="math inline">\(O(m)\)</span> 回答。</p>
+<p>时间复杂度 <span class="math inline">\(O(Tm+mn\log n)\)</span>。</p>
+<h4 id="大总结">大总结</h4>
+<p>这道题本质上和上一题的套路一样，都是借助这个式子简化计算： <span class="math display">\[
+n^m=\sum_{i=1}^{m}S(m,i)\cdot {n\choose i}\cdot i!
+\]</span> 上一题中，把 <span class="math inline">\({n\choose i}\cdot i!\)</span> 放在一起，看作是下降幂，然后借助下降幂公式来帮助树 DP 转移答案。</p>
+<p>在本题中，则把 <span class="math inline">\({n\choose i}\)</span> 体现在了组合枚举的过程中。而这个方法优化计算的本质，是把<strong>整张图的所有连通块一起对答案的贡献</strong> <span class="math inline">\(n^m\)</span> 分摊到了连通块的子集上。通过这样转化枚举对象，我们只关注一个特定的连通块集合，就容易统计答案了。</p>
+<h3 id="hackerrank-costly-graphs">HackerRank Costly Graphs</h3>
+<p>定义一张无向简单图的权值为 <span class="math inline">\(\sum_{v\in G}\deg(v)^m\)</span>。</p>
+<p>对于所有 <span class="math inline">\(n\)</span> 个点的有标号无向图，求它们的权值和。</p>
+<p>约定：<span class="math inline">\(n\leq 10^9,m\leq 2\times 10^5\)</span>。</p>
+<h4 id="sol-6">Sol</h4>
+<p>由对称性，只需要算出某一个点的贡献（记为 <span class="math inline">\(W(u)\)</span>），乘 <span class="math inline">\(n\)</span> 即可。</p>
+<p><span class="math display">\[
+W(u)=2^{n-1\choose 2}\sum_{i=0}^{n-1}{n-1\choose i}\cdot i^m
+\]</span></p>
+<p>现在来讨论式子右半边的做法，考虑这样一个式子的求法：</p>
+<p><span class="math display">\[
+\sum_{i=0}^{n}{n\choose i}i^k
+\]</span></p>
+<p>直接求这个式子并不容易，但是如果那里的 <span class="math inline">\(k\)</span> 是下降幂就很开心了：</p>
+<p><span class="math display">\[
+\begin{aligned}
+\sum_{i=0}^{n}{n\choose i}i^{k\downarrow} &amp; = \sum_{i=0}^{n}n^{k\downarrow}\cdot{n-k\choose i-k}\\
+&amp; =n^{k\downarrow}\cdot\sum_{i=0}^{n-k}{n-k\choose i}\\
+&amp; =n^{k\downarrow}\cdot2^{n-k}
+\end{aligned}
+\]</span></p>
+<p>于是借助 Stirling 数，把通常幂转化为下降幂的和来做。Stirling 数的预处理需要借助 FFT 来 <span class="math inline">\(O(k\log k)\)</span> 完成。</p>
+<div id="gitalk-container" class="card"></div>
+</body>
+
+</html>
