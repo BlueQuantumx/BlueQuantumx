@@ -14,7 +14,7 @@ body {
 }
 
 mjx-container * {
-  transition: none;
+  transition: none !important;
 }
 
 @media (max-width: 600px) {
@@ -238,6 +238,7 @@ div.sourceCode {
   position: relative;
   height: 3em;
   margin: 1em 0;
+  cursor: pointer;
 }
 
 div>pre>code.sourceCode {
