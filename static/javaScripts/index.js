@@ -75,13 +75,13 @@ window.addEventListener("scroll", (() => {
 })());
 
 // 拉取 json 以获取文章列表和友链列表
-fetch('static/articles.json').then(response => {
+fetch("/articles/articles.json").then(response => {
   return response.json();
 }).then(Arts => {
   let make_html = '';
   for (let i in Arts) {
     let a = Arts[i];
-    make_html += `<a class="card article" href="./articles/exports/${a}.html">${a}</a>`;
+    make_html += `<a class="card article" href="/articles/exports/${a}.html">${a}</a>`;
   }
   document.getElementById('articles').innerHTML = make_html;
 });

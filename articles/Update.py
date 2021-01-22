@@ -53,7 +53,7 @@ def update():
             else:
               data[filename] = md5sum
 
-  data = dumps(data)
+  data = dumps(data, sort_keys=True, separators=(',', ': '), indent=2)
   with open(articlesFolder + "/md5s.json", "w+") as f:
     f.write(data)
 
@@ -70,7 +70,7 @@ def publish(filename: str):
   else:
     print(fileBaseName + " has already been published!")
   with open(staticFolder + "/articles.json", "w+") as f:
-    f.write(dumps(data))
+    f.write(dumps(data, sort_keys=True, separators=(',', ': '), indent=2))
 
 
 if __name__ == "__main__":
