@@ -121,3 +121,71 @@ fetch('/static/gitalk.json').then(response => {
   });
   gitalk.render('gitalk-container');
 });
+
+// LeanCloud
+AV.init({
+  appId: "beY1CHJwtpOwXviCEyQJNlN1-gzGzoHsz",
+  appKey: "mRklyzcF05p8jXk0cbRQAe7T",
+  serverURL: "https://bey1chjw.lc-cn-n1-shared.com"
+});
+
+function getRemoteArticles() {
+  const query = new AV.Query('Article');
+  query.find().then((articles) => {
+    let make_html = '';
+    let origin = document.getElementById('articles').innerHTML;
+    for (let i in articles) {
+      let a = articles[i];
+      make_html += `<a class="card article" href="./articles/exports/${a.attributes.name}.html">${a.attributes.name}</a>`;
+    }
+    document.getElementById('articles').innerHTML = make_html + origin;
+  });
+}
+
+function logIn() {
+  let name = document.getElementById('name').value;
+  let password = document.getElementById('password').value;
+  AV.User.logIn(name, password).then(user => {
+    alert("登录成功。");
+    getRemoteArticles();
+    let logButton = document.getElementById("log");
+    logButton.removeEventListener("click", popupLogIn);
+    logButton.addEventListener("click", logOut);
+    logButton.innerHTML = "注销";
+  }).catch(error => {
+    alert("登录失败，请重试。");
+    console.log(error);
+  });
+}
+
+function logOut() {
+  AV.User.logOut();
+  let logButton = document.getElementById("log");
+  logButton.removeEventListener("click", logOut);
+  logButton.addEventListener("click", popupLogIn);
+  logButton.innerHTML = "注销";
+}
+
+function popupLogIn() {
+  let popup = document.getElementsByClassName("popup")[0];
+  popup.style.opacity = 1;
+  popup.style.zIndex = 200;
+}
+
+function cancel() {
+  let popup = document.getElementsByClassName("popup")[0];
+  popup.style.opacity = 0;
+  popup.style.zIndex = -2;
+}
+
+document.getElementById("log").addEventListener("click",
+  AV.User.current() ? logOut : popupLogIn);
+
+document.getElementById("logIn").addEventListener("click", logIn);
+document.getElementById("cancel").addEventListener("click", cancel);
+
+document.getElementById("log").innerHTML = AV.User.current() ? "注销" : "登录";
+
+if (AV.User.current()) {
+  getRemoteArticles();
+}

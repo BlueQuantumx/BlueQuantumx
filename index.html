@@ -11,13 +11,24 @@
   <link rel="stylesheet" type="text/css" href="/static/css/index.css" />
   <script src="/static/javaScripts/common.js"></script>
   <script src="https://cdn.bootcdn.net/ajax/libs/gitalk/1.7.0/gitalk.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/leancloud-storage@4.9.0/dist/av-min.js"></script>
 </head>
 
 <body>
+  <div class="popup">
+    <div class="card">
+      <h1>登录</h1>
+      <input id="name" placeholder="用户名">
+      <input id="password" placeholder="密码" type="password">
+      <button id="logIn" class="button">登录</button>
+      <button id="cancel" class="button">取消</button>
+    </div>
+  </div>
   <nav id="top-panel">
     <span id="myname">BlueQuantum's Blog</span>
     <span id="colorSwitch" class="color-switch"></span>
     <a id="about" href="/about.html">关于</a>
+    <button id="log" class="button"></button>
     <!-- <span id="scroll"></span> -->
     <!-- <span id="posX"></span><span id="posY"></span> -->
   </nav>

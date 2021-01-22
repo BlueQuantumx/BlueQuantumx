@@ -139,6 +139,38 @@ main {
   content: '——';
 }
 
+.popup {
+  z-index: -2;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  backdrop-filter: blur(10px);
+  text-align: center;
+}
+
+.popup .card {
+  position: relative;
+  top: calc(50% - 10em);
+  left: auto;
+  right: auto;
+  width: 20em;
+  height: 20em;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+button, input {
+  background-color: var(--auxbg-color);
+  color: var(--auxiliary-color);
+  border: none;
+  display: block;
+  margin: 10px;
+  padding: 5px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 @keyframes cutin {
   from {
     opacity: 0;
