@@ -21,6 +21,7 @@ body::before {
 h4 {
   margin-top: 0;
   user-select: none;
+  text-align: center;
 }
 
 main {
@@ -137,6 +138,16 @@ main {
 
 #hitokotoRef::before {
   content: '——';
+}
+
+.refresh {
+  display: inline-block;
+  height: 1.5em;
+  width: 1.5em;
+  background-size: contain;
+  vertical-align: bottom;
+  cursor: pointer;
+  background-image: var(--refresh-image);
 }
 
 .popup {
