@@ -1,104 +1,104 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-cmn-Hans">
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="author" content="BlueQuantum" />
-    <meta name="description" content="BlueQuantum's Blog" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" href="/static/images/icon.png" />
-    <link rel="stylesheet" href="/static/css/common.css" />
-    <script src="/static/javaScripts/common.js"></script>
-    <style>
-        @keyframes myRotate {
-            from {
-                transform: rotate(0deg);
-            }
+  <meta charset="utf-8" />
+  <meta name="author" content="BlueQuantum" />
+  <meta name="description" content="BlueQuantum's Blog" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="/static/images/icon.png" />
+  <link rel="stylesheet" href="/static/css/common.css" />
+  <script src="/static/javaScripts/common.js"></script>
+  <style>
+    @keyframes myRotate {
+      from {
+        transform: rotate(0deg);
+      }
 
-            to {
-                transform: rotate(360deg);
-            }
-        }
+      to {
+        transform: rotate(360deg);
+      }
+    }
 
-        main {
-            text-align: center;
-        }
+    main {
+      text-align: center;
+    }
 
-        #avatar>img {
-            height: 160px;
-            width: 160px;
-            -webkit-user-drag: none;
-        }
+    #avatar>img {
+      height: 160px;
+      width: 160px;
+      -webkit-user-drag: none;
+    }
 
-        #introduction {
-            color: var(--text-color);
-            padding: 2.5em;
-            margin-left: auto;
-            margin-right: auto;
-            width: 20em;
-            height: 20em;
-            position: relative;
-            background-color: var(--background-color);
-            overflow: hidden;
-            border-radius: 10em;
-        }
+    #introduction {
+      color: var(--text-color);
+      padding: 2.5em;
+      margin-left: auto;
+      margin-right: auto;
+      width: 20em;
+      height: 20em;
+      position: relative;
+      background-color: var(--background-color);
+      overflow: hidden;
+      border-radius: 10em;
+    }
 
-        #introduction::after {
-            content: "";
-            position: absolute;
-            backdrop-filter: invert(1);
-            top: calc(50%);
-            left: 0;
-            height: 50%;
-            width: 100%;
-            transform-origin: center top;
-            animation: myRotate 3s ease 1s infinite;
-        }
+    #introduction::after {
+      content: "";
+      position: absolute;
+      backdrop-filter: invert(1);
+      top: calc(50%);
+      left: 0;
+      height: 50%;
+      width: 100%;
+      transform-origin: center top;
+      animation: myRotate 3s ease 1s infinite;
+    }
 
-        #introduction>h1 {
-            margin-top: 2em;
-        }
+    #introduction>h1 {
+      margin-top: 2em;
+    }
 
-        footer {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-        }
-    </style>
-    <title>BlueQuantum</title>
+    footer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+  </style>
+  <title>BlueQuantum</title>
 </head>
 
 <body>
-    <nav id="top-panel">
-        <a id="myname" href="/">BlueQuantum's Blog</a>
-        <span id="colorSwitch" class="color-switch"></span>
-        <a id="about" href="/about.html" target="_blank">关于</a>
-        <!-- <span id="scroll"></span> -->
-        <!-- <span id="posX"></span><span id="posY"></span> -->
-    </nav>
+  <nav id="top-panel">
+    <a id="myname" href="/">BlueQuantum's Blog</a>
+    <span id="colorSwitch" class="color-switch"></span>
+    <a id="about" href="/about.html" target="_blank">关于</a>
+    <!-- <span id="scroll"></span> -->
+    <!-- <span id="posX"></span><span id="posY"></span> -->
+  </nav>
 
-    <main>
-        <h2>关于我</h2>
+  <main>
+    <h2>关于我</h2>
 
-        <hr />
+    <hr />
 
-        <div id="avatar">
-            <img src="/static/images/icon.png" alt="icon.png" />
-        </div>
+    <div id="avatar">
+      <img src="/static/images/icon.png" alt="icon.png" />
+    </div>
 
-        <div id="introduction">
-            <h1>BlueQuantum</h1>
-            <div>sjzez 学生</div>
-            <div>蒟蒻一枚</div>
-        </div>
-    </main>
+    <div id="introduction">
+      <h1>BlueQuantum</h1>
+      <div>sjzez 学生</div>
+      <div>蒟蒻一枚</div>
+    </div>
+  </main>
 
-    <footer>
-        <p>
-            由<a href="https://gitee.com/bluequantum"> BlueQuantum </a>没劲驱动 Copyright &copy; 2020 ~ 2020
-        </p>
-    </footer>
+  <footer>
+    <p>
+      由<a href="https://gitee.com/bluequantum"> BlueQuantum </a>没劲驱动 Copyright &copy; 2020 ~ 2020
+    </p>
+  </footer>
 </body>
 
 </html>

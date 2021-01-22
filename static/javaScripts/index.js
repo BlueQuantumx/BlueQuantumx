@@ -136,7 +136,7 @@ function getRemoteArticles() {
     let origin = document.getElementById('articles').innerHTML;
     for (let i in articles) {
       let a = articles[i];
-      make_html += `<a class="card article" href="./articles/exports/${a.attributes.name}.html">${a.attributes.name}</a>`;
+      make_html = `<a class="card article" href="./articles/exports/${a.attributes.name}.html">${a.attributes.name}</a>` + make_html;
     }
     document.getElementById('articles').innerHTML = make_html + origin;
   });
@@ -146,12 +146,13 @@ function logIn() {
   let name = document.getElementById('name').value;
   let password = document.getElementById('password').value;
   AV.User.logIn(name, password).then(user => {
-    alert("登录成功。");
     getRemoteArticles();
     let logButton = document.getElementById("log");
     logButton.removeEventListener("click", popupLogIn);
     logButton.addEventListener("click", logOut);
     logButton.innerHTML = "注销";
+    alert("登录成功。");
+    cancel();
   }).catch(error => {
     alert("登录失败，请重试。");
     console.log(error);
@@ -163,7 +164,7 @@ function logOut() {
   let logButton = document.getElementById("log");
   logButton.removeEventListener("click", logOut);
   logButton.addEventListener("click", popupLogIn);
-  logButton.innerHTML = "注销";
+  logButton.innerHTML = "登录";
 }
 
 function popupLogIn() {

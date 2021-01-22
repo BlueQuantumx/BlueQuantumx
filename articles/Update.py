@@ -1,11 +1,39 @@
-from json import dumps, loads
-from hashlib import md5
 import os, sys
 import getopt
+import http.client
+from json import dumps, loads
+from hashlib import md5
 
 workspaceRoot = os.path.dirname(os.path.dirname(sys.argv[0]))
 articlesFolder = workspaceRoot + "/articles"
 staticFolder = workspaceRoot + "/static"
+
+
+class LeanCloud:
+  session = "l17zj4fqmjud9pfpnd9ngvdd3"
+
+  def __init__(self) -> None:
+    return
+
+  def logIn():
+    return
+
+  def publish(self, file: str):
+    """
+    Publish an article to remote server
+    """
+    conn = http.client.HTTPSConnection("bey1chjw.lc-cn-n1-shared.com")
+    payload = dumps({"name": file})
+    headers = {
+        'X-LC-Id': 'beY1CHJwtpOwXviCEyQJNlN1-gzGzoHsz',
+        'X-LC-Key': 'mRklyzcF05p8jXk0cbRQAe7T',
+        'Content-Type': 'application/json',
+        'X-LC-Session': LeanCloud.session
+    }
+    conn.request("POST", "/1.1/classes/Article", payload, headers)
+    res = conn.getresponse()
+    data = res.read()
+    print(data.decode("utf-8"))
 
 
 def generate(filename: str):
@@ -59,22 +87,27 @@ def update():
 
 
 def publish(filename: str):
-  data: list
-  with open(staticFolder + "/articles.json", "r") as f:
-    data = loads(f.read())
+  opt = str(input("Remote?"))
   fileBaseName = os.path.basename(filename)
   fileBaseNameNoExt = os.path.splitext(fileBaseName)[0]
-  if data.count(fileBaseNameNoExt) == 0:
-    data.insert(0, fileBaseNameNoExt)
-    print("Publishing " + fileBaseName)
+  if opt == 'y':
+    LC.publish(fileBaseNameNoExt)
   else:
-    print(fileBaseName + " has already been published!")
-  with open(staticFolder + "/articles.json", "w+") as f:
-    f.write(dumps(data, sort_keys=True, separators=(',', ': '), indent=2))
+    data: list
+    with open(staticFolder + "/articles.json", "r") as f:
+      data = loads(f.read())
+    if data.count(fileBaseNameNoExt) == 0:
+      data.insert(0, fileBaseNameNoExt)
+      print("Publishing " + fileBaseName)
+    else:
+      print(fileBaseName + " has already been published!")
+    with open(staticFolder + "/articles.json", "w+") as f:
+      f.write(dumps(data, sort_keys=True, separators=(',', ': '), indent=2))
 
 
 if __name__ == "__main__":
   argv = sys.argv[1:]
+  LC = LeanCloud()
   try:
     opts, args = getopt.getopt(argv, "-p:", ["publish="])
   except getopt.GetoptError:

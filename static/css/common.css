@@ -78,13 +78,13 @@ a:hover {
 
 #top-panel>* {
   margin-left: 0.5rem;
-  margin-right: 0.5rem;
+  margin-right: unset;
 }
 
 #myname {
   font-size: 1.25em;
   font-weight: 550;
-  flex-basis: 70%;
+  flex-grow: 0.7;
 }
 
 .color-switch {
