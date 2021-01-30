@@ -10,25 +10,45 @@ staticFolder = workspaceRoot + "/static"
 
 
 class LeanCloud:
-  session = "l17zj4fqmjud9pfpnd9ngvdd3"
+  appID = 'beY1CHJwtpOwXviCEyQJNlN1-gzGzoHsz'
+  appKey = 'mRklyzcF05p8jXk0cbRQAe7T'
 
   def __init__(self) -> None:
     return
 
-  def logIn():
+  def logIn(self):
+    """
+    Log in to the remote server
+    """
+    userName = input("User: ")
+    password = input("Password: ")
+    conn = http.client.HTTPSConnection("bey1chjw.lc-cn-n1-shared.com")
+    payload = dumps({"username": userName, "password": password})
+    headers = {
+        'Content-Type': 'application/json',
+        'X-LC-Id': LeanCloud.appID,
+        'X-LC-Key': LeanCloud.appKey
+    }
+    conn.request("POST", "/1.1/login", payload, headers)
+    res = conn.getresponse()
+    data = res.read().decode("utf-8")
+    data = loads(data)
+    self.session = data["sessionToken"]
+    print(data["sessionToken"])
     return
 
   def publish(self, file: str):
     """
     Publish an article to remote server
     """
+    self.logIn()
     conn = http.client.HTTPSConnection("bey1chjw.lc-cn-n1-shared.com")
     payload = dumps({"name": file})
     headers = {
-        'X-LC-Id': 'beY1CHJwtpOwXviCEyQJNlN1-gzGzoHsz',
-        'X-LC-Key': 'mRklyzcF05p8jXk0cbRQAe7T',
+        'X-LC-Id': LeanCloud.appID,
+        'X-LC-Key': LeanCloud.appKey,
         'Content-Type': 'application/json',
-        'X-LC-Session': LeanCloud.session
+        'X-LC-Session': self.session
     }
     conn.request("POST", "/1.1/classes/Article", payload, headers)
     res = conn.getresponse()
@@ -94,14 +114,14 @@ def publish(filename: str):
     LC.publish(fileBaseNameNoExt)
   else:
     data: list
-    with open(staticFolder + "/articles.json", "r") as f:
+    with open(articlesFolder + "/articles.json", "r") as f:
       data = loads(f.read())
     if data.count(fileBaseNameNoExt) == 0:
       data.insert(0, fileBaseNameNoExt)
       print("Publishing " + fileBaseName)
     else:
       print(fileBaseName + " has already been published!")
-    with open(staticFolder + "/articles.json", "w+") as f:
+    with open(articlesFolder + "/articles.json", "w+") as f:
       f.write(dumps(data, sort_keys=True, separators=(',', ': '), indent=2))
 
 
