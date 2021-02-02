@@ -114,8 +114,8 @@ fetch('/static/gitalk.json').then(response => {
     clientID: content.clientID, //Client ID
     clientSecret: content.clientSecret, //Client Secret
     repo: 'MyBlogComments', //仓库名称
-    owner: 'Bluequarks', //仓库拥有者
-    admin: ['Bluequarks'],
+    owner: 'BlueQuantumx', //仓库拥有者
+    admin: ['BlueQuantumx'],
     id: document.title,
     distractionFreeMode: false  // Facebook-like distraction free mode
   });
