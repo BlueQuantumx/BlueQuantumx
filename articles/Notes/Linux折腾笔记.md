@@ -9,6 +9,7 @@
 - `/usr/share/fcitx/data/` 修改字符映射（￥--> $ ）
 - `/etc/fstab` 挂载 `/tmp` 到内存
 - `~/.local/share/mime/packages/[Any Name].xml` 添加自定义类型
+- update-mime-database ~/.local/share/mime 刷新mime数据库
 
 ## Deepin
 - dde-top-panel

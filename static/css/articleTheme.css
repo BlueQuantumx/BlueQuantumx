@@ -38,7 +38,13 @@ mjx-container * {
     page-break-after: avoid;
   }
   #top-panel {
-    position: absolute;
+    display: none;
+  }
+  #gitalk-container {
+    display: none;
+  }
+  div.sourceCode {
+    height: unset !important;
   }
 }
 
