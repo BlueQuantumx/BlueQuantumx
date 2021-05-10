@@ -7,7 +7,8 @@
 }
 
 .bgcolor {
-	background: #ee9ca7;
+	/* background: #ee9ca7; */
+	background-color: gray;
 	opacity: 0.9;
 }
 
@@ -135,13 +136,77 @@
 	}
 }
 
+/*时间轴的线*/
+
+.timeline {
+	width: 8px;
+	height: 0;
+	position: absolute;
+	left: 20%;
+	top: -100%;
+	background-color: #ccc;
+	border-radius: 3px;
+	transition: all 2s;
+}
+
+.active .timeline {
+	width: 10px;
+	height: 100%;
+	top: 0;
+	transition-delay: 0.1s;
+}
+
+/**时间轴上的点**/
+
+.timepoint {
+	width: 20px;
+	height: 20px;
+	margin-left: -5px;
+	position: absolute;
+	left: 20%;
+	top: 0;
+	opacity: 1;
+	background-color: #fff;
+	border-radius: 10px;
+	transition: all 1s;
+}
+
+.active .timepoint {
+	top: 310px;
+}
+
+.ly-box {
+	top: 210px !important;
+}
+
+/*小三角*/
+
+.ly-box::before {
+	content: "";
+	width: 0;
+	height: 0;
+	border-top: 20px solid transparent;
+	border-right: 22px solid white;
+	border-bottom: 20px solid transparent;
+	border-radius: 2px;
+	position: absolute;
+	left: -22px;
+	top: 90px;
+	opacity: 0;
+	-webkit-transform: scale(0.5, 0.5);
+	transform: scale(0.5, 0.5);
+	transition: all 1s;
+}
+
+.active .ly-box::before {
+	opacity: 0.6;
+	transform: scale(1, 1);
+	transition-delay: inherit;
+}
+
 /***                                  内容区域                                 ***/
 
 /**                                   第一部分                                  **/
-
-/*盒子*/
-
-/*PC端*/
 
 @media screen and (min-aspect-ratio: 10/9) {
 	.ly-box01 {
@@ -155,173 +220,18 @@
 		margin-bottom: 50%;
 		overflow: hidden;
 		transform-origin: center bottom;
-		animation: box_to_point 11.5s 0s, bounce 2.5s 11.5s;
+		opacity: 0;
+		transition: opacity 1s;
 	}
-}
-
-/** 移动端动画 **/
-
-@keyframes box_to_point_mobile {
-	0% {
-		margin-bottom: 50%;
-		width: 50px;
-		height: 50px;
-		border-radius: 25px;
-		position: absolute;
-		left: 48%;
-		bottom: 50%;
-	}
-	10% {
-		margin-bottom: 0;
-		width: 50px;
-		height: 50px;
-		border-radius: 25px;
-		background-color: rgba(255, 255, 255, 1);
-		position: absolute;
-		left: 48%;
-		bottom: 50%;
-	}
-	/*打开小球*/
-	14% {
-		margin-bottom: 0;
-		width: 80%;
-		height: 70%;
-		border-radius: 6px;
-		background-color: rgba(255, 255, 255, 0.5);
-		position: absolute;
-		left: 10%;
-		bottom: 15%;
-	}
-	96% {
-		margin-bottom: 0;
-		width: 80%;
-		height: 70%;
-		border-radius: 6px;
-		background-color: rgba(255, 255, 255, 0.6);
-		position: absolute;
-		left: 10%;
-		bottom: 15%;
-	}
-	100% {
-		margin-bottom: 0;
-		width: 50px;
-		height: 50px;
-		border-radius: 25px;
-		background-color: rgba(255, 255, 255, 1);
-		position: absolute;
-		left: 48%;
-		bottom: 50%;
-	}
-}
-
-@-webkit-keyframes box_to_point_mobile {
-	0% {
-		margin-bottom: 50%;
-		width: 50px;
-		height: 50px;
-		border-radius: 25px;
-		position: absolute;
-		left: 48%;
-		bottom: 50%;
-	}
-	10% {
-		margin-bottom: 0;
-		width: 50px;
-		height: 50px;
-		border-radius: 25px;
-		background-color: rgba(255, 255, 255, 1);
-		position: absolute;
-		left: 48%;
-		bottom: 50%;
-	}
-	/*打开小球*/
-	14% {
-		margin-bottom: 0;
-		width: 80%;
-		height: 70%;
-		border-radius: 6px;
-		background-color: rgba(255, 255, 255, 0.5);
-		position: absolute;
-		left: 10%;
-		bottom: 15%;
-	}
-	96% {
-		margin-bottom: 0;
-		width: 80%;
-		height: 70%;
-		border-radius: 6px;
-		background-color: rgba(255, 255, 255, 0.6);
-		position: absolute;
-		left: 10%;
-		bottom: 15%;
-	}
-	100% {
-		margin-bottom: 0;
-		width: 50px;
-		height: 50px;
-		border-radius: 25px;
-		background-color: rgba(255, 255, 255, 1);
-		position: absolute;
-		left: 48%;
-		bottom: 50%;
+	.active .ly-box01 {
+		opacity: 1;
+		animation: box_to_point 10s 0s, bounce 2.5s 10s;
 	}
 }
 
 /** PC端动画 **/
 
 @keyframes box_to_point {
-	0% {
-		margin-bottom: 50%;
-		width: 50px;
-		height: 50px;
-		border-radius: 25px;
-		position: absolute;
-		left: 48%;
-		bottom: 50%;
-	}
-	10% {
-		margin-bottom: 0;
-		width: 50px;
-		height: 50px;
-		border-radius: 25px;
-		background-color: rgba(255, 255, 255, 1);
-		position: absolute;
-		left: 48%;
-		bottom: 50%;
-	}
-	14% {
-		margin-bottom: 0;
-		width: 80%;
-		height: 70%;
-		border-radius: 6px;
-		background-color: rgba(255, 255, 255, 0.5);
-		position: absolute;
-		left: 10%;
-		bottom: 12%;
-	}
-	96% {
-		margin-bottom: 0;
-		width: 80%;
-		height: 70%;
-		border-radius: 6px;
-		background-color: rgba(255, 255, 255, 0.6);
-		position: absolute;
-		left: 10%;
-		bottom: 12%;
-	}
-	100% {
-		margin-bottom: 0;
-		width: 50px;
-		height: 50px;
-		border-radius: 25px;
-		background-color: rgba(255, 255, 255, 1);
-		position: absolute;
-		left: 48%;
-		bottom: 50%;
-	}
-}
-
-@-webkit-keyframes box_to_point {
 	0% {
 		margin-bottom: 50%;
 		width: 50px;
@@ -391,34 +301,8 @@
 		bottom: 0;
 		left: 48%;
 	}
-	100% {
-		margin-bottom: 0;
-		width: 20px;
-		height: 20px;
-		border-radius: 10px;
-		left: 48%;
-		bottom: 0;
-		left: 20%;
-	}
-}
-
-@-webkit-keyframes bounce {
-	0% {
-		margin-bottom: 0;
-		width: 50px;
-		height: 50px;
-		border-radius: 25px;
-		bottom: 50%;
-		left: 48%;
-	}
-	50% {
-		margin-bottom: 0;
-		left: 48%;
-		width: 50px;
-		height: 50px;
-		border-radius: 25px;
-		bottom: 0;
-		left: 48%;
+	80% {
+		opacity: 0.8;
 	}
 	100% {
 		margin-bottom: 0;
@@ -428,6 +312,7 @@
 		left: 48%;
 		bottom: 0;
 		left: 20%;
+		opacity: 0;
 	}
 }
 
@@ -438,22 +323,7 @@
 		position: absolute;
 		width: 60%;
 		left: 10%;
-		top: 10%;
-	}
-}
-
-@media screen and (max-aspect-ratio: 3/4) {
-	.ly-txt01 {
-		position: absolute;
-		width: 60%;
-		left: 10%;
-		top: 5%;
-	}
-	.ly-txt01 p {
-		font-size: 4vw !important;
-	}
-	.ly-txt02 p {
-		font-size: 4vw !important;
+		top: 150px;
 	}
 }
 
@@ -464,10 +334,7 @@
 	left: 5%;
 	top: 5%;
 	opacity: 0;
-	animation: ly-stxt01_move 15s;
-	animation-delay: 3s;
-	-webkit-animation: ly-stxt01_move 15s;
-	-webkit-animation-delay: 3s;
+	animation-delay: 4s;
 }
 
 .ly-stxt02 {
@@ -478,10 +345,7 @@
 	top: 5%;
 	margin-top: -71px;
 	opacity: 0;
-	animation: ly-stxt02_move 15s;
-	animation-delay: 3s;
-	-webkit-animation: ly-stxt02_move 15s;
-	-webkit-animation-delay: 3s;
+	animation-delay: 4s;
 }
 
 .ly-stxt03 {
@@ -492,10 +356,7 @@
 	top: 5%;
 	opacity: 0;
 	margin-top: -71px;
-	animation: ly-stxt03_move 15s;
-	animation-delay: 3s;
-	-webkit-animation: ly-stxt03_move 15s;
-	-webkit-animation-delay: 3s;
+	animation-delay: 4s;
 }
 
 .ly-stxt04 {
@@ -506,10 +367,7 @@
 	top: 5%;
 	opacity: 0;
 	margin-top: -71px;
-	animation: ly-stxt04_move 15s;
-	animation-delay: 3s;
-	-webkit-animation: ly-stxt04_move 15s;
-	-webkit-animation-delay: 3s;
+	animation-delay: 4s;
 }
 
 .ly-stxt05 {
@@ -520,51 +378,39 @@
 	top: 5%;
 	opacity: 0;
 	margin-top: -71px;
-	animation: ly-stxt05_move 15s;
-	animation-delay: 3s;
-	-webkit-animation: ly-stxt05_move 15s;
-	-webkit-animation-delay: 3s;
+	animation-delay: 4s;
 }
 
 .ly-stxt06 {
 	font-size: 20px;
 	padding: 5px;
 	position: relative;
-	right: 5%;
+	left: 5%;
 	top: 5%;
 	opacity: 0;
-	animation: ly-stxt06_move 15s;
-	animation-delay: 3s;
-	-webkit-animation: ly-stxt06_move 15s;
-	-webkit-animation-delay: 3s;
+	animation-delay: 4s;
 }
 
 .ly-stxt07 {
 	font-size: 20px;
 	padding: 5px;
 	position: relative;
-	right: 5%;
+	left: 5%;
 	top: 5%;
 	opacity: 0;
 	margin-top: -71px;
-	animation: ly-stxt07_move 15s;
-	animation-delay: 3s;
-	-webkit-animation: ly-stxt07_move 15s;
-	-webkit-animation-delay: 3s;
+	animation-delay: 4s;
 }
 
 .ly-stxt08 {
 	font-size: 20px;
 	padding: 5px;
 	position: relative;
-	right: 5%;
+	left: 5%;
 	top: 5%;
 	opacity: 0;
 	margin-top: -71px;
-	animation: ly-stxt08_move 15s;
-	animation-delay: 3s;
-	-webkit-animation: ly-stxt08_move 15s;
-	-webkit-animation-delay: 3s;
+	animation-delay: 4s;
 }
 
 .ly-stxt09 {
@@ -575,10 +421,7 @@
 	top: 5%;
 	opacity: 0;
 	margin-top: -71px;
-	animation: ly-stxt09_move 15s;
-	animation-delay: 3s;
-	-webkit-animation: ly-stxt09_move 15s;
-	-webkit-animation-delay: 3s;
+	animation-delay: 4s;
 }
 
 .ly-stxt10 {
@@ -589,10 +432,39 @@
 	top: 5%;
 	opacity: 0;
 	margin-top: -71px;
-	animation: ly-stxt10_move 15s;
-	animation-delay: 3s;
-	-webkit-animation: ly-stxt10_move 15s;
-	-webkit-animation-delay: 3s;
+	animation-delay: 4s;
+}
+
+.active .ly-stxt01 {
+	animation: ly-stxt01_move 10s;
+}
+
+.active .ly-stxt02 {
+	animation: ly-stxt02_move 10s;
+}
+
+.active .ly-stxt03 {
+	animation: ly-stxt03_move 10s;
+}
+
+.active .ly-stxt04 {
+	animation: ly-stxt04_move 10s;
+}
+
+.active .ly-stxt05 {
+	animation: ly-stxt05_move 10s;
+}
+
+.active .ly-stxt06 {
+	animation: ly-stxt06_move 10s;
+}
+
+.active .ly-stxt07 {
+	animation: ly-stxt07_move 10s;
+}
+
+.active .ly-stxt08 {
+	animation: ly-stxt08_move 10s;
 }
 
 @keyframes ly-stxt01_move {
@@ -613,48 +485,7 @@
 	}
 }
 
-@-webkit-keyframes ly-stxt01_move {
-	0% {
-		opacity: 0;
-	}
-	8% {
-		opacity: 0;
-	}
-	90% {
-		opacity: 1;
-	}
-	98% {
-		opacity: 0;
-	}
-	100% {
-		opacity: 0;
-	}
-}
-
 @keyframes ly-stxt02_move {
-	0% {
-		opacity: 0;
-		margin-top: -71px;
-	}
-	8% {
-		opacity: 0;
-		margin-top: -71px;
-	}
-	16% {
-		opacity: 1;
-		margin-top: 0;
-	}
-	90% {
-		opacity: 1;
-		margin-top: 0;
-	}
-	100% {
-		opacity: 0;
-		margin-top: 0;
-	}
-}
-
-@-webkit-keyframes ly-stxt02_move {
 	0% {
 		opacity: 0;
 		margin-top: -71px;
@@ -700,53 +531,7 @@
 	}
 }
 
-@-webkit-keyframes ly-stxt03_move {
-	0% {
-		opacity: 0;
-		margin-top: -71px;
-	}
-	16% {
-		opacity: 0;
-		margin-top: -71px;
-	}
-	24% {
-		opacity: 1;
-		margin-top: 0;
-	}
-	90% {
-		opacity: 1;
-		margin-top: 0;
-	}
-	100% {
-		opacity: 0;
-		margin-top: 0;
-	}
-}
-
 @keyframes ly-stxt04_move {
-	0% {
-		opacity: 0;
-		margin-top: -71px;
-	}
-	24% {
-		opacity: 0;
-		margin-top: -71px;
-	}
-	32% {
-		opacity: 1;
-		margin-top: 0;
-	}
-	90% {
-		opacity: 1;
-		margin-top: 0;
-	}
-	100% {
-		opacity: 0;
-		margin-top: 0;
-	}
-}
-
-@-webkit-keyframes ly-stxt04_move {
 	0% {
 		opacity: 0;
 		margin-top: -71px;
@@ -792,29 +577,6 @@
 	}
 }
 
-@-webkit-keyframes ly-stxt05_move {
-	0% {
-		opacity: 0;
-		margin-top: -71px;
-	}
-	32% {
-		opacity: 0;
-		margin-top: -71px;
-	}
-	40% {
-		opacity: 1;
-		margin-top: 0;
-	}
-	90% {
-		opacity: 1;
-		margin-top: 0;
-	}
-	100% {
-		opacity: 0;
-		margin-top: 0;
-	}
-}
-
 @keyframes ly-stxt06_move {
 	0% {
 		opacity: 0;
@@ -833,48 +595,7 @@
 	}
 }
 
-@-webkit-keyframes ly-stxt06_move {
-	0% {
-		opacity: 0;
-	}
-	40% {
-		opacity: 0;
-	}
-	48% {
-		opacity: 1;
-	}
-	90% {
-		opacity: 1;
-	}
-	100% {
-		opacity: 0;
-	}
-}
-
 @keyframes ly-stxt07_move {
-	0% {
-		opacity: 0;
-		margin-top: -71px;
-	}
-	48% {
-		opacity: 0;
-		margin-top: -71px;
-	}
-	56% {
-		opacity: 1;
-		margin-top: 0;
-	}
-	90% {
-		opacity: 1;
-		margin-top: 0;
-	}
-	100% {
-		opacity: 0;
-		margin-top: 0;
-	}
-}
-
-@-webkit-keyframes ly-stxt07_move {
 	0% {
 		opacity: 0;
 		margin-top: -71px;
@@ -920,53 +641,7 @@
 	}
 }
 
-@-webkit-keyframes ly-stxt08_move {
-	0% {
-		opacity: 0;
-		margin-top: -71px;
-	}
-	56% {
-		opacity: 0;
-		margin-top: -71px;
-	}
-	64% {
-		opacity: 1;
-		margin-top: 0;
-	}
-	90% {
-		opacity: 1;
-		margin-top: 0;
-	}
-	100% {
-		opacity: 0;
-		margin-top: 0;
-	}
-}
-
 @keyframes ly-stxt09_move {
-	0% {
-		opacity: 0;
-		margin-top: -71px;
-	}
-	64% {
-		opacity: 0;
-		margin-top: -71px;
-	}
-	72% {
-		opacity: 1;
-		margin-top: 0;
-	}
-	90% {
-		opacity: 1;
-		margin-top: 0;
-	}
-	100% {
-		opacity: 0;
-		margin-top: 0;
-	}
-}
-
-@-webkit-keyframes ly-stxt09_move {
 	0% {
 		opacity: 0;
 		margin-top: -71px;
@@ -1012,102 +687,11 @@
 	}
 }
 
-@-webkit-keyframes ly-stxt10_move {
-	0% {
-		opacity: 0;
-		margin-top: -71px;
-	}
-	72% {
-		opacity: 0;
-		margin-top: -71px;
-	}
-	80% {
-		opacity: 1;
-		margin-top: 0;
-	}
-	90% {
-		opacity: 1;
-		margin-top: 0;
-	}
-	100% {
-		opacity: 0;
-		margin-top: 0;
-	}
-}
-
 /**                                      第二部分                                       **/
 
-/*时间轴的线*/
-
-.timeline {
-	width: 8px;
-	height: 0;
-	position: absolute;
-	left: 20%;
-	top: -100%;
-	background-color: #ccc;
-	border-radius: 3px;
-	transition: all 2s;
-}
-
-.active .timeline {
-	width: 10px;
-	height: 100%;
-	top: 0;
-	transition-delay: 0.1s;
-}
-
-/*时间轴上的点*/
-
-.timepoint {
-	width: 20px;
-	height: 20px;
-	margin-left: -5px;
-	position: absolute;
-	left: 20%;
-	top: 15.5%;
-	opacity: 0;
-	background-color: #fff;
-	-webkit-border-radius: 10px;
-	-moz-border-radius: 10px;
-	-ms-border-radius: 10px;
-	-o-border-radius: 10px;
-	border-radius: 10px;
-	transition: all 0.3s;
-}
-
-.active .timepoint {
-	opacity: 1;
-	transition-delay: 2s;
-}
-
-/**时间轴上的点**/
-
-.timepoint11 {
-	width: 20px;
-	height: 20px;
-	margin-left: -5px;
-	position: absolute;
-	left: 20%;
-	top: 0;
-	opacity: 1;
-	background-color: #fff;
-	-webkit-border-radius: 10px;
-	-moz-border-radius: 10px;
-	-ms-border-radius: 10px;
-	-o-border-radius: 10px;
-	border-radius: 10px;
-	transition: all 1s;
-}
-
 .active .timepoint11 {
-	top: 15.5%;
 	transition-delay: 2s;
 }
-
-/* 盒子 */
-
-/*电脑*/
 
 @media screen and (min-aspect-ratio: 10/9) {
 	.ly-box11 {
@@ -1119,7 +703,7 @@
 		border-radius: 8px;
 		position: absolute;
 		left: 23%;
-		top: 5.8%;
+		top: 210px;
 		opacity: 0;
 		-webkit-transform: scale(0.5, 0.5);
 		transform: scale(0.5, 0.5);
@@ -1241,28 +825,12 @@
 /**时间轴上的点**/
 
 .timepoint21 {
-	width: 20px;
-	height: 20px;
-	margin-left: -5px;
-	position: absolute;
-	left: 20%;
-	top: 0;
-	opacity: 1;
-	background-color: #fff;
-	-webkit-border-radius: 10px;
-	-moz-border-radius: 10px;
-	-ms-border-radius: 10px;
-	-o-border-radius: 10px;
-	border-radius: 10px;
 	transition: all 0.5s;
 }
 
 .active .timepoint21 {
-	top: 15.5%;
 	transition-delay: 1.5s;
 }
-
-/* PC */
 
 @media screen and (min-aspect-ratio: 10/9) {
 	/* 盒子 */
@@ -1329,29 +897,6 @@
 		transform: scale(1, 1);
 		transition-delay: 5s;
 	}
-	/*小三角*/
-	.ly-box::before {
-		content: "";
-		width: 0;
-		height: 0;
-		border-top: 20px solid transparent;
-		border-right: 22px solid white;
-		border-bottom: 20px solid transparent;
-		border-radius: 2px;
-		position: absolute;
-		left: -22px;
-		top: 15%;
-		opacity: 0;
-		-webkit-transform: scale(0.5, 0.5);
-		transform: scale(0.5, 0.5);
-		transition: all 1s;
-	}
-	.active .ly-box::before {
-		opacity: 0.6;
-		-webkit-transform: scale(1, 1);
-		transform: scale(1, 1);
-		transition-delay: inherit;
-	}
 	/*图片*/
 	.ly-imgbox22 {
 		position: absolute;
@@ -1375,19 +920,20 @@
 	/* 盒子 */
 	.ly-box23 {
 		width: 30%;
-		height: 0;
+		height: 300px;
 		border: 2px #CCC;
 		background-color: #fff;
 		background-color: rgba(255, 255, 255, 0.6);
 		border-radius: 8px;
 		position: absolute;
 		left: 65%;
-		top: 10%;
-		opacity: 0.9;
-		transition: all 8s;
+		opacity: 0;
+		transition: all 1s;
+		transform: scale(0.5);
 	}
 	.active .ly-box23 {
-		height: 300px;
+		opacity: 0.9;
+		transform: scale(1);
 		transition-delay: 8s;
 	}
 	/*图片*/
@@ -1403,7 +949,7 @@
 	}
 	.active .ly-imgbox23 {
 		opacity: 1;
-		transition-delay: 12s;
+		transition-delay: 10s;
 	}
 	.ly-img23 {
 		position: absolute;
@@ -1427,7 +973,7 @@
 
 .active .ly-txt21 {
 	opacity: 1;
-	transition-delay: 3.5s;
+	transition-delay: inherit;
 }
 
 .ly-txt22 {
@@ -1460,7 +1006,7 @@
 
 .active .ly-txt23 {
 	opacity: 1;
-	transition-delay: 6s;
+	transition-delay: inherit;
 }
 
 /*文本*/
@@ -1468,7 +1014,6 @@
 .ly-txt25 {
 	font-size: 20px;
 	padding: 5px;
-	text-shadow: 1px;
 	position: absolute;
 	left: 3%;
 	top: 2%;
@@ -1485,25 +1030,7 @@
 
 /**时间轴上的点**/
 
-.timepoint31 {
-	width: 20px;
-	height: 20px;
-	margin-left: -5px;
-	position: absolute;
-	left: 20%;
-	top: 0;
-	opacity: 1;
-	background-color: #fff;
-	-webkit-border-radius: 10px;
-	-moz-border-radius: 10px;
-	-ms-border-radius: 10px;
-	-o-border-radius: 10px;
-	border-radius: 10px;
-	transition: all 1s;
-}
-
 .active .timepoint31 {
-	top: 15.5%;
 	transition-delay: 2s;
 }
 
@@ -1760,7 +1287,7 @@
 
 .active .ly-txt71 {
 	opacity: 1;
-	transition-delay: 7.0s;
+	transition-delay: inherit;
 }
 
 /*图片*/
@@ -1788,24 +1315,10 @@
 }
 
 .timepoint71 {
-	width: 20px;
-	height: 20px;
-	margin-left: -5px;
-	position: absolute;
-	left: 20%;
-	top: 0;
-	opacity: 1;
-	background-color: #fff;
-	-webkit-border-radius: 10px;
-	-moz-border-radius: 10px;
-	-ms-border-radius: 10px;
-	-o-border-radius: 10px;
-	border-radius: 10px;
 	transition: all 0.5s;
 }
 
 .active .timepoint71 {
-	top: 21%;
 	transition-delay: 1.5s;
 }
 
