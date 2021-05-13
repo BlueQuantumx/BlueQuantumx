@@ -171,11 +171,11 @@
 }
 
 .active .timepoint {
-	top: 310px;
+	top: 200px;
 }
 
 .ly-box {
-	top: 210px !important;
+	top: 100px !important;
 }
 
 /*小三角*/
@@ -322,7 +322,7 @@
 		position: absolute;
 		width: 60%;
 		left: 10%;
-		top: 150px;
+		top: 50px;
 	}
 }
 
