@@ -7,11 +7,11 @@
   <meta name="author" content="BlueQuantum" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="icon" type="image/ico" sizes="512x512" href="/static/images/icon.png" />
-  <link rel="stylesheet" href="/static/css/articleTheme.css" />
-  <link rel="stylesheet" href="/static/css/gitalk.css" />
   <link rel="stylesheet" href="/static/css/common.css" />
-  <script src="/static/javaScripts/articleJS.js"></script>
+  <link rel="stylesheet" href="/static/css/gitalk.css" />
+  <link rel="stylesheet" href="/static/css/articleTheme.css" />
   <script src="/static/javaScripts/common.js"></script>
+  <script src="/static/javaScripts/articleJS.js"></script>
   <script id="MathJax-script" src="/static/javaScripts/mathJax-3.1.2/es5/tex-chtml.js"></script>
   <script src="https://cdn.bootcdn.net/ajax/libs/gitalk/1.7.0/gitalk.min.js"></script>
       <title>Linux折腾笔记</title>
@@ -35,6 +35,7 @@
 <li><code>/usr/share/fcitx/data/</code> 修改字符映射（￥–&gt; $ ）</li>
 <li><code>/etc/fstab</code> 挂载 <code>/tmp</code> 到内存</li>
 <li><code>~/.local/share/mime/packages/[Any Name].xml</code> 添加自定义类型</li>
+<li>update-mime-database ~/.local/share/mime 刷新mime数据库</li>
 </ul>
 <h2 id="deepin">Deepin</h2>
 <ul>
@@ -45,7 +46,7 @@
 </ul>
 <h2 id="manjaro">Manjaro</h2>
 <ul>
-<li><div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>  <span class="ex">yay</span> -S kmscon</span>
+<li><div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>  <span class="ex">yay</span> <span class="at">-S</span> kmscon</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sudo</span> systemctl disable getty@tty2.service</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sudo</span> systemctl enable kmsconvt@tty2.service</span></code></pre></div></li>
 <li><pre><code>  yay -S seahorse

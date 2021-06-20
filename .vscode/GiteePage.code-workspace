@@ -8,6 +8,7 @@
 		}
 	],
 	"settings": {
+		"code-runner.runInTerminal": true,
 		"code-runner.clearPreviousOutput": true,
 		"code-runner.customCommand": "python $workspaceRoot/Update.py",
 		"code-runner.executorMapByFileExtension": {
