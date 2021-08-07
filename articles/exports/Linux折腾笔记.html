@@ -28,7 +28,7 @@
 <!-- body不能缩进，不然会影响代码 -->
 <h1 id="linux-折腾笔记">Linux 折腾笔记</h1>
 <p>这个主要是记录一下折腾的详细条目，防止以后重装系统后忘掉。。。</p>
-<h2 id="common">Common</h2>
+<h2 id="commondeprecated">Common(Deprecated)</h2>
 <ul>
 <li><code>~/.vimrc</code> 的配置</li>
 <li><code>/usr/share/X11/xkb/keycodes</code> 里修改caps/meta</li>
@@ -37,22 +37,49 @@
 <li><code>~/.local/share/mime/packages/[Any Name].xml</code> 添加自定义类型</li>
 <li>update-mime-database ~/.local/share/mime 刷新mime数据库</li>
 </ul>
-<h2 id="deepin">Deepin</h2>
+<h2 id="arch">Arch</h2>
+<h3 id="install">Install</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mkfs.fat</span> <span class="at">-F32</span> /dev/{esp}</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">mkfs.ext4</span> /dev/{root}</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">timedatectl</span> set-local-rtc 1</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">timedatectl</span> set-ntp 1</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mount</span> /dev/{root} /mnt</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">mount</span> /dev/{esp} /mnt/boot</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="ex">vim</span> /etc/pacman.d/mirrorlist</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Server</span> = http://mirrors.tuna.tsinghua.edu.cn/archlinux/<span class="va">$repo</span>/os/<span class="va">$arch</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Server</span> = http://mirrors.zju.edu.cn/archlinux/<span class="va">$repo</span>/os/<span class="va">$arch</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="ex">vim</span> /etc/pacman.conf</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="ex">[archlinuxcn]</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Server</span> = https://mirrors.ustc.edu.cn/archlinuxcn/<span class="va">$arch</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="ex">pacstrap</span> /mnt base base-devel linux-zen linux-fireware xorg gvim</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="ex">genfstab</span> <span class="at">-L</span> /mnt <span class="op">&gt;&gt;</span> /mnt/etc/fstab</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">arch-chroot</span> /mnt</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-sf</span> /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">hwclock</span> <span class="at">--systohc</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="ex">vim</span> /etc/locale.gen</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="ex">locale-gen</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="ex">vim</span> /etc/locale.conf</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="va">LANG</span><span class="op">=</span>en_US.UTF-8 <span class="va">LC_ALL</span><span class="op">=</span>en_US.UTF-8</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="ex">vim</span> /etc/hostname</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="ex">vim</span> /etc/hosts</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="ex">127.0.0.1</span> localhost</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="ex">::1</span>       localhost</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="ex">127.0.1.1</span> myhostname.localdomain  myhostname</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="fu">passwd</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="ex">pacman</span> <span class="at">-S</span> intel-ucode refind yay networkmanager plasma nbfc-linux zsh</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="ex">useradd</span> <span class="at">-m</span> <span class="at">-s</span> /usr/bin/zsh <span class="at">-G</span> wheel bluequantum</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="fu">passwd</span> bluequantum</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="ex">yay</span> <span class="at">-S</span> zsh zsh-theme-powerlevel10k zsh-syntax-highlighting zsh-history-substring-search zsh-completions zsh-autosuggestions yakuake konsole libinput-gestures xdotool wmctrl</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="ex">gpasswd</span> <span class="at">-a</span> bluequantum input</span></code></pre></div>
+<h3 id="config">Config</h3>
 <ul>
-<li>dde-top-panel</li>
-<li><code>sudo apt install vim-gtk3</code>（支持系统剪贴板）</li>
-<li>/etc/modules msr</li>
-<li>libfprint-dev.deb</li>
-</ul>
-<h2 id="manjaro">Manjaro</h2>
-<ul>
-<li><div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>  <span class="ex">yay</span> <span class="at">-S</span> kmscon</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sudo</span> systemctl disable getty@tty2.service</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sudo</span> systemctl enable kmsconvt@tty2.service</span></code></pre></div></li>
+<li><div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>  <span class="ex">yay</span> <span class="at">-S</span> kmscon</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sudo</span> systemctl disable getty@tty2.service</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sudo</span> systemctl enable kmsconvt@tty2.service</span></code></pre></div></li>
 <li><pre><code>  yay -S seahorse
   yay -S qtkeychain
   /etc/pam.d/sddm &lt;&lt; &quot;auth optional pam_gnome_keyring.so&quot; &lt;&lt; &quot;session optional pam_gnome_keyring.so auto_start&quot;</code></pre></li>
-<li><code>yay -S gvim</code>（支持系统剪贴板）</li>
 </ul>
 <div id="gitalk-container" class="card"></div>
 </body>
