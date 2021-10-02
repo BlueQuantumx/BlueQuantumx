@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="zh-cn">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>作业助手</title>
+  <link rel="icon" type="image/ico" sizes="640x640" href="/favicon.ico" />
+  <link rel="stylesheet" href="/static/css/common.css" />
+  <link rel="stylesheet" type="text/css" href="/static/css/index.css" />
+  <script src="/static/javaScripts/common.js"></script>
+  <style>
+    .container {
+      text-align: center;
+      max-width: 30rem;
+      margin: auto;
+      margin-top: 10rem;
+      padding: 0.5rem;
+      backdrop-filter: blur(10px) brightness(0.8);
+      border-radius: 1rem;
+    }
+
+    html.light .container {
+      backdrop-filter: blur(10px) brightness(0.9);
+    }
+
+    /* button {
+      width: 6rem;
+      height: 3rem;
+      font-size: larger;
+      font-family: "楷体";
+    } */
+
+    #res {
+      justify-content: center;
+      margin: 1rem 0;
+      user-select: none;
+    }
+
+    .p-row {
+      flex-direction: row;
+      justify-content: space-around;
+      display: flex;
+    }
+
+    .p-node {
+      width: 5rem;
+      height: 2rem;
+      line-height: 2rem;
+      margin: .5rem;
+      /* background: paleturquoise; */
+      border-radius: 0.3rem;
+      /* box-shadow: black 2px 2px 5px 0px */
+    }
+
+    .p-node[active] {
+      width: 5rem;
+      height: 2rem;
+      line-height: 2rem;
+      margin: .5rem;
+      border-radius: 0.3rem;
+      background: var(--accent-color);
+      /* box-shadow: black 2px 2px 5px 0px */
+    }
+
+    footer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <nav id="top-panel">
+    <span id="myname">作业助手</span>
+    <span id="colorSwitch" class="color-switch"></span>
+    <a id="about" href="/about.html">关于</a>
+    <!-- <span id="scroll"></span> -->
+    <!-- <span id="posX"></span><span id="posY"></span> -->
+  </nav>
+  <div class="container">
+    <div id="res">
+      <div class="p-row">
+        <span class="p-node" id="p-19"></span>
+        <span class="p-node" id="p-12"></span>
+        <span class="p-node" id="p-6"></span>
+        <span class="p-node" id="p-0"></span>
+      </div>
+      <div class="p-row">
+        <span class="p-node" id="p-20"></span>
+        <span class="p-node" id="p-13"></span>
+        <span class="p-node" id="p-7"></span>
+        <span class="p-node" id="p-1"></span>
+      </div>
+      <div class="p-row">
+        <span class="p-node" id="p-21"></span>
+        <span class="p-node" id="p-14"></span>
+        <span class="p-node" id="p-8"></span>
+        <span class="p-node" id="p-2"></span>
+      </div>
+      <div class="p-row">
+        <span class="p-node" id="p-22"></span>
+        <span class="p-node" id="p-15"></span>
+        <span class="p-node" id="p-9"></span>
+        <span class="p-node" id="p-3"></span>
+      </div>
+      <div class="p-row">
+        <span class="p-node" id="p-23"></span>
+        <span class="p-node" id="p-16"></span>
+        <span class="p-node" id="p-10"></span>
+        <span class="p-node" id="p-4"></span>
+      </div>
+      <div class="p-row">
+        <span class="p-node" id="p-24"></span>
+        <span class="p-node" id="p-17"></span>
+        <span class="p-node" id="p-11"></span>
+        <span class="p-node" id="p-5"></span>
+      </div>
+      <div class="p-row">
+        <span class="p-node" id="p-18"></span>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <p>
+      由<a href="https://gitee.com/bluequantum" target="_blank"> BlueQuantum </a>没劲驱动 Copyright &copy; 2020 ~ 2021
+    </p>
+  </footer>
+  <script>
+    const n = 25;
+    var P, p = []; // P:现有的排座位次序，号->人名; p:0-24的排列
+    var hasHandled = [];
+    var nodes;
+    var headers_Leancloud = { "content-type": "application/json", "x-lc-id": "0fXMSbCD7SIxO3z7u5j1VjkL-gzGzoHsz", "x-lc-Key": "eIi8ECHYotfQqPB4AQRI6nfi" };
+    var password;
+    function $(s) { return document.querySelectorAll(s); }
+
+    async function initLeanCloud() {
+      for (let i = 0; i < n; ++i) p.push(i);
+      password = localStorage.getItem("rand");
+      password = password || prompt("为访问私密内容，请输入访问口令。", "password");
+      await (fetch("https://avoscloud.com/1.1/login", { headers: headers_Leancloud, method: "POST", body: `{"username":"B15Seats","password":"${password}"}` })
+        .then(r => r.json()).then(s => { if (s.code) { alert(`登陆失败，请刷新重试。\n${JSON.stringify(s)}`); } else { headers_Leancloud["x-lc-session"] = s.sessionToken; localStorage.setItem("rand", password); } }));
+      await (fetch("https://avoscloud.com/1.1/classes/Seat?order=-createdAt&limit=1&keys=-createdAt,-updatedAt,-objectId", { headers: headers_Leancloud, method: "GET" })
+        .then(r => r.json()).then(s => (P = s.results[0].p)));
+      P || (P = p);
+      initSeats();
+    }
+    var addChanger = function (element) {
+      this.onClick = function (event) {
+        // console.log(this);
+        // let node = document.getElementById(`p-${nodes[i].id}`);
+        // console.log(nodes[i].id);
+        if (hasHandled[this.id] === true) {
+          hasHandled[this.id] = false;
+          this.removeAttribute("active");
+        } else {
+          hasHandled[this.id] = true;
+          this.setAttribute("active", "");
+        }
+      }
+      element.addEventListener("click", this.onClick, false);
+    }
+    function initSeats() {
+      for (let i = 0; i < 25; ++i) {
+        hasHandled[i] = false;
+      }
+      let nodes = document.getElementsByClassName("p-node");
+
+      for (let i = 0; i < nodes.length; ++i) {
+        nodes[i].innerHTML = P[parseInt(nodes[i].id.replace("p-", ""))];
+        var changer = new addChanger(nodes[i]);
+        // nodes[i].addEventListener("click", )
+      }
+    }
+    initLeanCloud();
+    // initSeats();
+  </script>
+</body>
+
+<script>
+  console.log("%cWelcome to BlueQuantum's Blog!", "color:black;display:block;background:white;padding:1em; border: 1em #2b73af solid")
+</script>
+
+</html>
