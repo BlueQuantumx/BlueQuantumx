@@ -6,8 +6,7 @@ from hashlib import md5
 
 workspaceRoot = os.path.dirname(os.path.dirname(sys.argv[0]))
 articlesFolder = workspaceRoot + "/articles"
-staticFolder = workspaceRoot + "/static"
-
+buildFolder = workspaceRoot + "/build"
 
 class LeanCloud:
   appID = 'beY1CHJwtpOwXviCEyQJNlN1-gzGzoHsz'
@@ -58,17 +57,17 @@ class LeanCloud:
 
 def generate(filename: str):
   print("Updating", os.path.basename(filename))
-  if os.system("pandoc --mathjax \"" + filename + "\" -o \"./exports/" +
+  if os.system("pandoc --mathjax \"" + filename + "\" -o \"../build/articles/exports/" +
                os.path.splitext(os.path.basename(filename))[0] +
-               ".html\" --template=../static/myTemplate.html -M pagetitle=\"" +
+               ".html\" --template=../build/static/myTemplate.html -M pagetitle=\"" +
                os.path.splitext(os.path.basename(filename))[0] + "\"") != 0:
-    """ 
-    print("pandoc --mathjax \"" + filename + "\" -o \"./exports/" +
-          os.path.splitext(os.path.basename(filename))[0] +
-          ".html\" --template=../static/myTemplate.html -M pagetitle=\"" +
-          os.path.splitext(os.path.basename(filename))[0] + "\"")
-    """
+    
     raise Exception("Pandoc Error!")
+  """ print("pandoc --mathjax \"" + filename + "\" -o \"../build/articles/exports/" +
+        os.path.splitext(os.path.basename(filename))[0] +
+        ".html\" --template=../build/static/myTemplate.html -M pagetitle=\"" +
+        os.path.splitext(os.path.basename(filename))[0] + "\"")
+  """ 
   print("Updated", os.path.basename(filename))
 
 
@@ -114,14 +113,14 @@ def publish(filename: str):
     LC.publish(fileBaseNameNoExt)
   else:
     data: list
-    with open(articlesFolder + "/articles.json", "r") as f:
+    with open(buildFolder + "/articles/articles.json", "r") as f:
       data = loads(f.read())
     if data.count(fileBaseNameNoExt) == 0:
       data.insert(0, fileBaseNameNoExt)
       print("Publishing " + fileBaseName)
     else:
       print(fileBaseName + " has already been published!")
-    with open(articlesFolder + "/articles.json", "w+") as f:
+    with open(buildFolder + "/articles/articles.json", "w+") as f:
       f.write(dumps(data, sort_keys=True, separators=(',', ': '), indent=2))
 
 
