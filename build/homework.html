@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="/static/css/common.css" />
   <link rel="stylesheet" type="text/css" href="/static/css/index.css" />
   <script src="/static/javaScripts/common.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/leancloud-storage@4.9.0/dist/av-min.js"></script>
   <style>
     .container {
       text-align: center;
@@ -81,104 +82,75 @@
     <!-- <span id="posX"></span><span id="posY"></span> -->
   </nav>
   <div class="container">
-    <div id="res">
-      <div class="p-row">
-        <span class="p-node" id="p-19"></span>
-        <span class="p-node" id="p-12"></span>
-        <span class="p-node" id="p-6"></span>
-        <span class="p-node" id="p-0"></span>
-      </div>
-      <div class="p-row">
-        <span class="p-node" id="p-20"></span>
-        <span class="p-node" id="p-13"></span>
-        <span class="p-node" id="p-7"></span>
-        <span class="p-node" id="p-1"></span>
-      </div>
-      <div class="p-row">
-        <span class="p-node" id="p-21"></span>
-        <span class="p-node" id="p-14"></span>
-        <span class="p-node" id="p-8"></span>
-        <span class="p-node" id="p-2"></span>
-      </div>
-      <div class="p-row">
-        <span class="p-node" id="p-22"></span>
-        <span class="p-node" id="p-15"></span>
-        <span class="p-node" id="p-9"></span>
-        <span class="p-node" id="p-3"></span>
-      </div>
-      <div class="p-row">
-        <span class="p-node" id="p-23"></span>
-        <span class="p-node" id="p-16"></span>
-        <span class="p-node" id="p-10"></span>
-        <span class="p-node" id="p-4"></span>
-      </div>
-      <div class="p-row">
-        <span class="p-node" id="p-24"></span>
-        <span class="p-node" id="p-17"></span>
-        <span class="p-node" id="p-11"></span>
-        <span class="p-node" id="p-5"></span>
-      </div>
-      <div class="p-row">
-        <span class="p-node" id="p-18"></span>
-      </div>
-    </div>
+    <div id="res"></div>
   </div>
   <footer>
     <p>
       由<a href="https://gitee.com/bluequantum" target="_blank"> BlueQuantum </a>没劲驱动 Copyright &copy; 2020 ~ 2021
     </p>
   </footer>
-  <script>
-    const n = 25;
-    var P, p = []; // P:现有的排座位次序，号->人名; p:0-24的排列
-    var hasHandled = [];
-    var nodes;
-    var headers_Leancloud = { "content-type": "application/json", "x-lc-id": "0fXMSbCD7SIxO3z7u5j1VjkL-gzGzoHsz", "x-lc-Key": "eIi8ECHYotfQqPB4AQRI6nfi" };
-    var password;
-    function $(s) { return document.querySelectorAll(s); }
-
-    async function initLeanCloud() {
-      for (let i = 0; i < n; ++i) p.push(i);
-      password = localStorage.getItem("rand");
-      password = password || prompt("为访问私密内容，请输入访问口令。", "password");
-      await (fetch("https://avoscloud.com/1.1/login", { headers: headers_Leancloud, method: "POST", body: `{"username":"B15Seats","password":"${password}"}` })
-        .then(r => r.json()).then(s => { if (s.code) { alert(`登陆失败，请刷新重试。\n${JSON.stringify(s)}`); } else { headers_Leancloud["x-lc-session"] = s.sessionToken; localStorage.setItem("rand", password); } }));
-      await (fetch("https://avoscloud.com/1.1/classes/Seat?order=-createdAt&limit=1&keys=-createdAt,-updatedAt,-objectId", { headers: headers_Leancloud, method: "GET" })
-        .then(r => r.json()).then(s => (P = s.results[0].p)));
-      P || (P = p);
-      initSeats();
-    }
-    var addChanger = function (element) {
-      this.onClick = function (event) {
-        // console.log(this);
-        // let node = document.getElementById(`p-${nodes[i].id}`);
-        // console.log(nodes[i].id);
-        if (hasHandled[this.id] === true) {
-          hasHandled[this.id] = false;
-          this.removeAttribute("active");
-        } else {
-          hasHandled[this.id] = true;
-          this.setAttribute("active", "");
-        }
-      }
-      element.addEventListener("click", this.onClick, false);
-    }
-    function initSeats() {
-      for (let i = 0; i < 25; ++i) {
-        hasHandled[i] = false;
-      }
-      let nodes = document.getElementsByClassName("p-node");
-
-      for (let i = 0; i < nodes.length; ++i) {
-        nodes[i].innerHTML = P[parseInt(nodes[i].id.replace("p-", ""))];
-        var changer = new addChanger(nodes[i]);
-        // nodes[i].addEventListener("click", )
-      }
-    }
-    initLeanCloud();
-    // initSeats();
-  </script>
 </body>
+
+<script>
+  AV.init({
+    appId: "beY1CHJwtpOwXviCEyQJNlN1-gzGzoHsz",
+    appKey: "mRklyzcF05p8jXk0cbRQAe7T",
+    serverURL: "https://bey1chjw.lc-cn-n1-shared.com"
+  });
+
+  const n = 25;
+  var P, p = [], hasHandled = []; // P:现有的排座位次序，号->人名; p:0-24的排列
+  var nodes;
+
+  function $(s) { return document.querySelectorAll(s); }
+
+  function init() {
+    for (let i = 0; i < n; ++i) p.push(i);
+    if (!AV.User.current()) {
+      let password = prompt("为访问私有内容，请输入密码。", "Password");
+      AV.User.logIn("BlueQuantum", password).then((res) => { }).catch((error) => { alert(`登陆失败，请刷新重试。`) });
+    }
+    const query = new AV.Query('Seats');
+    query.find().then((seatsHistories) => {
+      P = seatsHistories[seatsHistories.length - 1].attributes.seatsDetail;
+      html = '';
+      let cnt = 0;
+      for (let i = 0; i < 6; ++i) {
+        html += '<div class="p-row">';
+        for (let j = 0; j < 4; ++j)
+          (html += `<div class="p-node" id="p-${cnt}">${P[cnt]}</div>`), ++cnt;
+        html += "</div>";
+      }
+      html += `<div class="p-row"><div class="p-node" id="p-${cnt}">${P[cnt]}</div></div>`;
+      ++cnt;
+      $("#res")[0].innerHTML = html;
+      nodes = $(".p-node");
+      initSeats();
+    })
+  }
+
+  var addChanger = function (element) {
+    this.onClick = function (event) {
+      if (hasHandled[this.id] === true) {
+        hasHandled[this.id] = false;
+        this.removeAttribute("active");
+      } else {
+        hasHandled[this.id] = true;
+        this.setAttribute("active", "");
+      }
+    }
+    element.addEventListener("click", this.onClick, false);
+  }
+  function initSeats() {
+    for (let i = 0; i < 25; ++i) { hasHandled[i] = false; }
+    for (let i = 0; i < nodes.length; ++i) {
+      nodes[i].innerHTML = P[i];
+      var changer = new addChanger(nodes[i]);
+    }
+  }
+
+  init();
+</script>
 
 <script>
   console.log("%cWelcome to BlueQuantum's Blog!", "color:black;display:block;background:white;padding:1em; border: 1em #2b73af solid")

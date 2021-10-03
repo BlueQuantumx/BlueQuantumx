@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="zh-cn">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>座位调换器</title>
+  <link rel="icon" type="image/ico" sizes="512x512" href="/favicon.ico" />
+  <link rel="stylesheet" href="/static/css/common.css" />
+  <link rel="stylesheet" type="text/css" href="/static/css/index.css" />
+  <script src="/static/javaScripts/common.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/leancloud-storage@4.9.0/dist/av-min.js"></script>
+  <style>
+    button {
+      background-color: var(--accent-color);
+      color: var(--text-color);
+      border: none;
+      display: block;
+      margin: 10px;
+      padding-left: 2em;
+      padding-right: 2em;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 0.5em;
+    }
+
+    button:disabled {
+      background-color: var(--auxiliary-color);
+    }
+
+    .operator {
+      display: flex;
+      align-items: center;
+    }
+
+    .container {
+      text-align: center;
+      max-width: 30rem;
+      margin: auto;
+      margin-top: 10rem;
+      padding: 0.5rem;
+      backdrop-filter: blur(10px) brightness(0.8);
+      border-radius: 1rem;
+    }
+
+    html.light .container {
+      backdrop-filter: blur(10px) brightness(0.9);
+    }
+
+    #res {
+      justify-content: center;
+      margin: 1rem 0;
+      user-select: none;
+    }
+
+    .p-row {
+      flex-direction: row;
+      justify-content: space-around;
+      display: flex;
+    }
+
+    .p-node {
+      width: 5rem;
+      height: 2rem;
+      line-height: 2rem;
+      margin: .5rem;
+      /* background: paleturquoise; */
+      border-radius: 0.3rem;
+      /* box-shadow: black 2px 2px 5px 0px */
+    }
+
+    .p-node[active] {
+      width: 5rem;
+      height: 2rem;
+      line-height: 2rem;
+      margin: .5rem;
+      border-radius: 0.3rem;
+      background: var(--accent-color);
+      /* box-shadow: black 2px 2px 5px 0px */
+    }
+
+    footer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <nav id="top-panel">
+    <span id="myname">座位调换器</span>
+    <span id="colorSwitch" class="color-switch"></span>
+    <a id="about" href="/about.html">关于</a>
+    <!-- <span id="scroll"></span> -->
+    <!-- <span id="posX"></span><span id="posY"></span> -->
+  </nav>
+  <div class="container">
+    <div class="operator">
+      <input type="checkbox" id="noFixedPoint" checked><label for="noFixedPoint">去除不动点</label>
+      <button onclick="toggle()" id="switch">开始</button>
+      <button onclick="saveSeat()" id="save-btn" disabled>保存</button>
+    </div>
+
+    <div id="res"></div>
+    <div>
+      <div>&lt;随机换座&gt;&nbsp;&nbsp;B15专供版</div>
+      <div>点击保存可以记住新座位</div>
+    </div>
+  </div>
+  <footer>
+    <p>
+      Originated from<a class="goline-text" href="https://gitee.com/bluequantum" target="_blank"> Wankupi </a>
+      . Improved by<a class="goline-text" href="https://gitee.com/bluequantum" target="_blank"> BlueQuantum </a>
+      Copyright
+      &copy; 2020 ~ 2021
+    </p>
+  </footer>
+</body>
+
+<script src="./seat_changer.js"></script>
+
+</html>
