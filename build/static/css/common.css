@@ -102,7 +102,7 @@ a:hover {
 .goline-text::before {
   content: "";
   position: absolute;
-  height: 3px;
+  height: 2px;
   width: 100%;
   left: 0px;
   top: 0px;
@@ -120,18 +120,18 @@ a:hover {
 .goline-text::after {
   content: "";
   position: absolute;
-  height: 3px;
+  height: 2px;
   width: 100%;
   left: 0px;
   bottom: 0px;
   background-color: #5e72e4;
-  transform: scaleX(0);
+  transform: scaleX(1);
   transform-origin: right;
   transition: transform 0.3s;
 }
 
 .goline-text:hover::after {
-  transform: scaleX(1);
+  transform: scaleX(0);
   transform-origin: left;
 }
 

@@ -14,7 +14,7 @@ function init() {
   for (let i = 0; i < n; ++i) p.push(i);
   if (!AV.User.current()) {
     let password = prompt("为访问私有内容，请输入密码。", "Password");
-    AV.User.logIn("BlueQuantum", password).then((res) => { }).catch((error) => { alert(`登陆失败，请刷新重试。`) });
+    AV.User.logIn("B15SeatChanger", password).then((res) => { }).catch((error) => { alert(`登陆失败，请刷新重试。`) });
   }
   const query = new AV.Query('Seats');
   query.find().then((seatsHistories) => {

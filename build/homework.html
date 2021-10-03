@@ -108,8 +108,12 @@
     for (let i = 0; i < n; ++i) p.push(i);
     if (!AV.User.current()) {
       let password = prompt("为访问私有内容，请输入密码。", "Password");
-      AV.User.logIn("BlueQuantum", password).then((res) => { }).catch((error) => { alert(`登陆失败，请刷新重试。`) });
+      AV.User.logIn("B15SeatChanger", password).then((res) => { loadSeats(); }).catch((error) => { alert(`登陆失败，请刷新重试。`) });
+    } else {
+      loadSeats();
     }
+  }
+  function loadSeats() {
     const query = new AV.Query('Seats');
     query.find().then((seatsHistories) => {
       P = seatsHistories[seatsHistories.length - 1].attributes.seatsDetail;
@@ -126,9 +130,8 @@
       $("#res")[0].innerHTML = html;
       nodes = $(".p-node");
       initSeats();
-    })
+    });
   }
-
   var addChanger = function (element) {
     this.onClick = function (event) {
       if (hasHandled[this.id] === true) {
@@ -141,6 +144,7 @@
     }
     element.addEventListener("click", this.onClick, false);
   }
+
   function initSeats() {
     for (let i = 0; i < 25; ++i) { hasHandled[i] = false; }
     for (let i = 0; i < nodes.length; ++i) {
