@@ -1,10 +1,28 @@
 .light {
   --text-color: black;
+
+  --primary: black;
+  --primary-variant: black;
+  --on-primary: white;
+
   --background-color: white;
+  --on-background: black;
+
   --accent-color: #6190e8;
+  --on-accent: #6190e8;
+
+  --secondary: gray;
+  --secondary-variant: rgb(59, 59, 59);
+  --on-secondary: #f8f8f8;
+
+  --surface: gray;
+  --on-surface: #f8f8f8;
+
   --auxiliary-color: gray;
   --auxbg-color: #F8F8F8;
+
   --transbg: #FFFFFF80;
+
   --refresh-image: url("/static/images/light/refresh.png");
   --background-image: url("/static/images/light/background.png");
   --color-switch: url("/static/images/light/colorSwitch.png");
