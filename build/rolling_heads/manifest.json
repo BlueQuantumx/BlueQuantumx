@@ -1,11 +1,11 @@
 {
     "name": "rolling_heads",
     "short_name": "rolling_heads",
-    "start_url": ".",
+    "start_url": "/roll_heads/",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "B15 座位调换工具",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
