@@ -8,19 +8,19 @@ const RESOURCES = {
 "canvaskit/profiling/canvaskit.wasm": "a9610cf39260f60fbe7524a785c66101",
 "canvaskit/profiling/canvaskit.js": "f3bfccc993a1e0bfdd3440af60d99df4",
 "canvaskit/canvaskit.js": "43fa9e17039a625450b6aba93baf521e",
-"main.dart.js": "e5c578c7863d05cc23374763e6d29690",
+"main.dart.js": "e0efee082e819c30c07802d7ddbf336a",
 "favicon.png": "5dcef449791fa27946b3d35ad8803796",
 "icons/Icon-192.png": "ac9a721a12bbc803b44f645561ecb1e1",
 "icons/Icon-maskable-192.png": "c457ef57daa1d16f64b27b786ec2ea3c",
 "icons/Icon-maskable-512.png": "301a7604d45b3e739efc881eb04896ea",
 "icons/Icon-512.png": "96e752610906ba2a93c65f8abe1645f1",
-"manifest.json": "e9d9371780739299d7f5a842539153a9",
+"manifest.json": "b51c4f4bb420aeae87b14b1ce6263c74",
 "assets/NOTICES": "0ed9bd90dca153a231fe605c060c68e1",
 "assets/FontManifest.json": "7b2a36307916a9721811788013e65289",
 "assets/AssetManifest.json": "99914b932bd37a50b983c5e7c90ae93b",
 "assets/fonts/MaterialIcons-Regular.otf": "4e6447691c9509f7acdbf8a931a85ca1",
-"index.html": "a29da93714886af1c1d56fc5092caaa3",
-"/": "a29da93714886af1c1d56fc5092caaa3"
+"index.html": "5b2169849789dce2274a38ee4a39476d",
+"/": "5b2169849789dce2274a38ee4a39476d"
 };
 
 // The application shell files that are downloaded before a service worker can

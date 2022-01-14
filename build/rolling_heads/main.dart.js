@@ -22000,7 +22000,7 @@ q7(a){return A.acS(new A.pU("Paste is not implemented for this browser."),null,t
 A.d3.prototype={
 grU(a){var s=this.a
 s=s==null?null:J.apM(s)
-return s==null?"https://cdn.jsdelivr.net/npm/canvaskit-wasm/bin/":s},
+return s==null?"https://cdn.jsdelivr.net/npm/canvaskit-wasm@0.30.0/bin/":s},
 grV(a){var s=this.a
 s=s==null?null:J.apN(s)
 return s==null?!1:s},
