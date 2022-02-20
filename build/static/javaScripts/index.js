@@ -126,7 +126,7 @@ fetch('/static/gitalk.json').then(response => {
 AV.init({
   appId: "beY1CHJwtpOwXviCEyQJNlN1-gzGzoHsz",
   appKey: "mRklyzcF05p8jXk0cbRQAe7T",
-  serverURL: "https://bey1chjw.lc-cn-n1-shared.com"
+  serverURL: "https://bluequantum.zlxxwy.cn"
 });
 
 function getRemoteArticles() {
