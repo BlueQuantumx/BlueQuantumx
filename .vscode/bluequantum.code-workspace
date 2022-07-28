@@ -21,7 +21,7 @@
 				"comments": true,
 			},
 			"editor.acceptSuggestionOnEnter": "on",
-			"editor.fontFamily": "'Noto Sans Mono CJK SC'"
+			// "editor.fontFamily": "'Noto Sans Mono CJK SC'"
 		}
 	},
 }
