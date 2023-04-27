@@ -1,6 +1,6 @@
 ### Hi there 👋
 
-- 🔭 I’m currently working on NOTHING
+- 🔭 I’m currently working on Appcontest & BBHust (-> Bingyan Studio)
 - 🌱 I’m currently learning ACM & Apple development kits
 <!-- - 👯 I’m looking to collaborate on ... -->
 <!-- - 🤔 I’m looking for help with ... -->
