@@ -1,6 +1,6 @@
 ### Hi there 👋
 
-- 🔭 I’m currently working on XCPC & BBHust (-> Bingyan Studio) & Graph Neural Network
+- 🔭 I’m currently working on XCPC & BBHust (-> Bingyan Studio) & Adversarial Attack
 - 🌱 I’m currently learning Machine Learning & ~Apple development kits~
 - 🤔 I’m looking for help with studying abroad
 - ⚡ Fun fact: To some extent, I'm a tech otaku
