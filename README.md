@@ -1,8 +1,6 @@
 ### Hi there 👋
 
-- 🔭 I’m currently working on XCPC & BBHust (-> Bingyan Studio) & Adversarial Attack
-- 🌱 I’m currently learning Machine Learning & ~Apple development kits~
-- 🤔 I’m looking for help with studying abroad
+- 🔭 I’m currently learning Operating System & File/Storage System
 - ⚡ Fun fact: To some extent, I'm a tech otaku
 <!-- - 💬 Ask me about ... -->
 <!-- - 📫 How to reach me: ... -->
